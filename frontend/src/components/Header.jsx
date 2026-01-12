@@ -58,11 +58,11 @@ export const Header = () => {
             to="/login"
             className="text-sm font-medium opacity-60 hover:opacity-100 hidden sm:block"
           >
-            Login
+            Sign in
           </Link>
           <Link to="/products">
             <Button variant="brutal-outline" className="h-11 px-6">
-              Buy Now - ₹99
+              Sign in
             </Button>
           </Link>
         </div>

@@ -53,11 +53,11 @@ export default function ContactPage() {
             {/* Email */}
             <div className="flex items-center gap-3 mb-10 p-4 bg-secondary">
               <Mail className="w-5 h-5" />
-              <a 
-                href="mailto:hello@slatetemplates.com" 
+              <a
+                href="mailto:syntheight@gmail.com"
                 className="text-sm hover:underline"
               >
-                hello@slatetemplates.com
+                syntheight@gmail.com
               </a>
             </div>
             

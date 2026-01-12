@@ -78,7 +78,7 @@ export default function TermsPage() {
               <section>
                 <h2 className="text-lg font-semibold mb-3">Contact</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  For questions about these terms, contact us at hello@slatetemplates.com
+                  For questions about these terms, contact us at syntheight@gmail.com
                 </p>
               </section>
             </div>

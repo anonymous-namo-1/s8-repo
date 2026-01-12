@@ -63,7 +63,7 @@ export default function PrivacyPage() {
               <section>
                 <h2 className="text-lg font-semibold mb-3">Contact</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  For privacy-related questions, contact us at hello@slatetemplates.com
+                  For privacy-related questions, contact us at syntheight@gmail.com
                 </p>
               </section>
             </div>

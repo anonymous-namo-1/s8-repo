@@ -9,18 +9,6 @@ import { formatPrice } from '../data/templates';
 export const TemplateCard = ({ template, onBuyNow }) => {
   return (
     <Card className="group border border-border bg-background overflow-hidden flex flex-col relative hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-      {/* Badge */}
-      {template.badge && (
-        <div className="absolute bottom-3 left-3 z-10">
-          <Badge
-            variant="secondary"
-            className="bg-foreground text-background text-[10px] sm:text-xs font-medium px-2 py-0.5"
-          >
-            {template.badge}
-          </Badge>
-        </div>
-      )}
-
       {/* Image */}
       <div className="aspect-[16/10] overflow-hidden bg-secondary">
         <ImageWithSkeleton

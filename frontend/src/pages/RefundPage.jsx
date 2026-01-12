@@ -32,7 +32,7 @@ export default function RefundPage() {
                 <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
-                    Email us at hello@slatetemplates.com
+                    Email us at syntheight@gmail.com
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
@@ -79,7 +79,7 @@ export default function RefundPage() {
               <section>
                 <h2 className="text-lg font-semibold mb-3">Contact</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  For refund requests or questions, contact us at hello@slatetemplates.com
+                  For refund requests or questions, contact us at syntheight@gmail.com
                 </p>
               </section>
             </div>
