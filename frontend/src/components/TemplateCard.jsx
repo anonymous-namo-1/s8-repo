@@ -26,7 +26,7 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         <ImageWithSkeleton
           src={template.image}
           alt={template.name}
-          className="transition-transform duration-300 group-hover:scale-105"
+          className="transition-transform duration-300 group-hover:scale-105 object-top"
           lazy={true}
         />
       </div>
