@@ -7,6 +7,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Separator } from '../components/ui/separator';
+import { ImageWithSkeleton } from '../components/ui/image-with-skeleton';
 import { getTemplateBySlug } from '../data/templates';
 import { toast, Toaster } from 'sonner';
 
@@ -223,10 +224,10 @@ export default function CheckoutPage() {
                   <h2 className="font-semibold">Order summary</h2>
                   
                   <div className="aspect-[4/3] overflow-hidden border border-border">
-                    <img 
-                      src={template.image} 
+                    <ImageWithSkeleton
+                      src={template.image}
                       alt={template.name}
-                      className="w-full h-full object-cover"
+                      lazy={true}
                     />
                   </div>
                   

@@ -6,6 +6,7 @@ import { Footer } from '../components/Footer';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
+import { ImageWithSkeleton } from '../components/ui/image-with-skeleton';
 import { getTemplateBySlug, formatPrice } from '../data/templates';
 import { useRazorpay } from '../hooks/useRazorpay';
 import { Toaster } from 'sonner';
@@ -67,10 +68,10 @@ export default function TemplateDetailPage() {
               )}
               
               <div className="aspect-[4/3] overflow-hidden border border-border bg-secondary">
-                <img 
-                  src={template.image} 
+                <ImageWithSkeleton
+                  src={template.image}
                   alt={template.name}
-                  className="w-full h-full object-cover"
+                  lazy={false}
                 />
               </div>
               

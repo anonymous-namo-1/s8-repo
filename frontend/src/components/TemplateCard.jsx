@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
+import { ImageWithSkeleton } from './ui/image-with-skeleton';
 import { formatPrice } from '../data/templates';
 
 export const TemplateCard = ({ template, onBuyNow }) => {
@@ -22,11 +23,11 @@ export const TemplateCard = ({ template, onBuyNow }) => {
 
       {/* Image */}
       <div className="aspect-[16/10] overflow-hidden bg-secondary">
-        <img
+        <ImageWithSkeleton
           src={template.image}
           alt={template.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
+          className="transition-transform duration-300 group-hover:scale-105"
+          lazy={true}
         />
       </div>
 
