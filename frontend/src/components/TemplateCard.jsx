@@ -11,7 +11,7 @@ export const TemplateCard = ({ template, onBuyNow }) => {
     <Card className="group border border-border bg-background overflow-hidden flex flex-col relative hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
       {/* Badge */}
       {template.badge && (
-        <div className="absolute top-3 left-3 z-10">
+        <div className="absolute bottom-3 left-3 z-10">
           <Badge
             variant="secondary"
             className="bg-foreground text-background text-[10px] sm:text-xs font-medium px-2 py-0.5"
