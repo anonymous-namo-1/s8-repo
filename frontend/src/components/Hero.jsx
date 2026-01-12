@@ -20,7 +20,7 @@ export const Hero = () => {
             }`}
             style={{ transitionDelay: '100ms' }}
           >
-            For founders, agencies, and indie builders
+            For developers, businesses, and automation enthusiasts
           </p>
 
           {/* Outcome-Driven Headline */}
@@ -30,9 +30,9 @@ export const Hero = () => {
             }`}
             style={{ transitionDelay: '200ms' }}
           >
-            Ship your website this weekend.
+            10,000+ automation workflows.
             <br />
-            <span className="text-muted-foreground">Not next month.</span>
+            <span className="text-muted-foreground">Ready in minutes.</span>
           </h1>
 
           {/* Value Proposition - Remove Uncertainty */}
@@ -42,8 +42,8 @@ export const Hero = () => {
             }`}
             style={{ transitionDelay: '400ms' }}
           >
-            Production-ready templates. Clean HTML, CSS, JS.
-            No frameworks to learn. No subscriptions. Download, customize, deploy.
+            Pre-built workflows for n8n, Zapier, and Make.
+            Stop building from scratch. Import, customize, automate.
           </p>
 
           {/* What You Get */}
@@ -53,7 +53,7 @@ export const Hero = () => {
             }`}
             style={{ transitionDelay: '600ms' }}
           >
-            8 templates from ₹1,499. Instant download. 14-day refund guarantee.
+            Just ₹99. 10,000+ workflows. Lifetime access. 14-day money-back guarantee.
           </p>
 
           {/* CTAs */}
@@ -65,16 +65,14 @@ export const Hero = () => {
           >
             <Link to="/products">
               <Button variant="brutal" size="xl">
-                Browse Templates
+                Get All Workflows - ₹99
               </Button>
             </Link>
             <a
-              href="https://demo.slatetemplates.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#workflows-preview"
               className="text-sm font-medium opacity-60 hover:opacity-100 hover:text-gray-700 link-underline px-4 py-3 transition-colors duration-200"
             >
-              View Live Demo
+              Preview Workflows
             </a>
           </div>
         </div>

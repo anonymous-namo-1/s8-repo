@@ -8,11 +8,11 @@ export const Footer = () => {
       <div className="container-slate py-10 border-b border-border">
         <div className="max-w-md">
           <p className="text-lg font-semibold mb-2">
-            Templates built for people who ship.
+            Workflows built for people who automate.
           </p>
           <p className="text-sm text-muted-foreground">
-            Stop tweaking. Start launching. These templates are built by developers, 
-            for developers who value their time.
+            Stop building automations from scratch. 10,000+ ready-to-use workflows
+            for developers and businesses who value their time.
           </p>
         </div>
       </div>
@@ -29,7 +29,7 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-2">License</h4>
             <p className="text-xs text-muted-foreground">
-              Use on your own projects or client work. Just do not resell the template itself.
+              Unlimited personal and commercial use. No redistribution or resale of workflows.
             </p>
           </div>
           <div>
@@ -47,41 +47,41 @@ export const Footer = () => {
           {/* Logo & Copyright */}
           <div>
             <Link to="/" className="text-base font-bold tracking-tight mb-1 block">
-              SlateTemplates
+              Syntheight
             </Link>
             <p className="text-xs text-muted-foreground">
-              {new Date().getFullYear()} SlateTemplates. All rights reserved.
+              {new Date().getFullYear()} Syntheight. All rights reserved.
             </p>
           </div>
           
           {/* Policy Links */}
           <nav className="flex flex-wrap gap-6">
-            <Link 
-              to="/products" 
+            <a
+              href="#workflows"
               className="text-xs text-muted-foreground hover:text-foreground"
             >
-              Products
-            </Link>
-            <Link 
-              to="/privacy" 
+              Workflows
+            </a>
+            <Link
+              to="/privacy"
               className="text-xs text-muted-foreground hover:text-foreground"
             >
               Privacy
             </Link>
-            <Link 
-              to="/terms" 
+            <Link
+              to="/terms"
               className="text-xs text-muted-foreground hover:text-foreground"
             >
               Terms
             </Link>
-            <Link 
-              to="/refund" 
+            <Link
+              to="/refund"
               className="text-xs text-muted-foreground hover:text-foreground"
             >
               Refunds
             </Link>
-            <Link 
-              to="/contact" 
+            <Link
+              to="/contact"
               className="text-xs text-muted-foreground hover:text-foreground"
             >
               Contact

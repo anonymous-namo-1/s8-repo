@@ -25,14 +25,14 @@ export const TemplatesGrid = ({ showAll = true }) => {
             isHeaderVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-3">
-            All Templates
+          <h2 id="workflows" className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-3">
+            Get All 10,000+ Workflows
           </h2>
           <p className="text-muted-foreground text-sm sm:text-base mb-4 leading-relaxed">
-            One-time purchase. No subscriptions. No lock-in.
+            One-time payment. Lifetime access. No subscriptions.
           </p>
           <p className="text-xs sm:text-sm text-muted-foreground">
-            {templates.length} templates from ₹1,499. Cheaper than 2 hours of developer time.
+            Just ₹99 for the entire collection. Cheaper than an hour of development time.
           </p>
         </div>
 

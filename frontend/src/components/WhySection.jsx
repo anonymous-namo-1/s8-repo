@@ -4,20 +4,20 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const features = [
   {
-    title: "Clean, readable code",
-    description: "No spaghetti. No mystery classes. Code you can actually understand."
+    title: "10,000+ ready-to-use workflows",
+    description: "Massive collection covering marketing, sales, HR, finance, DevOps, and more."
   },
   {
-    title: "Fast load times",
-    description: "Under 100KB total. No frameworks dragging you down."
+    title: "Compatible with popular platforms",
+    description: "Works with n8n, Zapier, and Make. Import in seconds."
   },
   {
-    title: "Easy customization",
-    description: "Change colors, fonts, content. Ship same day."
+    title: "Easy to customize",
+    description: "Modify workflows to fit your needs. Documentation included."
   },
   {
-    title: "Built for production",
-    description: "These templates run real businesses. Not just demos."
+    title: "Lifetime access & updates",
+    description: "One-time payment. Get all future workflow additions for free."
   }
 ];
 
@@ -26,7 +26,7 @@ export const WhySection = () => {
   const [rightRef, isRightVisible] = useScrollAnimation(0.2);
 
   return (
-    <section className="w-full py-16 md:py-20 border-t border-border">
+    <section id="features" className="w-full py-16 md:py-20 border-t border-border">
       <div className="container-slate">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
           {/* Left - Title */}
@@ -37,14 +37,14 @@ export const WhySection = () => {
             }`}
           >
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4">
-              Why SlateTemplates
+              Why Syntheight
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground mb-4 leading-relaxed">
-              Templates that respect your time and your users.
+              Automation workflows that save you hundreds of hours.
             </p>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-              Every template is hand-coded. No page builders. No generated code.
-              Just clean, maintainable HTML, CSS, and JavaScript.
+              Stop building automations from scratch. Every workflow is ready to import,
+              customize, and deploy. From simple tasks to complex multi-step integrations.
             </p>
           </div>
 

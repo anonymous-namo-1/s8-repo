@@ -25,29 +25,25 @@ export const Header = () => {
       <div className="container-slate h-16 flex items-center justify-between">
         {/* Logo - Left */}
         <Link to="/" className="flex items-center">
-          <span className="text-lg font-bold tracking-tight">SlateTemplates</span>
+          <span className="text-lg font-bold tracking-tight">Syntheight</span>
         </Link>
         
         {/* Navigation - Center */}
         <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-          <Link 
-            to="/" 
-            className={`text-sm font-medium link-underline ${
-              isActive('/') ? 'opacity-100' : 'opacity-60 hover:opacity-100'
-            }`}
+          <a
+            href="#workflows"
+            className="text-sm font-medium link-underline opacity-60 hover:opacity-100"
           >
-            Home
-          </Link>
-          <Link 
-            to="/products" 
-            className={`text-sm font-medium link-underline ${
-              isActive('/products') ? 'opacity-100' : 'opacity-60 hover:opacity-100'
-            }`}
+            Workflows
+          </a>
+          <a
+            href="#features"
+            className="text-sm font-medium link-underline opacity-60 hover:opacity-100"
           >
-            Products
-          </Link>
-          <Link 
-            to="/contact" 
+            Features
+          </a>
+          <Link
+            to="/contact"
             className={`text-sm font-medium link-underline ${
               isActive('/contact') ? 'opacity-100' : 'opacity-60 hover:opacity-100'
             }`}
@@ -58,15 +54,17 @@ export const Header = () => {
         
         {/* Right Actions */}
         <div className="flex items-center gap-6">
-          <Link 
-            to="/login" 
+          <Link
+            to="/login"
             className="text-sm font-medium opacity-60 hover:opacity-100 hidden sm:block"
           >
             Login
           </Link>
-          <Button variant="brutal-outline" className="h-11 px-6">
-            Get Started
-          </Button>
+          <Link to="/products">
+            <Button variant="brutal-outline" className="h-11 px-6">
+              Buy Now - ₹99
+            </Button>
+          </Link>
         </div>
       </div>
     </header>

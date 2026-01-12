@@ -4,16 +4,16 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const testimonials = [
   {
-    quote: "Bought the Starter Landing template. Had my site live in 3 hours. Clean code, easy to customize.",
-    role: "Founder"
+    quote: "10,000+ workflows for ₹99? Absolute steal. Already automated 20+ tasks in my business.",
+    role: "SaaS Founder"
   },
   {
-    quote: "Dashboard Pro saved us weeks of frontend work. Worth every rupee.",
-    role: "Agency Developer"
+    quote: "Saved me hundreds of hours. The n8n workflows work perfectly out of the box.",
+    role: "Developer"
   },
   {
-    quote: "Finally, templates that look good without 50 dependencies. Just HTML/CSS/JS.",
-    role: "Indie Builder"
+    quote: "Best automation investment I've made. Finally stopped building everything from scratch.",
+    role: "Automation Enthusiast"
   }
 ];
 
@@ -36,10 +36,10 @@ export const TrustSection = () => {
             Trusted by
           </p>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-2">
-            Used by founders, agencies, and indie builders
+            Used by developers, businesses, and automation enthusiasts
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-            Clean HTML, CSS, JS — no frameworks, no lock-in
+            n8n, Zapier, Make — works with your favorite automation platforms
           </p>
         </div>
 
@@ -74,15 +74,15 @@ export const TrustSection = () => {
             isTechVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <span>No jQuery</span>
+          <span>Marketing Automation</span>
           <span className="opacity-30">|</span>
-          <span>No Bootstrap bloat</span>
+          <span>Sales Workflows</span>
           <span className="opacity-30">|</span>
-          <span>Semantic HTML</span>
+          <span>HR & Operations</span>
           <span className="opacity-30">|</span>
-          <span>Mobile-first CSS</span>
+          <span>Social Media</span>
           <span className="opacity-30">|</span>
-          <span>Vanilla JS only</span>
+          <span>DevOps & CI/CD</span>
         </div>
       </div>
     </section>
