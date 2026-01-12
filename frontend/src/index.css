@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+@layer base {
+    :root {
+        /* SlateTemplates Design System - Pure Black & White */
+        --background: 0 0% 100%;           /* Pure white */
+        --foreground: 0 0% 0%;             /* Pure black */
+        
+        --card: 0 0% 100%;
+        --card-foreground: 0 0% 0%;
+        
+        --popover: 0 0% 100%;
+        --popover-foreground: 0 0% 0%;
+        
+        --primary: 0 0% 0%;                /* Pure black for buttons */
+        --primary-foreground: 0 0% 100%;   /* White text on black */
+        
+        --secondary: 0 0% 98%;             /* Very light gray */
+        --secondary-foreground: 0 0% 0%;
+        
+        --muted: 0 0% 96%;
+        --muted-foreground: 0 0% 45%;
+        
+        --accent: 0 0% 96%;
+        --accent-foreground: 0 0% 0%;
+        
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        
+        --border: 0 0% 92%;                /* Very subtle border */
+        --input: 0 0% 92%;
+        --ring: 0 0% 0%;
+        
+        --radius: 0px;                     /* No border radius - minimal */
+        
+        /* Custom tokens */
+        --hover-opacity: 0.8;
+        --transition-fast: 150ms ease;
+        --transition-smooth: 200ms ease;
+        
+        /* Glassmorphism */
+        --glass-bg: rgba(255, 255, 255, 0.8);
+        --glass-border: rgba(0, 0, 0, 0.06);
+    }
+    
+    .dark {
+        --background: 0 0% 0%;
+        --foreground: 0 0% 100%;
+        --card: 0 0% 5%;
+        --card-foreground: 0 0% 100%;
+        --popover: 0 0% 5%;
+        --popover-foreground: 0 0% 100%;
+        --primary: 0 0% 100%;
+        --primary-foreground: 0 0% 0%;
+        --secondary: 0 0% 10%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 0 0% 15%;
+        --muted-foreground: 0 0% 60%;
+        --accent: 0 0% 15%;
+        --accent-foreground: 0 0% 100%;
+        --border: 0 0% 20%;
+        --input: 0 0% 20%;
+        --ring: 0 0% 100%;
+        --glass-bg: rgba(0, 0, 0, 0.8);
+        --glass-border: rgba(255, 255, 255, 0.1);
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-bold tracking-tight;
+    }
+    
+    :focus-visible {
+        @apply outline-none ring-1 ring-foreground ring-offset-2 ring-offset-background;
+    }
+}
+
+@layer components {
+    .brutal-hover {
+        @apply transition-opacity duration-150;
+    }
+    .brutal-hover:hover {
+        opacity: var(--hover-opacity);
+    }
+    
+    .link-underline {
+        @apply relative;
+    }
+    .link-underline::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-0 h-px bg-foreground;
+        transition: width var(--transition-smooth);
+    }
+    .link-underline:hover::after {
+        @apply w-full;
+    }
+    
+    .container-slate {
+        @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+    
+    .section-spacing {
+        @apply py-16 md:py-24 lg:py-32;
+    }
+    
+    /* Glassmorphism header */
+    .glass-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--glass-border);
+    }
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+}
