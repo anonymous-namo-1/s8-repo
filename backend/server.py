@@ -9,6 +9,12 @@ from pydantic import BaseModel, Field, ConfigDict
 from typing import List
 import uuid
 from datetime import datetime, timezone
+import sys
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
+
+from routes.payment_routes import create_payment_router
 
 
 ROOT_DIR = Path(__file__).parent
@@ -68,6 +74,10 @@ async def get_status_checks():
 
 # Include the router in the main app
 app.include_router(api_router)
+
+# Include payment routes
+payment_router = create_payment_router(db)
+app.include_router(payment_router)
 
 app.add_middleware(
     CORSMiddleware,
