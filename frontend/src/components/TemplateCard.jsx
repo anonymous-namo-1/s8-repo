@@ -41,9 +41,23 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         {/* Footer */}
         <div className="flex items-center justify-between mt-auto pt-3 border-t border-border">
           {/* Price in INR */}
-          <span className="text-base font-bold">
-            {formatPrice(template.price)}
-          </span>
+          <div className="flex flex-col items-start">
+            <div className="flex items-center gap-2">
+              <span className="text-base font-bold">
+                {formatPrice(template.price)}
+              </span>
+              {template.originalPrice && (
+                <span className="text-xs text-muted-foreground line-through">
+                  {formatPrice(template.originalPrice)}
+                </span>
+              )}
+            </div>
+            {template.discount && (
+              <span className="text-[10px] text-green-600 font-medium">
+                Save {template.discount}%
+              </span>
+            )}
+          </div>
 
           {/* Actions */}
           <div className="flex items-center gap-2">

@@ -219,9 +219,21 @@ export default function TemplateDetailPage() {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 bg-secondary">
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">One-time purchase</p>
-                  <p className="text-2xl font-bold">{formatPrice(template.price)}</p>
+                  <div className="flex items-center gap-3">
+                    <p className="text-2xl font-bold">{formatPrice(template.price)}</p>
+                    {template.originalPrice && (
+                      <div className="flex flex-col">
+                        <span className="text-sm text-muted-foreground line-through">
+                          {formatPrice(template.originalPrice)}
+                        </span>
+                        <span className="text-xs text-green-600 font-medium">
+                          Save {template.discount}%
+                        </span>
+                      </div>
+                    )}
+                  </div>
                   <p className="text-[10px] text-muted-foreground mt-1">
-                    Cheaper than 2 hours of developer time
+                    Limited time offer • Cheaper than 1 hour of developer time
                   </p>
                 </div>
                 <Button 
