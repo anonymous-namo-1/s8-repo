@@ -76,7 +76,7 @@ def send_download_email(customer_email, order_id):
                     <tr>
                         <td style="background-color: #f9fafb; padding: 30px; text-align: center; border-top: 1px solid #e5e7eb;">
                             <p style="font-size: 14px; color: #666666; margin: 0 0 10px 0;">
-                                Need help? Contact us at <a href="mailto:support@syntheight.com" style="color: #3B82F6;">support@syntheight.com</a>
+                                Need help? Contact us at <a href="mailto:syntheight@gmail.com" style="color: #3B82F6;">syntheight@gmail.com</a>
                             </p>
                             <p style="font-size: 12px; color: #999999; margin: 10px 0 0 0;">
                                 This is an automated email. Please do not reply.
@@ -99,7 +99,7 @@ Order ID: {order_id}
 Access your workflows here:
 {DOWNLOAD_LINK}
 
-Need help? Contact us at support@syntheight.com
+Need help? Contact us at syntheight@gmail.com
 """
 
         params = {

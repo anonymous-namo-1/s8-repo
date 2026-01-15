@@ -1,0 +1,15 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#000000"/>
+
+  <!-- Letter S with modern geometric style -->
+  <path d="M256 128C211.817 128 176 163.817 176 208C176 252.183 211.817 288 256 288C300.183 288 336 323.817 336 368C336 412.183 300.183 448 256 448C211.817 448 176 412.183 176 368"
+        stroke="#3B82F6"
+        stroke-width="40"
+        stroke-linecap="round"
+        fill="none"/>
+
+  <!-- Number 8 incorporated -->
+  <circle cx="256" cy="200" r="30" fill="#3B82F6" opacity="0.6"/>
+  <circle cx="256" cy="360" r="30" fill="#3B82F6" opacity="0.6"/>
+</svg>
