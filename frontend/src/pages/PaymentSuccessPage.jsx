@@ -57,7 +57,6 @@ export default function PaymentSuccessPage() {
               <h3 className="font-semibold mb-3">What's Included:</h3>
               <ul className="text-sm text-muted-foreground space-y-2">
                 <li>• 10,000+ ready-to-use automation workflows</li>
-                <li>• Compatible with n8n, Make, Zapier & more</li>
                 <li>• Lifetime access to all files</li>
                 <li>• Free future updates</li>
               </ul>

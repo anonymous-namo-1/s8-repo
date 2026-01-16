@@ -8,7 +8,7 @@ const testimonials = [
     role: "SaaS Founder"
   },
   {
-    quote: "Saved me hundreds of hours. The n8n workflows work perfectly out of the box.",
+    quote: "Saved me hundreds of hours. The workflows work perfectly out of the box.",
     role: "Developer"
   },
   {
@@ -39,7 +39,7 @@ export const TrustSection = () => {
             Used by developers, businesses, and automation enthusiasts
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-            n8n, Zapier, Make — works with your favorite automation platforms
+            Join hundreds of satisfied customers
           </p>
         </div>
 

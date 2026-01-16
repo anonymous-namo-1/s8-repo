@@ -8,10 +8,6 @@ const features = [
     description: "Massive collection covering marketing, sales, HR, finance, DevOps, and more."
   },
   {
-    title: "Compatible with popular platforms",
-    description: "Works with n8n, Zapier, and Make. Import in seconds."
-  },
-  {
     title: "Easy to customize",
     description: "Modify workflows to fit your needs. Documentation included."
   },

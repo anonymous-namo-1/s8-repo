@@ -42,7 +42,6 @@ export const Hero = () => {
             }`}
             style={{ transitionDelay: '400ms' }}
           >
-            Pre-built workflows for n8n, Zapier, and Make.
             Stop building from scratch. Import, customize, automate.
           </p>
 
