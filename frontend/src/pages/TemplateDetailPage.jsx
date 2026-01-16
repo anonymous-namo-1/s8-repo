@@ -169,19 +169,6 @@ export default function TemplateDetailPage() {
               
               <Separator className="my-6" />
               
-              {/* License - Plain English */}
-              <div className="mb-6">
-                <h2 className="text-sm font-semibold mb-2">License</h2>
-                <p className="text-xs text-muted-foreground mb-2">
-                  {template.license}
-                </p>
-                <p className="text-[10px] text-muted-foreground">
-                  {template.licenseShort} • {template.refund}
-                </p>
-              </div>
-              
-              <Separator className="my-6" />
-              
               {/* What Happens After Purchase */}
               <div className="mb-6">
                 <h2 className="text-sm font-semibold mb-3">After Purchase</h2>

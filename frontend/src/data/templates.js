@@ -26,8 +26,6 @@ export const templates = [
       "Searchable workflow database",
       "Community support access"
     ],
-    license: "Personal and commercial use allowed. Use in unlimited projects. No redistribution or resale of the workflow collection.",
-    licenseShort: "Unlimited personal & commercial use",
     refund: "14-day money-back guarantee if the workflows don't meet your expectations.",
     demoUrl: "#workflows-preview",
     featured: true

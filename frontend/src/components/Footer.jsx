@@ -27,12 +27,6 @@ export const Footer = () => {
             </p>
           </div>
           <div>
-            <h4 className="font-semibold mb-2">License</h4>
-            <p className="text-xs text-muted-foreground">
-              Unlimited personal and commercial use. No redistribution or resale of workflows.
-            </p>
-          </div>
-          <div>
             <h4 className="font-semibold mb-2">Support</h4>
             <p className="text-xs text-muted-foreground">
               Email support within 24 hours. We help with setup, not custom development.
