@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/ui/button';
@@ -161,16 +161,6 @@ export default function TemplateDetailPage() {
                 </div>
               )}
 
-              {/* Live Demo Link */}
-              <a
-                href={template.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 border border-border text-sm font-medium hover:bg-secondary"
-              >
-                <ExternalLink className="w-4 h-4" />
-                View Live Demo
-              </a>
             </div>
 
             {/* Right - Details */}
