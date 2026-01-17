@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
 
-// Direct Razorpay payment link
-const RAZORPAY_PAYMENT_LINK = 'https://rzp.io/rzp/97EV1mGs';
+// Default Razorpay payment link (for automation-workflows)
+const DEFAULT_PAYMENT_LINK = 'https://rzp.io/rzp/97EV1mGs';
 
 export const useRazorpay = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -16,9 +16,12 @@ export const useRazorpay = () => {
       // Show info toast
       toast.success('Redirecting to payment page...', { duration: 2000 });
 
+      // Use template-specific payment URL if available, otherwise use default
+      const paymentUrl = template?.paymentUrl || DEFAULT_PAYMENT_LINK;
+
       // Redirect to Razorpay payment link
       setTimeout(() => {
-        window.open(RAZORPAY_PAYMENT_LINK, '_blank');
+        window.open(paymentUrl, '_blank');
         setIsProcessing(false);
       }, 500);
 

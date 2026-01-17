@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 # Template pricing (in paise: ₹99 = 9900 paise)
 TEMPLATE_PRICING = {
     "automation-workflows": 9900,  # ₹99
+    "whatsapp-automation-workflows": 2900,  # ₹29
 }
 
 

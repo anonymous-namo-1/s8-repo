@@ -7,6 +7,7 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
 import { ImageWithSkeleton } from '../components/ui/image-with-skeleton';
+import { SEO } from '../components/SEO';
 import { getTemplateBySlug, formatPrice } from '../data/templates';
 import { useRazorpay } from '../hooks/useRazorpay';
 import { Toaster } from 'sonner';
@@ -37,8 +38,26 @@ export default function TemplateDetailPage() {
     initiatePayment(template);
   };
   
+  const seoTitle = `${template.name} - ${template.discount}% OFF`;
+  const seoDescription = `${template.description} Only ${formatPrice(template.price)} (was ${formatPrice(template.originalPrice)}). ${template.includes.slice(0, 3).join('. ')}.`;
+  const seoKeywords = [
+    template.name.toLowerCase(),
+    ...template.techStack.map(t => t.toLowerCase()),
+    'automation workflows',
+    'workflow templates',
+    template.slug.replace(/-/g, ' ')
+  ].join(', ');
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
+        image={`https://syntheight.com${template.image}`}
+        url={`https://syntheight.com/template/${template.slug}`}
+        type="product"
+      />
       <Header />
       <main className="flex-1 pt-16">
         {/* Back Link */}

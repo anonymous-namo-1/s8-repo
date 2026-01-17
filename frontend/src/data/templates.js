@@ -29,6 +29,47 @@ export const templates = [
     refund: "14-day money-back guarantee if the workflows don't meet your expectations.",
     demoUrl: "#workflows-preview",
     featured: true
+  },
+  {
+    id: 2,
+    name: "100+ WhatsApp Automation Workflows",
+    slug: "whatsapp-automation-workflows",
+    useCase: "AI-powered WhatsApp chatbots and automation",
+    bestFor: "Businesses wanting 24/7 automated customer support on WhatsApp",
+    badge: "85% OFF - Limited Time",
+    price: 29,
+    originalPrice: 199,
+    discount: 85,
+    image: "/images/whatsapp-workflows-1.png",
+    images: [
+      "/images/whatsapp-workflows-1.png",
+      "/images/whatsapp-workflows-2.png",
+      "/images/whatsapp-workflows-3.png",
+      "/images/whatsapp-workflows-4.png"
+    ],
+    description: "100+ ready-to-use WhatsApp automation workflows powered by ChatGPT. Let AI run your business 24/7 with instant responses in any language including Hinglish.",
+    notFor: "Those not using n8n or similar automation platforms.",
+    customizeTime: "5-10 minutes per workflow",
+    techStack: ["n8n", "WhatsApp Business API", "ChatGPT", "OpenAI", "Google Gemini"],
+    fileFormats: ["JSON"],
+    includes: [
+      "100+ ready-to-import WhatsApp automation workflows",
+      "AI-powered chatbots with ChatGPT & GPT-4o integration",
+      "Multi-language support including Hinglish",
+      "Connect with WhatsApp, Email, Messenger, and more",
+      "Restaurant, Salon, Sales, Travel & more business templates",
+      "Intent recognition and smart routing",
+      "No coding skills required",
+      "Ready to use - just import and configure",
+      "Works with n8n automation platform",
+      "24/7 automated customer responses",
+      "Instant reply capabilities",
+      "Lifetime access to all templates"
+    ],
+    refund: "14-day money-back guarantee if the workflows don't meet your expectations.",
+    demoUrl: "#whatsapp-preview",
+    paymentUrl: "https://pages.razorpay.com/pl_S56PXg8UrFZCOO/view",
+    featured: true
   }
 ];
 
