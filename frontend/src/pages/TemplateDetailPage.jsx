@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Clock, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/ui/button';
@@ -160,6 +160,24 @@ export default function TemplateDetailPage() {
                   ))}
                 </div>
               )}
+
+              {/* Video Tutorial */}
+              <div className="mt-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Play className="w-4 h-4 text-muted-foreground" />
+                  <h3 className="text-sm font-semibold">Video Tutorial</h3>
+                </div>
+                <div className="relative w-full border border-border bg-secondary" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/N4BOqPjOYOY"
+                    title="Product Tutorial"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
 
             </div>
 
