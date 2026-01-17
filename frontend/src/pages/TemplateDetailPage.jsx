@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Clock, FileText, Download, Mail } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
-import { ImageWithSkeleton } from '../components/ui/image-with-skeleton';
 import { SEO } from '../components/SEO';
 import { getTemplateBySlug, formatPrice } from '../data/templates';
 import { useRazorpay } from '../hooks/useRazorpay';
@@ -16,7 +15,8 @@ export default function TemplateDetailPage() {
   const { slug } = useParams();
   const template = getTemplateBySlug(slug);
   const { initiatePayment } = useRazorpay();
-  
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   if (!template) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -33,11 +33,26 @@ export default function TemplateDetailPage() {
       </div>
     );
   }
-  
+
   const handleBuyNow = () => {
     initiatePayment(template);
   };
-  
+
+  // Get all images - use images array if available, otherwise fall back to single image
+  const allImages = template.images && template.images.length > 0
+    ? template.images
+    : [template.image];
+
+  const hasMultipleImages = allImages.length > 1;
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+  };
+
   const seoTitle = `${template.name} - ${template.discount}% OFF`;
   const seoDescription = `${template.description} Only ${formatPrice(template.price)} (was ${formatPrice(template.originalPrice)}). ${template.includes.slice(0, 3).join('. ')}.`;
   const seoKeywords = [
@@ -62,7 +77,7 @@ export default function TemplateDetailPage() {
       <main className="flex-1 pt-16">
         {/* Back Link */}
         <div className="container-slate py-6">
-          <Link 
+          <Link
             to="/products"
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
           >
@@ -70,34 +85,86 @@ export default function TemplateDetailPage() {
             Back to Products
           </Link>
         </div>
-        
+
         {/* Template Content */}
         <div className="container-slate pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
-            {/* Left - Image */}
+            {/* Left - Image Gallery */}
             <div className="space-y-4">
               {/* Badge */}
               {template.badge && (
-                <Badge 
-                  variant="secondary" 
+                <Badge
+                  variant="secondary"
                   className="bg-foreground text-background text-xs font-medium px-2.5 py-1 mb-2"
                 >
                   {template.badge}
                 </Badge>
               )}
-              
-              <div className="aspect-[4/3] overflow-hidden border border-border bg-secondary">
-                <ImageWithSkeleton
-                  src={template.image}
-                  alt={template.name}
-                  lazy={false}
+
+              {/* Main Image with Navigation */}
+              <div className="relative border border-border bg-secondary">
+                {/* Image - natural aspect ratio */}
+                <img
+                  src={allImages[currentImageIndex]}
+                  alt={`${template.name} - Image ${currentImageIndex + 1}`}
+                  className="w-full h-auto"
                 />
+
+                {/* Navigation Arrows */}
+                {hasMultipleImages && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/90 hover:bg-background border border-border flex items-center justify-center transition-colors"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/90 hover:bg-background border border-border flex items-center justify-center transition-colors"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </>
+                )}
+
+                {/* Image Counter */}
+                {hasMultipleImages && (
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-background/90 border border-border px-3 py-1 text-xs font-medium">
+                    {currentImageIndex + 1} / {allImages.length}
+                  </div>
+                )}
               </div>
-              
+
+              {/* Thumbnail Strip */}
+              {hasMultipleImages && (
+                <div className="flex gap-2 overflow-x-auto pb-2">
+                  {allImages.map((img, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`flex-shrink-0 w-20 h-20 border-2 overflow-hidden transition-all ${
+                        index === currentImageIndex
+                          ? 'border-foreground'
+                          : 'border-border hover:border-muted-foreground'
+                      }`}
+                    >
+                      <img
+                        src={img}
+                        alt={`Thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+
               {/* Live Demo Link */}
-              <a 
+              <a
                 href={template.demoUrl}
-                target="_blank" 
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-3 border border-border text-sm font-medium hover:bg-secondary"
               >
@@ -105,7 +172,7 @@ export default function TemplateDetailPage() {
                 View Live Demo
               </a>
             </div>
-            
+
             {/* Right - Details */}
             <div>
               {/* Header */}
@@ -120,7 +187,7 @@ export default function TemplateDetailPage() {
                   {template.description}
                 </p>
               </div>
-              
+
               {/* Quick Stats */}
               <div className="flex items-center gap-6 mb-6 text-sm">
                 <div className="flex items-center gap-2">
@@ -128,9 +195,9 @@ export default function TemplateDetailPage() {
                   <span>{template.customizeTime} to customize</span>
                 </div>
               </div>
-              
+
               <Separator className="my-6" />
-              
+
               {/* Included */}
               <div className="mb-6">
                 <h2 className="text-sm font-semibold mb-3">What You Get</h2>
@@ -143,9 +210,9 @@ export default function TemplateDetailPage() {
                   ))}
                 </ul>
               </div>
-              
+
               <Separator className="my-6" />
-              
+
               {/* Who This Is NOT For */}
               <div className="mb-6 p-4 bg-secondary/50 border border-border">
                 <h2 className="text-sm font-semibold mb-2">Not For You If</h2>
@@ -153,15 +220,15 @@ export default function TemplateDetailPage() {
                   {template.notFor}
                 </p>
               </div>
-              
+
               {/* Tech Stack & File Formats */}
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div>
                   <h2 className="text-sm font-semibold mb-2">Tech Stack</h2>
                   <div className="flex flex-wrap gap-1.5">
                     {template.techStack.map((tech, index) => (
-                      <Badge 
-                        key={index} 
+                      <Badge
+                        key={index}
                         variant="secondary"
                         className="bg-secondary text-secondary-foreground text-[10px] px-2 py-0.5"
                       >
@@ -174,8 +241,8 @@ export default function TemplateDetailPage() {
                   <h2 className="text-sm font-semibold mb-2">Files Included</h2>
                   <div className="flex flex-wrap gap-1.5">
                     {template.fileFormats.map((format, index) => (
-                      <Badge 
-                        key={index} 
+                      <Badge
+                        key={index}
                         variant="secondary"
                         className="bg-secondary text-secondary-foreground text-[10px] px-2 py-0.5"
                       >
@@ -185,9 +252,9 @@ export default function TemplateDetailPage() {
                   </div>
                 </div>
               </div>
-              
+
               <Separator className="my-6" />
-              
+
               {/* What Happens After Purchase */}
               <div className="mb-6">
                 <h2 className="text-sm font-semibold mb-3">After Purchase</h2>
@@ -218,9 +285,9 @@ export default function TemplateDetailPage() {
                   </div>
                 </div>
               </div>
-              
+
               <Separator className="my-6" />
-              
+
               {/* Purchase Section */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 bg-secondary">
                 <div>
@@ -242,8 +309,8 @@ export default function TemplateDetailPage() {
                     Limited time offer • Cheaper than 1 hour of developer time
                   </p>
                 </div>
-                <Button 
-                  variant="brutal" 
+                <Button
+                  variant="brutal"
                   size="lg"
                   onClick={handleBuyNow}
                   className="w-full sm:w-auto"
@@ -251,7 +318,7 @@ export default function TemplateDetailPage() {
                   Buy Now
                 </Button>
               </div>
-              
+
               <p className="text-xs text-muted-foreground mt-3 text-center sm:text-left">
                 Secure payment via Razorpay. Instant download.
               </p>
