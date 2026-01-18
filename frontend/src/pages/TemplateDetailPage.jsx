@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Clock, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { Header } from '../components/Header';
@@ -16,6 +16,41 @@ export default function TemplateDetailPage() {
   const template = getTemplateBySlug(slug);
   const { initiatePayment } = useRazorpay();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showFloatingBar, setShowFloatingBar] = useState(false);
+  const purchaseSectionRef = useRef(null);
+  const [timeLeft, setTimeLeft] = useState(30 * 60); // 30 minutes in seconds
+
+  // Countdown timer for sale
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  // Format time as MM:SS
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Show floating bar when purchase section is scrolled out of view (mobile only)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (purchaseSectionRef.current) {
+        const rect = purchaseSectionRef.current.getBoundingClientRect();
+        // Show floating bar when purchase section is above the viewport
+        setShowFloatingBar(rect.bottom < 0);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   if (!template) {
     return (
@@ -296,8 +331,21 @@ export default function TemplateDetailPage() {
 
               <Separator className="my-6" />
 
+              {/* Sale Timer */}
+              {timeLeft > 0 && (
+                <div className="flex items-center justify-center gap-2 p-3 bg-foreground text-background mb-4">
+                  <Clock className="w-4 h-4" />
+                  <p className="text-sm font-medium">
+                    Sale ends in <span className="font-bold tabular-nums">{formatTime(timeLeft)}</span>
+                  </p>
+                </div>
+              )}
+
               {/* Purchase Section */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 bg-secondary">
+              <div
+                ref={purchaseSectionRef}
+                className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 bg-secondary"
+              >
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">One-time purchase</p>
                   <div className="flex items-center gap-3">
@@ -334,6 +382,47 @@ export default function TemplateDetailPage() {
           </div>
         </div>
       </main>
+
+      {/* Mobile Floating Purchase Bar */}
+      <div
+        className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border transition-transform duration-300 ${
+          showFloatingBar ? 'translate-y-0' : 'translate-y-full'
+        }`}
+      >
+        {/* Timer strip */}
+        {timeLeft > 0 && (
+          <div className="flex items-center justify-center gap-2 py-1.5 bg-foreground text-background">
+            <Clock className="w-3 h-3" />
+            <p className="text-xs font-medium">
+              Sale ends in <span className="font-bold tabular-nums">{formatTime(timeLeft)}</span>
+            </p>
+          </div>
+        )}
+        <div className="flex items-center justify-between gap-4 px-4 py-3">
+          <div className="flex items-center gap-3">
+            <p className="text-xl font-bold">{formatPrice(template.price)}</p>
+            {template.originalPrice && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground line-through">
+                  {formatPrice(template.originalPrice)}
+                </span>
+                <span className="text-xs text-green-600 font-medium">
+                  {template.discount}% OFF
+                </span>
+              </div>
+            )}
+          </div>
+          <Button
+            variant="brutal"
+            size="lg"
+            onClick={handleBuyNow}
+            className="flex-shrink-0"
+          >
+            Buy Now
+          </Button>
+        </div>
+      </div>
+
       <Footer />
       <Toaster position="top-center" />
     </div>
