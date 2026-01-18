@@ -63,7 +63,7 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         damping: 30,
       }}
     >
-      <Card className="group border border-border/70 bg-gradient-to-b from-background via-background to-secondary/60 overflow-hidden flex flex-col relative transition-all duration-500 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] hover:border-border/90">
+      <Card className="group rounded-2xl border border-border/70 bg-gradient-to-b from-background via-background to-secondary/60 overflow-hidden flex flex-col relative transition-all duration-500 ring-1 ring-black/5 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] hover:border-border/90">
         {/* Subtle gradient overlay on hover */}
         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-transparent to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
 

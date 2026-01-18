@@ -134,9 +134,13 @@ export default function TemplateDetailPage() {
         </motion.div>
       )}
 
-      <main className="flex-1 pt-16 sm:pt-14 pb-24 lg:pb-0">
+      <main className="flex-1 pt-16 sm:pt-14 pb-24 lg:pb-0 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 via-transparent to-secondary/30 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(251,191,36,0.12),_transparent_55%)] pointer-events-none" />
+        <div className="absolute -top-24 right-[-8%] h-72 w-72 rounded-full bg-amber-400/15 blur-3xl animate-float pointer-events-none" />
+        <div className="absolute bottom-0 left-[-8%] h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl animate-float-slow pointer-events-none" />
         {/* Back Link - Premium styling */}
-        <div className="container-slate py-6">
+        <div className="container-slate py-6 relative z-10">
           <Link
             to="/workflows"
             className="group inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
@@ -147,27 +151,27 @@ export default function TemplateDetailPage() {
         </div>
 
         {/* Template Content */}
-        <div className="container-slate pb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <div className="container-slate pb-24 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Left - Image Gallery */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="space-y-4"
+              className="space-y-5"
             >
               {/* Badge */}
               {template.badge && (
                 <Badge
                   variant="secondary"
-                  className="bg-foreground text-background text-xs font-semibold px-3 py-1.5 mb-3"
+                  className="bg-foreground text-background text-xs font-semibold px-4 py-1.5 mb-3 rounded-full shadow-sm"
                 >
                   {template.badge}
                 </Badge>
               )}
 
               {/* Main Image with Navigation */}
-              <div className="relative border border-border bg-secondary overflow-hidden group">
+              <div className="relative rounded-2xl border border-border/60 bg-secondary/60 overflow-hidden group shadow-[0_20px_60px_rgba(15,23,42,0.12)]">
                 {/* Image - natural aspect ratio with hover zoom */}
                 <img
                   src={allImages[currentImageIndex]}
@@ -180,14 +184,14 @@ export default function TemplateDetailPage() {
                   <>
                     <button
                       onClick={prevImage}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 bg-background/95 hover:bg-background border border-border flex items-center justify-center transition-all duration-300 hover:shadow-lg opacity-0 group-hover:opacity-100"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-background/95 hover:bg-background border border-border flex items-center justify-center transition-all duration-300 hover:shadow-lg opacity-0 group-hover:opacity-100"
                       aria-label="Previous image"
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </button>
                     <button
                       onClick={nextImage}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 bg-background/95 hover:bg-background border border-border flex items-center justify-center transition-all duration-300 hover:shadow-lg opacity-0 group-hover:opacity-100"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-background/95 hover:bg-background border border-border flex items-center justify-center transition-all duration-300 hover:shadow-lg opacity-0 group-hover:opacity-100"
                       aria-label="Next image"
                     >
                       <ChevronRight className="w-5 h-5" />
@@ -197,7 +201,7 @@ export default function TemplateDetailPage() {
 
                 {/* Image Counter - Premium styling */}
                 {hasMultipleImages && (
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-background/95 backdrop-blur-sm border border-border px-4 py-1.5 text-xs font-medium">
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-background/95 backdrop-blur-sm border border-border px-4 py-1.5 text-xs font-medium shadow-sm">
                     {currentImageIndex + 1} / {allImages.length}
                   </div>
                 )}
@@ -210,9 +214,9 @@ export default function TemplateDetailPage() {
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
-                      className={`flex-shrink-0 w-20 h-20 border-2 overflow-hidden transition-all duration-300 ${
+                      className={`flex-shrink-0 w-20 h-20 rounded-xl border-2 overflow-hidden transition-all duration-300 shadow-sm ${
                         index === currentImageIndex
-                          ? 'border-foreground shadow-md'
+                          ? 'border-foreground shadow-[0_10px_20px_rgba(15,23,42,0.15)]'
                           : 'border-border hover:border-foreground/50 opacity-70 hover:opacity-100'
                       }`}
                     >
@@ -227,9 +231,9 @@ export default function TemplateDetailPage() {
               )}
 
               {/* Video Tutorial - Premium card */}
-              <div className="mt-8 p-6 border border-border bg-secondary/30">
+              <div className="mt-8 p-6 rounded-2xl border border-border/60 bg-secondary/40 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-foreground text-background flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-foreground text-background flex items-center justify-center shadow-sm">
                     <Play className="w-5 h-5" />
                   </div>
                   <div>
@@ -237,7 +241,7 @@ export default function TemplateDetailPage() {
                     <p className="text-xs text-muted-foreground">Learn how to use this workflow</p>
                   </div>
                 </div>
-                <div className="relative w-full border border-border bg-secondary overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+                <div className="relative w-full rounded-xl border border-border/60 bg-secondary overflow-hidden shadow-sm" style={{ paddingBottom: '56.25%' }}>
                   <iframe
                     className="absolute top-0 left-0 w-full h-full"
                     src="https://www.youtube.com/embed/N4BOqPjOYOY"
@@ -257,7 +261,7 @@ export default function TemplateDetailPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               {/* Header */}
-              <div className="mb-6">
+              <div className="mb-6 rounded-2xl border border-border/60 bg-background/80 p-6 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
                 <p className="text-xs text-muted-foreground uppercase tracking-[0.15em] mb-3">
                   {template.bestFor}
                 </p>
@@ -271,11 +275,11 @@ export default function TemplateDetailPage() {
 
               {/* Quick Stats - Premium pills */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary text-sm">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background/80 text-sm shadow-sm">
                   <Clock className="w-4 h-4 text-muted-foreground" />
                   <span>{template.customizeTime} to customize</span>
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary text-sm">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background/80 text-sm shadow-sm">
                   <Shield className="w-4 h-4 text-muted-foreground" />
                   <span>14-day guarantee</span>
                 </div>
@@ -284,12 +288,12 @@ export default function TemplateDetailPage() {
               <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
 
               {/* Included - Premium list */}
-              <div className="mb-6">
+              <div className="mb-6 rounded-2xl border border-border/60 bg-background/80 p-6 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
                 <h2 className="text-base font-semibold mb-4">What You Get</h2>
                 <ul className="space-y-3">
                   {template.includes.map((item, index) => (
                     <li key={index} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <div className="w-5 h-5 bg-foreground/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-5 h-5 rounded-full bg-foreground/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <Check className="w-3 h-3 text-foreground" />
                       </div>
                       <span>{item}</span>
@@ -301,7 +305,7 @@ export default function TemplateDetailPage() {
               <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
 
               {/* Who This Is NOT For - Premium warning */}
-              <div className="mb-6 p-5 bg-secondary/50 border-l-2 border-foreground/20">
+              <div className="mb-6 p-5 rounded-2xl bg-secondary/50 border border-foreground/10 shadow-[0_14px_35px_rgba(15,23,42,0.08)]">
                 <h2 className="text-sm font-semibold mb-2">Not For You If</h2>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {template.notFor}
@@ -309,29 +313,29 @@ export default function TemplateDetailPage() {
               </div>
 
               {/* Tech Stack & File Formats - Premium grid */}
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                <div className="rounded-2xl border border-border/60 bg-background/80 p-5 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
                   <h2 className="text-sm font-semibold mb-3">Tech Stack</h2>
                   <div className="flex flex-wrap gap-2">
                     {template.techStack.map((tech, index) => (
                       <Badge
                         key={index}
                         variant="secondary"
-                        className="bg-background border border-border text-foreground/80 text-xs px-2.5 py-1"
+                        className="bg-background border border-border text-foreground/80 text-xs px-3 py-1 rounded-full"
                       >
                         {tech}
                       </Badge>
                     ))}
                   </div>
                 </div>
-                <div>
+                <div className="rounded-2xl border border-border/60 bg-background/80 p-5 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
                   <h2 className="text-sm font-semibold mb-3">Files Included</h2>
                   <div className="flex flex-wrap gap-2">
                     {template.fileFormats.map((format, index) => (
                       <Badge
                         key={index}
                         variant="secondary"
-                        className="bg-background border border-border text-foreground/80 text-xs px-2.5 py-1"
+                        className="bg-background border border-border text-foreground/80 text-xs px-3 py-1 rounded-full"
                       >
                         {format}
                       </Badge>
@@ -343,7 +347,7 @@ export default function TemplateDetailPage() {
               <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
 
               {/* What Happens After Purchase - Premium steps */}
-              <div className="mb-6">
+              <div className="mb-6 rounded-2xl border border-border/60 bg-background/80 p-6 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
                 <h2 className="text-base font-semibold mb-4">After Purchase</h2>
                 <div className="space-y-4">
                   {[
@@ -352,7 +356,7 @@ export default function TemplateDetailPage() {
                     'Email support if you get stuck'
                   ].map((step, index) => (
                     <div key={index} className="flex items-start gap-4 group">
-                      <div className="w-8 h-8 bg-foreground text-background flex items-center justify-center text-sm font-bold flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+                      <div className="w-8 h-8 rounded-full bg-foreground text-background flex items-center justify-center text-sm font-bold flex-shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-sm">
                         {index + 1}
                       </div>
                       <p className="text-sm text-muted-foreground pt-1.5">{step}</p>
@@ -364,7 +368,7 @@ export default function TemplateDetailPage() {
               <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
 
               {/* Purchase Section - Premium CTA */}
-              <div className="p-6 bg-secondary border border-border">
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-background via-secondary/50 to-secondary/70 border border-border/70 shadow-[0_20px_60px_rgba(15,23,42,0.12)]">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
                   <div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">One-time purchase</p>
@@ -418,7 +422,7 @@ export default function TemplateDetailPage() {
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-border px-4 py-3 shadow-[0_-6px_24px_rgba(0,0,0,0.12)]"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 rounded-t-2xl bg-background/95 backdrop-blur-md border-t border-border px-4 py-3 shadow-[0_-6px_24px_rgba(0,0,0,0.12)]"
       >
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-baseline gap-3">
