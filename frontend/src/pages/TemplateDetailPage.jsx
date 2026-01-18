@@ -109,7 +109,18 @@ export default function TemplateDetailPage() {
         type="product"
       />
       <Header />
-      <main className="flex-1 pt-16">
+
+      {/* Floating Sale Timer - Fixed below header */}
+      {timeLeft > 0 && (
+        <div className="fixed top-16 left-0 right-0 z-40 flex items-center justify-center gap-2 py-2 bg-foreground text-background">
+          <Clock className="w-4 h-4" />
+          <p className="text-sm font-medium">
+            Sale ends in <span className="font-bold tabular-nums">{formatTime(timeLeft)}</span>
+          </p>
+        </div>
+      )}
+
+      <main className={`flex-1 ${timeLeft > 0 ? 'pt-[104px]' : 'pt-16'}`}>
         {/* Back Link */}
         <div className="container-slate py-6">
           <Link
@@ -331,16 +342,6 @@ export default function TemplateDetailPage() {
 
               <Separator className="my-6" />
 
-              {/* Sale Timer */}
-              {timeLeft > 0 && (
-                <div className="flex items-center justify-center gap-2 p-3 bg-foreground text-background mb-4">
-                  <Clock className="w-4 h-4" />
-                  <p className="text-sm font-medium">
-                    Sale ends in <span className="font-bold tabular-nums">{formatTime(timeLeft)}</span>
-                  </p>
-                </div>
-              )}
-
               {/* Purchase Section */}
               <div
                 ref={purchaseSectionRef}
@@ -385,20 +386,11 @@ export default function TemplateDetailPage() {
 
       {/* Mobile Floating Purchase Bar */}
       <div
-        className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border transition-transform duration-300 ${
+        className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border px-4 py-3 transition-transform duration-300 ${
           showFloatingBar ? 'translate-y-0' : 'translate-y-full'
         }`}
       >
-        {/* Timer strip */}
-        {timeLeft > 0 && (
-          <div className="flex items-center justify-center gap-2 py-1.5 bg-foreground text-background">
-            <Clock className="w-3 h-3" />
-            <p className="text-xs font-medium">
-              Sale ends in <span className="font-bold tabular-nums">{formatTime(timeLeft)}</span>
-            </p>
-          </div>
-        )}
-        <div className="flex items-center justify-between gap-4 px-4 py-3">
+        <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <p className="text-xl font-bold">{formatPrice(template.price)}</p>
             {template.originalPrice && (
