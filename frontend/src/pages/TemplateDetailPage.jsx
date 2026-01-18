@@ -422,30 +422,30 @@ export default function TemplateDetailPage() {
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] pt-3"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+10px)] pt-2.5"
       >
-        <div className="rounded-2xl border border-border/70 bg-gradient-to-r from-white via-white/95 to-white/90 px-4 py-3 shadow-[0_-10px_30px_rgba(15,23,42,0.12)] backdrop-blur-md">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-baseline gap-3">
-                <p className="text-xl font-bold">{formatPrice(template.price)}</p>
+        <div className="mx-auto w-full max-w-md rounded-2xl border border-border/70 bg-gradient-to-r from-white via-white/95 to-white/90 px-3.5 py-2.5 shadow-[0_-10px_26px_rgba(15,23,42,0.12)] backdrop-blur-md">
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="flex items-baseline gap-2">
+                <p className="text-lg font-bold">{formatPrice(template.price)}</p>
                 {template.originalPrice && (
-                  <span className="text-sm text-muted-foreground line-through">
+                  <span className="text-xs text-muted-foreground line-through">
                     {formatPrice(template.originalPrice)}
                   </span>
                 )}
               </div>
               {template.discount && (
-                <span className="text-xs font-semibold text-emerald-600">
+                <span className="text-[11px] font-semibold text-emerald-600">
                   Save {template.discount}%
                 </span>
               )}
             </div>
             <Button
               variant="premium"
-              size="lg"
+              size="default"
               onClick={handleBuyNow}
-              className="w-full group"
+              className="rounded-full px-5 h-10 group flex-shrink-0"
             >
               <span>Buy Now</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
