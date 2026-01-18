@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Clock, ChevronLeft, ChevronRight, Play, Check, Shield, Zap } from 'lucide-react';
@@ -17,8 +17,6 @@ export default function TemplateDetailPage() {
   const template = getTemplateBySlug(slug);
   const { initiatePayment } = useRazorpay();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showFloatingBar, setShowFloatingBar] = useState(false);
-  const purchaseSectionRef = useRef(null);
   // Initialize timer from localStorage or set new end time
   const [timeLeft, setTimeLeft] = useState(() => {
     const storageKey = `sale_timer_${slug}`;
@@ -52,20 +50,6 @@ export default function TemplateDetailPage() {
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-
-  // Show floating bar when purchase section is scrolled out of view (mobile only)
-  useEffect(() => {
-    const handleScroll = () => {
-      if (purchaseSectionRef.current) {
-        const rect = purchaseSectionRef.current.getBoundingClientRect();
-        // Show floating bar when purchase section is above the viewport
-        setShowFloatingBar(rect.bottom < 0);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   if (!template) {
     return (
@@ -128,30 +112,29 @@ export default function TemplateDetailPage() {
       {/* Floating Sale Timer - Enhanced Premium styling */}
       {timeLeft > 0 && (
         <motion.div
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="fixed top-16 sm:top-14 left-0 right-0 z-40 flex items-center justify-center gap-4 py-3.5 bg-gradient-to-r from-red-600 via-red-500 to-orange-500 text-white shadow-[0_4px_20px_rgba(220,38,38,0.4)]"
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: [0, -6, 0], opacity: 1 }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          className="fixed right-4 top-24 z-40 flex items-center gap-3 rounded-2xl border border-white/40 bg-background/80 px-4 py-2.5 text-foreground shadow-[0_16px_40px_rgba(0,0,0,0.18)] backdrop-blur-md sm:right-6 sm:top-28"
         >
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <Clock className="w-5 h-5" />
-          </motion.div>
-          <p className="text-base sm:text-lg font-semibold tracking-wide">
-            LIMITED TIME OFFER - Sale ends in{' '}
-            <motion.span
-              animate={{ opacity: [1, 0.7, 1] }}
-              transition={{ duration: 0.5, repeat: Infinity }}
-              className="font-bold tabular-nums bg-white/20 px-3 py-1.5 ml-2 text-lg sm:text-xl"
-            >
-              {formatTime(timeLeft)}
-            </motion.span>
-          </p>
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-orange-400 text-white shadow-[0_6px_18px_rgba(234,88,12,0.45)]">
+            <Clock className="h-4 w-4" />
+          </div>
+          <div className="flex flex-col leading-tight">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+              Flash Offer
+            </span>
+            <span className="text-sm font-semibold">
+              Ends in{' '}
+              <span className="ml-1 rounded-md bg-foreground px-2 py-0.5 text-xs font-bold tabular-nums text-background">
+                {formatTime(timeLeft)}
+              </span>
+            </span>
+          </div>
         </motion.div>
       )}
 
-      <main className={`flex-1 ${timeLeft > 0 ? 'pt-[104px] sm:pt-[96px]' : 'pt-16 sm:pt-14'}`}>
+      <main className="flex-1 pt-16 sm:pt-14 pb-24 lg:pb-0">
         {/* Back Link - Premium styling */}
         <div className="container-slate py-6">
           <Link
@@ -381,10 +364,7 @@ export default function TemplateDetailPage() {
               <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
 
               {/* Purchase Section - Premium CTA */}
-              <div
-                ref={purchaseSectionRef}
-                className="p-6 bg-secondary border border-border"
-              >
+              <div className="p-6 bg-secondary border border-border">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
                   <div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">One-time purchase</p>
@@ -436,13 +416,13 @@ export default function TemplateDetailPage() {
       {/* Mobile Floating Purchase Bar - Premium styling */}
       <motion.div
         initial={{ y: 100 }}
-        animate={{ y: showFloatingBar ? 0 : 100 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-border px-4 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.1)]"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-border px-4 py-3 shadow-[0_-6px_24px_rgba(0,0,0,0.12)]"
       >
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-baseline gap-3">
-            <p className="text-2xl font-bold">{formatPrice(template.price)}</p>
+            <p className="text-xl font-bold">{formatPrice(template.price)}</p>
             {template.originalPrice && (
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground line-through">
