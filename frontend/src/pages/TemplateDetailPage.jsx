@@ -425,33 +425,27 @@ export default function TemplateDetailPage() {
         className="lg:hidden fixed bottom-0 left-0 right-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] pt-3"
       >
         <div className="rounded-2xl border border-border/70 bg-gradient-to-r from-white via-white/95 to-white/90 px-4 py-3 shadow-[0_-10px_30px_rgba(15,23,42,0.12)] backdrop-blur-md">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex flex-col">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                One-time purchase
-              </span>
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between gap-3">
               <div className="flex items-baseline gap-3">
                 <p className="text-xl font-bold">{formatPrice(template.price)}</p>
                 {template.originalPrice && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground line-through">
-                      {formatPrice(template.originalPrice)}
-                    </span>
-                    <span className="text-xs font-semibold text-emerald-600">
-                      Save {template.discount}%
-                    </span>
-                  </div>
+                  <span className="text-sm text-muted-foreground line-through">
+                    {formatPrice(template.originalPrice)}
+                  </span>
                 )}
               </div>
-              <span className="text-[11px] text-muted-foreground">
-                Instant access after payment
-              </span>
+              {template.discount && (
+                <span className="text-xs font-semibold text-emerald-600">
+                  Save {template.discount}%
+                </span>
+              )}
             </div>
             <Button
               variant="premium"
               size="lg"
               onClick={handleBuyNow}
-              className="flex-shrink-0 group"
+              className="w-full group"
             >
               <span>Buy Now</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
