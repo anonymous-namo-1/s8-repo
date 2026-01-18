@@ -61,47 +61,57 @@ export const Header = () => {
         </button>
       </div>
 
-      {/* Menu Overlay */}
+      {/* Menu Dropdown - Right aligned, solid background */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-16 z-[60] bg-background border-t border-border">
-          <nav className="container-slate py-6 flex flex-col gap-2">
-            <a
-              href="#workflows"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-lg sm:text-base font-medium py-4 px-4 hover:bg-secondary transition-colors"
-            >
-              Workflows
-            </a>
-            <a
-              href="#features"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-lg sm:text-base font-medium py-4 px-4 hover:bg-secondary transition-colors"
-            >
-              Features
-            </a>
-            <Link
-              to="/contact"
-              className={`text-lg sm:text-base font-medium py-4 px-4 hover:bg-secondary transition-colors ${
-                isActive('/contact') ? 'bg-secondary' : ''
-              }`}
-            >
-              Contact
-            </Link>
-            <Link
-              to="/login"
-              className="text-lg sm:text-base font-medium py-4 px-4 hover:bg-secondary transition-colors"
-            >
-              Sign in
-            </Link>
-            <div className="mt-4 px-4">
-              <Link to="/products" className="block">
-                <Button variant="brutal" className="w-full h-14 text-base sm:h-12">
-                  Get All Workflows
-                </Button>
+        <>
+          {/* Backdrop to close menu when clicking outside */}
+          <div
+            className="fixed inset-0 top-16 z-[55]"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          {/* Menu panel */}
+          <div className="absolute top-16 right-4 z-[60] w-56 bg-white border border-gray-200 shadow-lg">
+            <nav className="py-2 flex flex-col">
+              <a
+                href="#workflows"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-sm font-medium py-3 px-4 hover:bg-gray-100 transition-colors"
+              >
+                Workflows
+              </a>
+              <a
+                href="#features"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-sm font-medium py-3 px-4 hover:bg-gray-100 transition-colors"
+              >
+                Features
+              </a>
+              <Link
+                to="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-sm font-medium py-3 px-4 hover:bg-gray-100 transition-colors ${
+                  isActive('/contact') ? 'bg-gray-100' : ''
+                }`}
+              >
+                Contact
               </Link>
-            </div>
-          </nav>
-        </div>
+              <Link
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-sm font-medium py-3 px-4 hover:bg-gray-100 transition-colors"
+              >
+                Sign in
+              </Link>
+              <div className="mt-2 px-4 pb-2">
+                <Link to="/products" className="block" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="brutal" className="w-full h-10 text-sm">
+                    Get All Workflows
+                  </Button>
+                </Link>
+              </div>
+            </nav>
+          </div>
+        </>
       )}
     </header>
   );
