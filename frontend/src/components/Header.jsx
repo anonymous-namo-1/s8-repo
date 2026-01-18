@@ -37,10 +37,10 @@ export const Header = () => {
   const isActive = (path) => location.pathname === path;
 
   const menuItems = [
-    { label: 'Workflows', href: '#workflows', type: 'anchor' },
-    { label: 'Features', href: '#features', type: 'anchor' },
+    { label: 'Workflows', to: '/workflows', type: 'link' },
+    { label: '3D Websites', to: '/3d-websites', type: 'link', badge: 'Coming Soon' },
+    { label: 'Notion', to: '/notion', type: 'link', badge: 'Coming Soon' },
     { label: 'Contact', to: '/contact', type: 'link' },
-    { label: 'Sign in', to: '/login', type: 'link' },
   ];
 
   return (
@@ -62,33 +62,29 @@ export const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-1">
           {menuItems.map((item) => (
-            item.type === 'anchor' ? (
-              <a
-                key={item.label}
-                href={item.href}
-                className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 group"
-              >
+            <Link
+              key={item.label}
+              to={item.to}
+              className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 group ${
+                isActive(item.to) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <span className="flex items-center gap-1.5">
                 {item.label}
-                <span className="absolute bottom-1 left-4 right-4 h-px bg-foreground scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-              </a>
-            ) : (
-              <Link
-                key={item.label}
-                to={item.to}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 group ${
-                  isActive(item.to) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                {item.label}
-                <span className={`absolute bottom-1 left-4 right-4 h-px bg-foreground transition-transform duration-300 origin-left ${
-                  isActive(item.to) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                }`} />
-              </Link>
-            )
+                {item.badge && (
+                  <span className="text-[10px] px-1.5 py-0.5 bg-secondary text-muted-foreground font-medium">
+                    {item.badge}
+                  </span>
+                )}
+              </span>
+              <span className={`absolute bottom-1 left-4 right-4 h-px bg-foreground transition-transform duration-300 origin-left ${
+                isActive(item.to) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+              }`} />
+            </Link>
           ))}
-          <Link to="/products" className="ml-2">
+          <Link to="/login" className="ml-2">
             <Button variant="brutal" size="sm" className="group">
-              <span>Get All Workflows</span>
+              <span>Sign In</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </Link>
@@ -142,29 +138,25 @@ export const Header = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    {item.type === 'anchor' ? (
-                      <a
-                        href={item.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center justify-between text-sm font-medium py-3.5 px-5 hover:bg-gray-50 transition-colors duration-200 group"
-                      >
-                        <span>{item.label}</span>
-                        <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-50 group-hover:translate-x-0 transition-all duration-200" />
-                      </a>
-                    ) : (
-                      <Link
-                        to={item.to}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className={`flex items-center justify-between text-sm font-medium py-3.5 px-5 hover:bg-gray-50 transition-colors duration-200 group ${
-                          isActive(item.to) ? 'bg-gray-50 text-foreground' : ''
-                        }`}
-                      >
-                        <span>{item.label}</span>
-                        <ArrowRight className={`w-4 h-4 transition-all duration-200 ${
-                          isActive(item.to) ? 'opacity-50' : 'opacity-0 -translate-x-2 group-hover:opacity-50 group-hover:translate-x-0'
-                        }`} />
-                      </Link>
-                    )}
+                    <Link
+                      to={item.to}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex items-center justify-between text-sm font-medium py-3.5 px-5 hover:bg-gray-50 transition-colors duration-200 group ${
+                        isActive(item.to) ? 'bg-gray-50 text-foreground' : ''
+                      }`}
+                    >
+                      <span className="flex items-center gap-2">
+                        {item.label}
+                        {item.badge && (
+                          <span className="text-[10px] px-1.5 py-0.5 bg-secondary text-muted-foreground font-medium">
+                            {item.badge}
+                          </span>
+                        )}
+                      </span>
+                      <ArrowRight className={`w-4 h-4 transition-all duration-200 ${
+                        isActive(item.to) ? 'opacity-50' : 'opacity-0 -translate-x-2 group-hover:opacity-50 group-hover:translate-x-0'
+                      }`} />
+                    </Link>
                   </motion.div>
                 ))}
                 <motion.div
@@ -174,9 +166,9 @@ export const Header = () => {
                   className="mt-2 mx-4 mb-3"
                 >
                   <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-4" />
-                  <Link to="/products" className="block" onClick={() => setMobileMenuOpen(false)}>
+                  <Link to="/login" className="block" onClick={() => setMobileMenuOpen(false)}>
                     <Button variant="brutal" className="w-full h-11 text-sm group">
-                      <span>Get All Workflows</span>
+                      <span>Sign In</span>
                       <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Button>
                   </Link>

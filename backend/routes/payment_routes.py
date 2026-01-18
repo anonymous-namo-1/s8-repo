@@ -12,6 +12,7 @@ from models.payment import (
 from services.razorpay_service import get_razorpay_service
 from services.email_service import get_email_service
 from services.order_service import get_order_service
+from services.otp_service import OTPService
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +38,7 @@ def create_payment_router(db: AsyncIOMotorDatabase) -> APIRouter:
     razorpay_service = get_razorpay_service()
     email_service = get_email_service()
     order_service = get_order_service(db)
+    otp_service = OTPService(db)
 
     @router.post("/orders/create", response_model=OrderResponse)
     async def create_order(request: OrderCreateRequest):
@@ -170,6 +172,20 @@ def create_payment_router(db: AsyncIOMotorDatabase) -> APIRouter:
                 )
                 # Don't fail the payment, just log the error
                 # Admin can manually resend the email
+
+            # Add purchase to user's account (create user if doesn't exist)
+            try:
+                user = await otp_service.get_or_create_user(updated_order.customer_email)
+                await otp_service.add_purchase_to_user(
+                    updated_order.customer_email,
+                    updated_order.template_id
+                )
+                logger.info(
+                    f"Added purchase {updated_order.template_id} to user {updated_order.customer_email}"
+                )
+            except Exception as e:
+                logger.error(f"Failed to add purchase to user: {e}")
+                # Don't fail the payment, just log the error
 
             logger.info(
                 f"Payment verified and processed: {request.razorpay_order_id}"

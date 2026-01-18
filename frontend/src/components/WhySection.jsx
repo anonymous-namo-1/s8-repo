@@ -7,20 +7,20 @@ import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 const features = [
   {
     icon: Zap,
-    title: "10,000+ ready-to-use workflows",
-    description: "Massive collection covering marketing, sales, HR, finance, DevOps, and more.",
-    stat: "10,000+"
+    title: "Premium quality assets",
+    description: "Carefully curated templates, workflows, and tools designed for professionals.",
+    stat: "Premium"
   },
   {
     icon: Settings,
     title: "Easy to customize",
-    description: "Modify workflows to fit your needs. Documentation included.",
+    description: "Every asset is fully customizable. Documentation included.",
     stat: "100%"
   },
   {
     icon: Infinity,
     title: "Lifetime access & updates",
-    description: "One-time payment. Get all future workflow additions for free.",
+    description: "One-time payment. Get all future updates for free.",
     stat: "Forever"
   }
 ];
@@ -88,24 +88,24 @@ export const WhySection = () => {
             </h2>
 
             <p className="text-lg sm:text-xl text-muted-foreground mb-6 leading-relaxed">
-              Automation workflows that save you hundreds of hours.
+              Premium digital assets that save you time and money.
             </p>
 
             <p className="text-base text-muted-foreground/80 leading-relaxed mb-8">
-              Stop building automations from scratch. Every workflow is ready to import,
-              customize, and deploy. From simple tasks to complex multi-step integrations.
+              Stop building from scratch. Every asset is ready to use, customize, and deploy.
+              From templates to workflows to complete solutions.
             </p>
 
             {/* Premium stats row */}
             <div className="flex gap-8 pt-6 border-t border-border/50">
               <div>
-                <p className="text-3xl font-bold tracking-tight">₹99</p>
-                <p className="text-xs text-muted-foreground mt-1">One-time</p>
+                <p className="text-3xl font-bold tracking-tight">Premium</p>
+                <p className="text-xs text-muted-foreground mt-1">Quality</p>
               </div>
               <div className="w-px bg-border/50" />
               <div>
-                <p className="text-3xl font-bold tracking-tight">10K+</p>
-                <p className="text-xs text-muted-foreground mt-1">Workflows</p>
+                <p className="text-3xl font-bold tracking-tight">Instant</p>
+                <p className="text-xs text-muted-foreground mt-1">Download</p>
               </div>
               <div className="w-px bg-border/50" />
               <div>

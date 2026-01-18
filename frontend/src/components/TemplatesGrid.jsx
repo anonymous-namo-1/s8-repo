@@ -55,33 +55,24 @@ export const TemplatesGrid = ({ showAll = true }) => {
           transition={{ duration: 0.6 }}
           className="mb-10 md:mb-14"
         >
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-8 border-b border-border/50">
-            <div>
-              <motion.span
-                initial={{ opacity: 0, y: 10 }}
-                animate={isHeaderVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground uppercase tracking-[0.2em] mb-4"
-              >
-                <Sparkles className="w-4 h-4" />
-                Premium Collection
-              </motion.span>
+          <div className="pb-8 border-b border-border/50">
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              animate={isHeaderVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground uppercase tracking-[0.2em] mb-4"
+            >
+              <Sparkles className="w-4 h-4" />
+              Premium Collection
+            </motion.span>
 
-              <h2 id="workflows" className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-                Get All 10,000+ Workflows
-              </h2>
+            <h2 id="workflows" className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+              Premium Digital Assets
+            </h2>
 
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                One-time payment. Lifetime access. No subscriptions.
-              </p>
-            </div>
-
-            {/* Price highlight */}
-            <div className="flex-shrink-0 p-6 bg-foreground text-background">
-              <p className="text-xs uppercase tracking-wider mb-1 opacity-70">Complete Collection</p>
-              <p className="text-3xl sm:text-4xl font-bold tracking-tight">₹99</p>
-              <p className="text-xs mt-1 opacity-70">One-time payment</p>
-            </div>
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
+              High-quality templates, workflows, and tools. One-time payment, lifetime access.
+            </p>
           </div>
         </motion.div>
 

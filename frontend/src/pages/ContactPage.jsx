@@ -8,6 +8,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { Mail, Send, Clock, MessageSquare } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
+import api from '../utils/api';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -31,12 +32,34 @@ export default function ContactPage() {
       return;
     }
 
-    setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
 
-    toast.success('Message sent. We will respond within 24 hours.');
-    setFormData({ name: '', email: '', message: '' });
-    setIsSubmitting(false);
+    setIsSubmitting(true);
+
+    try {
+      const response = await api.post('/api/contact/submit', {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        message: formData.message.trim()
+      });
+
+      if (response.data.success) {
+        toast.success(response.data.message || 'Message sent. We will respond within 24 hours.');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        toast.error(response.data.message || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.detail || 'Failed to send message. Please try again or email us directly.';
+      toast.error(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

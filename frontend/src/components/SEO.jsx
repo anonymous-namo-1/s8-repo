@@ -2,9 +2,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 export const SEO = ({
-  title = "Syntheight - 10,000+ Automation Workflows",
-  description = "Get 10,000+ ready-to-use automation workflows at 50% OFF (₹99 only). Save hundreds of hours building automations from scratch. Instant download.",
-  keywords = "automation workflows, workflow templates, automation templates, business automation",
+  title = "Syntheight - Premium Digital Assets",
+  description = "High-quality digital assets for creators, developers, and business owners. Templates, workflows, and tools with lifetime access. One-time purchase.",
+  keywords = "digital assets, premium templates, automation workflows, business tools, developer resources",
   image = "https://syntheight.com/images/workflow-product.png",
   url = "https://syntheight.com/",
   type = "website"

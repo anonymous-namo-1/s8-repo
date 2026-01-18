@@ -74,7 +74,7 @@ export default function TemplateDetailPage() {
         <main className="flex-1 flex items-center justify-center pt-16">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Template not found</h1>
-            <Link to="/products">
+            <Link to="/workflows">
               <Button variant="brutal">Back to Products</Button>
             </Link>
           </div>
@@ -125,19 +125,28 @@ export default function TemplateDetailPage() {
       />
       <Header />
 
-      {/* Floating Sale Timer - Premium styling */}
+      {/* Floating Sale Timer - Enhanced Premium styling */}
       {timeLeft > 0 && (
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="fixed top-16 sm:top-14 left-0 right-0 z-40 flex items-center justify-center gap-3 py-2.5 bg-foreground text-background shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+          className="fixed top-16 sm:top-14 left-0 right-0 z-40 flex items-center justify-center gap-4 py-3.5 bg-gradient-to-r from-red-600 via-red-500 to-orange-500 text-white shadow-[0_4px_20px_rgba(220,38,38,0.4)]"
         >
-          <Clock className="w-4 h-4" />
-          <p className="text-sm font-medium">
-            Sale ends in{' '}
-            <span className="font-bold tabular-nums bg-background/10 px-2.5 py-1 ml-1">
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Clock className="w-5 h-5" />
+          </motion.div>
+          <p className="text-base sm:text-lg font-semibold tracking-wide">
+            LIMITED TIME OFFER - Sale ends in{' '}
+            <motion.span
+              animate={{ opacity: [1, 0.7, 1] }}
+              transition={{ duration: 0.5, repeat: Infinity }}
+              className="font-bold tabular-nums bg-white/20 px-3 py-1.5 ml-2 text-lg sm:text-xl"
+            >
               {formatTime(timeLeft)}
-            </span>
+            </motion.span>
           </p>
         </motion.div>
       )}
@@ -146,7 +155,7 @@ export default function TemplateDetailPage() {
         {/* Back Link - Premium styling */}
         <div className="container-slate py-6">
           <Link
-            to="/products"
+            to="/workflows"
             className="group inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
           >
             <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />

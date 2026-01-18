@@ -240,6 +240,23 @@ class OrderService:
 
         return True
 
+    async def get_user_purchases(self, email: str) -> list:
+        """
+        Get list of template_ids purchased by a user
+
+        Args:
+            email: Customer email
+
+        Returns:
+            List of template_ids
+        """
+        orders = await self.orders_collection.find(
+            {"customer_email": email, "status": "paid"},
+            {"template_id": 1, "_id": 0}
+        ).to_list(1000)
+
+        return list(set(order.get('template_id') for order in orders if order.get('template_id')))
+
     async def create_indexes(self):
         """Create database indexes for optimal query performance"""
         await self.orders_collection.create_index("order_id", unique=True)

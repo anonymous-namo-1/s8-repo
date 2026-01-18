@@ -33,7 +33,7 @@ export const Hero = () => {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/80 backdrop-blur-sm border border-border text-sm font-medium text-muted-foreground">
               <Sparkles className="w-4 h-4" />
-              For developers, businesses, and automation enthusiasts
+              For creators, developers, and business owners
             </span>
           </motion.div>
 
@@ -44,9 +44,9 @@ export const Hero = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-8"
           >
-            <span className="block">10,000+ automation</span>
-            <span className="block">workflows.</span>
-            <span className="block mt-2 text-muted-foreground/70">Ready in minutes.</span>
+            <span className="block">Premium digital</span>
+            <span className="block">assets.</span>
+            <span className="block mt-2 text-muted-foreground/70">Ready to use.</span>
           </motion.h1>
 
           {/* Value Proposition - Remove Uncertainty */}
@@ -56,7 +56,7 @@ export const Hero = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mb-6 leading-relaxed font-light"
           >
-            Stop building from scratch. Import, customize, automate.
+            High-quality templates, workflows, and tools. One-time purchase, lifetime access.
           </motion.p>
 
           {/* What You Get - Premium styled */}
@@ -68,11 +68,11 @@ export const Hero = () => {
           >
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
-              Just ₹99
+              Premium quality
             </span>
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
-              10,000+ workflows
+              Instant download
             </span>
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
@@ -91,18 +91,18 @@ export const Hero = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
           >
-            <Link to="/products">
+            <Link to="/workflows">
               <Button variant="brutal" size="xl" className="group">
-                <span>Get All Workflows - ₹99</span>
+                <span>Browse Products</span>
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </Link>
             <a
-              href="#workflows"
+              href="#products"
               className="group flex items-center gap-2 text-base sm:text-sm font-medium text-muted-foreground hover:text-foreground px-4 py-4 sm:py-3 transition-all duration-300"
             >
               <span className="relative">
-                Preview Workflows
+                View All Products
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-foreground group-hover:w-full transition-all duration-300" />
               </span>
               <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
@@ -116,7 +116,7 @@ export const Hero = () => {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="mt-10 text-xs text-muted-foreground/60"
           >
-            Trusted by developers and businesses worldwide
+            Trusted by creators, developers, and businesses worldwide
           </motion.p>
         </div>
       </div>

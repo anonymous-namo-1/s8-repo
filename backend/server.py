@@ -15,6 +15,10 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent))
 
 from routes.payment_routes import create_payment_router
+from routes.auth_routes import router as auth_router, set_services
+from routes.contact_routes import router as contact_router, set_email_service as set_contact_email_service
+from services.otp_service import OTPService
+from services.email_service import get_email_service
 
 
 ROOT_DIR = Path(__file__).parent
@@ -78,6 +82,16 @@ app.include_router(api_router)
 # Include payment routes
 payment_router = create_payment_router(db)
 app.include_router(payment_router)
+
+# Initialize and include auth routes
+otp_service = OTPService(db)
+email_service = get_email_service()
+set_services(otp_service, email_service)
+app.include_router(auth_router)
+
+# Initialize and include contact routes
+set_contact_email_service(email_service)
+app.include_router(contact_router)
 
 app.add_middleware(
     CORSMiddleware,
