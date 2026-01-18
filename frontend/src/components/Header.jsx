@@ -36,9 +36,9 @@ export const Header = () => {
   const isActive = (path) => location.pathname === path;
   
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
-        scrolled ? 'glass-header' : 'bg-transparent'
+        scrolled ? 'glass-header shadow-sm' : 'bg-background/95 backdrop-blur-sm'
       }`}
     >
       <div className="container-slate h-16 flex items-center justify-between">
@@ -63,7 +63,7 @@ export const Header = () => {
 
       {/* Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-16 z-40 bg-background border-t border-border">
+        <div className="fixed inset-0 top-16 z-[60] bg-background border-t border-border">
           <nav className="container-slate py-6 flex flex-col gap-2">
             <a
               href="#workflows"
