@@ -422,31 +422,33 @@ export default function TemplateDetailPage() {
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 rounded-t-2xl bg-background/95 backdrop-blur-md border-t border-border px-4 py-3 shadow-[0_-6px_24px_rgba(0,0,0,0.12)]"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] pt-3"
       >
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-baseline gap-3">
-            <p className="text-xl font-bold">{formatPrice(template.price)}</p>
-            {template.originalPrice && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground line-through">
-                  {formatPrice(template.originalPrice)}
-                </span>
-                <span className="text-sm text-green-600 font-semibold">
-                  {template.discount}% OFF
-                </span>
-              </div>
-            )}
+        <div className="rounded-2xl border border-border/70 bg-gradient-to-r from-white via-white/95 to-white/90 px-4 py-3 shadow-[0_-10px_30px_rgba(15,23,42,0.12)] backdrop-blur-md">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-baseline gap-3">
+              <p className="text-xl font-bold">{formatPrice(template.price)}</p>
+              {template.originalPrice && (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground line-through">
+                    {formatPrice(template.originalPrice)}
+                  </span>
+                  <span className="text-sm text-green-600 font-semibold">
+                    {template.discount}% OFF
+                  </span>
+                </div>
+              )}
+            </div>
+            <Button
+              variant="brutal"
+              size="lg"
+              onClick={handleBuyNow}
+              className="flex-shrink-0 group"
+            >
+              <span>Buy Now</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Button>
           </div>
-          <Button
-            variant="brutal"
-            size="lg"
-            onClick={handleBuyNow}
-            className="flex-shrink-0 group"
-          >
-            <span>Buy Now</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </Button>
         </div>
       </motion.div>
 
