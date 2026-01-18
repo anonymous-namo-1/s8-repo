@@ -63,21 +63,27 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         damping: 30,
       }}
     >
-      <Card className="group border border-border bg-background overflow-hidden flex flex-col relative transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:border-border/80">
+      <Card className="group border border-border/70 bg-gradient-to-b from-background via-background to-secondary/60 overflow-hidden flex flex-col relative transition-all duration-500 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] hover:border-border/90">
         {/* Subtle gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-transparent to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
 
         {/* Image - clickable to go to detail page */}
         <Link to={`/template/${template.slug}`} className="relative aspect-[16/10] overflow-hidden bg-secondary block">
+          {template.badge && (
+            <Badge className="absolute left-3 top-3 z-10 bg-foreground text-background text-[10px] font-semibold uppercase tracking-[0.18em] px-2.5 py-1">
+              {template.badge}
+            </Badge>
+          )}
           <ImageWithSkeleton
             src={template.image}
             alt={template.name}
             className="transition-all duration-500 group-hover:scale-105 object-top"
             lazy={true}
           />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           {/* Hover overlay with preview hint */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
-            <span className="flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm text-sm font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
+            <span className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/40 bg-white/90 backdrop-blur-sm text-sm font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
               <Eye className="w-4 h-4" />
               View Details
             </span>
@@ -85,11 +91,11 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         </Link>
 
         {/* Content */}
-        <CardContent className="p-4 sm:p-5 flex flex-col flex-1 relative z-20">
+        <CardContent className="p-5 sm:p-6 flex flex-col flex-1 relative z-20">
           <div className="flex-1">
             {/* Name - clickable */}
             <Link to={`/template/${template.slug}`}>
-              <h3 className="text-base sm:text-lg font-semibold tracking-tight mb-1.5 line-clamp-2 group-hover:text-foreground/80 transition-colors duration-300">
+              <h3 className="text-lg sm:text-xl font-semibold tracking-tight mb-2 line-clamp-2 group-hover:text-foreground/80 transition-colors duration-300">
                 {template.name}
               </h3>
             </Link>
@@ -106,11 +112,11 @@ export const TemplateCard = ({ template, onBuyNow }) => {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/60">
+          <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
             {/* Price in INR - Enhanced styling */}
             <div className="flex flex-col items-start">
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-bold tracking-tight">
+                <span className="text-2xl font-bold tracking-tight">
                   {formatPrice(template.price)}
                 </span>
                 {template.originalPrice && (
