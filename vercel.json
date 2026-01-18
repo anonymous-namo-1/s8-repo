@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd frontend && yarn install --frozen-lockfile && yarn build",
+  "buildCommand": "cd frontend && (yarn install --frozen-lockfile || yarn install --frozen-lockfile) && yarn build",
   "outputDirectory": "frontend/build",
   "installCommand": "echo 'Skipping default install'",
   "rewrites": [
