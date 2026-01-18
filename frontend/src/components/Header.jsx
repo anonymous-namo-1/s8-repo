@@ -44,83 +44,44 @@ export const Header = () => {
       <div className="container-slate h-16 flex items-center justify-between">
         {/* Logo - Left */}
         <Link to="/" className="flex items-center">
-          <span className="text-lg font-bold tracking-tight">Syntheight</span>
+          <span className="text-xl sm:text-lg font-bold tracking-tight">Syntheight</span>
         </Link>
-        
-        {/* Navigation - Center */}
-        <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-          <a
-            href="#workflows"
-            className="text-sm font-medium link-underline opacity-60 hover:opacity-100"
-          >
-            Workflows
-          </a>
-          <a
-            href="#features"
-            className="text-sm font-medium link-underline opacity-60 hover:opacity-100"
-          >
-            Features
-          </a>
-          <Link
-            to="/contact"
-            className={`text-sm font-medium link-underline ${
-              isActive('/contact') ? 'opacity-100' : 'opacity-60 hover:opacity-100'
-            }`}
-          >
-            Contact
-          </Link>
-        </nav>
-        
-        {/* Right Actions */}
-        <div className="flex items-center gap-6">
-          <Link
-            to="/login"
-            className="text-sm font-medium opacity-60 hover:opacity-100 hidden sm:block"
-          >
-            Sign in
-          </Link>
-          <Link to="/products" className="hidden md:block">
-            <Button variant="brutal-outline" className="h-11 px-6">
-              Sign in
-            </Button>
-          </Link>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden flex items-center justify-center w-10 h-10 -mr-2"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
-        </div>
+        {/* Hamburger Menu Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 -mr-2"
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+        >
+          {mobileMenuOpen ? (
+            <X className="w-7 h-7 sm:w-6 sm:h-6" />
+          ) : (
+            <Menu className="w-7 h-7 sm:w-6 sm:h-6" />
+          )}
+        </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 z-40 bg-background border-t border-border">
-          <nav className="container-slate py-6 flex flex-col gap-1">
+        <div className="fixed inset-0 top-16 z-40 bg-background border-t border-border">
+          <nav className="container-slate py-6 flex flex-col gap-2">
             <a
               href="#workflows"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-base font-medium py-3 px-4 hover:bg-secondary transition-colors"
+              className="text-lg sm:text-base font-medium py-4 px-4 hover:bg-secondary transition-colors"
             >
               Workflows
             </a>
             <a
               href="#features"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-base font-medium py-3 px-4 hover:bg-secondary transition-colors"
+              className="text-lg sm:text-base font-medium py-4 px-4 hover:bg-secondary transition-colors"
             >
               Features
             </a>
             <Link
               to="/contact"
-              className={`text-base font-medium py-3 px-4 hover:bg-secondary transition-colors ${
+              className={`text-lg sm:text-base font-medium py-4 px-4 hover:bg-secondary transition-colors ${
                 isActive('/contact') ? 'bg-secondary' : ''
               }`}
             >
@@ -128,13 +89,13 @@ export const Header = () => {
             </Link>
             <Link
               to="/login"
-              className="text-base font-medium py-3 px-4 hover:bg-secondary transition-colors"
+              className="text-lg sm:text-base font-medium py-4 px-4 hover:bg-secondary transition-colors"
             >
               Sign in
             </Link>
             <div className="mt-4 px-4">
               <Link to="/products" className="block">
-                <Button variant="brutal" className="w-full h-12">
+                <Button variant="brutal" className="w-full h-14 text-base sm:h-12">
                   Get All Workflows
                 </Button>
               </Link>

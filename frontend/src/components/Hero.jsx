@@ -15,7 +15,7 @@ export const Hero = () => {
         <div className="max-w-4xl">
           {/* Target Audience Badge */}
           <p
-            className={`text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4 transition-all duration-500 ${
+            className={`text-sm sm:text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4 transition-all duration-500 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
             style={{ transitionDelay: '100ms' }}
@@ -25,7 +25,7 @@ export const Hero = () => {
 
           {/* Outcome-Driven Headline */}
           <h1
-            className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6 transition-all duration-700 ${
+            className={`text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6 transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: '200ms' }}
@@ -37,7 +37,7 @@ export const Hero = () => {
 
           {/* Value Proposition - Remove Uncertainty */}
           <p
-            className={`text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl mb-4 leading-relaxed transition-all duration-700 ${
+            className={`text-lg sm:text-lg md:text-xl text-muted-foreground max-w-xl mb-4 leading-relaxed transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: '400ms' }}
@@ -47,7 +47,7 @@ export const Hero = () => {
 
           {/* What You Get */}
           <p
-            className={`text-sm sm:text-base text-muted-foreground mb-8 transition-all duration-700 ${
+            className={`text-base sm:text-base text-muted-foreground mb-8 transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: '600ms' }}
@@ -69,7 +69,7 @@ export const Hero = () => {
             </Link>
             <a
               href="#workflows-preview"
-              className="text-sm font-medium opacity-60 hover:opacity-100 hover:text-gray-700 link-underline px-4 py-3 transition-colors duration-200"
+              className="text-base sm:text-sm font-medium opacity-60 hover:opacity-100 hover:text-gray-700 link-underline px-4 py-4 sm:py-3 transition-colors duration-200"
             >
               Preview Workflows
             </a>

@@ -25,11 +25,11 @@ const buttonVariants = cva(
           "border-2 border-foreground bg-transparent text-foreground font-semibold tracking-tight hover:bg-foreground hover:text-background hover:scale-105 active:scale-95 transition-all duration-200",
       },
       size: {
-        default: "h-10 px-5 py-2",
-        sm: "h-9 px-4 text-xs min-h-[44px] sm:min-h-0",
-        lg: "h-12 px-8 text-base",
-        xl: "h-14 px-10 text-base font-semibold",
-        icon: "h-10 w-10",
+        default: "h-12 px-6 py-2 sm:h-10 sm:px-5",
+        sm: "h-11 px-5 text-sm min-h-[44px] sm:h-9 sm:px-4 sm:text-xs sm:min-h-0",
+        lg: "h-14 px-10 text-lg sm:h-12 sm:px-8 sm:text-base",
+        xl: "h-16 px-12 text-lg font-semibold sm:h-14 sm:px-10 sm:text-base",
+        icon: "h-12 w-12 sm:h-10 sm:w-10",
       },
     },
     defaultVariants: {

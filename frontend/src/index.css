@@ -7,6 +7,14 @@
 
 html {
     scroll-behavior: smooth;
+    /* Responsive base font size - larger on mobile for better readability */
+    font-size: 18px;
+}
+
+@media (min-width: 640px) {
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
