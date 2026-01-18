@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Button } from './ui/button';
+import { FloatingShapes } from './FloatingShapes';
+import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { isMinimal } = useDeviceCapabilities();
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
   return (
-    <section className="w-full pt-32 pb-16 md:pt-40 md:pb-20">
-      <div className="container-slate">
+    <section className="w-full pt-32 pb-16 md:pt-40 md:pb-20 relative overflow-hidden">
+      {/* 3D Floating Background - positioned behind content */}
+      <FloatingShapes />
+
+      <div className="container-slate relative z-10">
         <div className="max-w-4xl">
           {/* Target Audience Badge */}
           <p
