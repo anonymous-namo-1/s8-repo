@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://syntheight.com/sitemap.xml
+
+# Disallow admin or checkout pages if any
+# Disallow: /admin
+# Disallow: /checkout
