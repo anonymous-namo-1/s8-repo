@@ -18,7 +18,21 @@ export default function TemplateDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showFloatingBar, setShowFloatingBar] = useState(false);
   const purchaseSectionRef = useRef(null);
-  const [timeLeft, setTimeLeft] = useState(30 * 60); // 30 minutes in seconds
+  // Initialize timer from localStorage or set new end time
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const storageKey = `sale_timer_${slug}`;
+    const storedEndTime = localStorage.getItem(storageKey);
+
+    if (storedEndTime) {
+      const remaining = Math.floor((parseInt(storedEndTime, 10) - Date.now()) / 1000);
+      return remaining > 0 ? remaining : 0;
+    } else {
+      // Set new end time 30 minutes from now
+      const endTime = Date.now() + 30 * 60 * 1000;
+      localStorage.setItem(storageKey, endTime.toString());
+      return 30 * 60;
+    }
+  });
 
   // Countdown timer for sale
   useEffect(() => {
@@ -112,10 +126,10 @@ export default function TemplateDetailPage() {
 
       {/* Floating Sale Timer - Fixed below header */}
       {timeLeft > 0 && (
-        <div className="fixed top-16 left-0 right-0 z-40 flex items-center justify-center gap-2 py-3 sm:py-2 bg-foreground text-background">
-          <Clock className="w-5 h-5 sm:w-4 sm:h-4" />
+        <div className="fixed top-16 left-0 right-0 z-40 flex items-center justify-center gap-2 py-3 sm:py-2 bg-red-600 text-white shadow-lg">
+          <Clock className="w-5 h-5 sm:w-4 sm:h-4 animate-pulse" />
           <p className="text-base sm:text-sm font-medium">
-            Sale ends in <span className="font-bold tabular-nums">{formatTime(timeLeft)}</span>
+            🔥 Sale ends in <span className="font-bold tabular-nums bg-red-700 px-2 py-0.5 rounded">{formatTime(timeLeft)}</span>
           </p>
         </div>
       )}
