@@ -113,8 +113,8 @@ export default function TemplateDetailPage() {
       {timeLeft > 0 && (
         <motion.div
           initial={{ y: -10, opacity: 0 }}
-          animate={{ y: [0, -6, 0], opacity: 1 }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="fixed right-4 top-24 z-40 flex items-center gap-3 rounded-2xl border border-white/40 bg-background/80 px-4 py-2.5 text-foreground shadow-[0_16px_40px_rgba(0,0,0,0.18)] backdrop-blur-md sm:right-6 sm:top-28"
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-orange-400 text-white shadow-[0_6px_18px_rgba(234,88,12,0.45)]">
