@@ -8,6 +8,7 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Separator } from '../components/ui/separator';
 import { ImageWithSkeleton } from '../components/ui/image-with-skeleton';
+import { SEO } from '../components/SEO';
 import { getTemplateBySlug } from '../data/templates';
 import { toast, Toaster } from 'sonner';
 
@@ -52,6 +53,11 @@ export default function CheckoutPage() {
   if (!template) {
     return (
       <div className="min-h-screen flex flex-col">
+        <SEO
+          title="Checkout - Template Not Found"
+          description="The requested template could not be found. Browse available workflows and templates."
+          url="https://syntheight.com/checkout"
+        />
         <Header />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
@@ -69,6 +75,11 @@ export default function CheckoutPage() {
   if (isComplete) {
     return (
       <div className="min-h-screen flex flex-col">
+        <SEO
+          title="Checkout Success"
+          description="Purchase complete. Your download link is ready and has been sent to your email."
+          url="https://syntheight.com/checkout"
+        />
         <Header />
         <main className="flex-1 flex items-center justify-center py-24">
           <div className="container-brutal max-w-md text-center">
@@ -99,6 +110,12 @@ export default function CheckoutPage() {
   
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Checkout"
+        description="Complete your purchase to get instant access to Syntheight workflows and templates."
+        keywords="checkout, buy workflows, purchase templates, automation workflows"
+        url="https://syntheight.com/checkout"
+      />
       <Header />
       <main className="flex-1">
         {/* Back Link */}

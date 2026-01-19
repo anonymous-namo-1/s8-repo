@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer';
 import { Button } from '../components/ui/button';
 import { CheckCircle, Download, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEO } from '../components/SEO';
 
 export default function WhatsAppPaymentSuccessPage() {
   const downloadUrl = 'https://drive.google.com/drive/u/1/folders/1YpeUgwiNT9MingxS4sBEwVUbBQG7HuI-';
@@ -14,6 +15,12 @@ export default function WhatsAppPaymentSuccessPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Payment Successful"
+        description="Your payment is confirmed. Download your 100+ WhatsApp automation workflows instantly."
+        keywords="payment success, whatsapp workflows download, order confirmed"
+        url="https://syntheight.com/order/success/w4h8a2t5s9p3p7m1n6b0k-q2r8e7y4u1i3o5p9a6s"
+      />
       <Header />
       <main className="flex-1 pt-24 pb-16">
         <div className="container-slate">

@@ -39,6 +39,8 @@ export default function ComingSoonPage() {
       <SEO
         title={`${info.title} - Coming Soon | Syntheight`}
         description={info.description}
+        keywords={`${info.title.toLowerCase()}, coming soon, syntheight`}
+        url={`https://syntheight.com${location.pathname}`}
       />
       <Header />
       <main className="flex-1 flex items-center justify-center pt-16 pb-16">

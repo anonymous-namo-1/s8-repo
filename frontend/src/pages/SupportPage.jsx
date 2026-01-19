@@ -5,6 +5,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
+import { SEO } from '../components/SEO';
 import { toast, Toaster } from 'sonner';
 
 export default function SupportPage() {
@@ -40,6 +41,12 @@ export default function SupportPage() {
   
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Support"
+        description="Get help with Syntheight workflows and templates. We respond within 24 hours."
+        keywords="support, help, syntheight, automation workflows"
+        url="https://syntheight.com/support"
+      />
       <Header />
       <main className="flex-1 py-16 md:py-24">
         <div className="container-brutal">

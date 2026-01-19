@@ -2,10 +2,17 @@ import React from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Separator } from '../components/ui/separator';
+import { SEO } from '../components/SEO';
 
 export default function RefundPage() {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Refund & Cancellation Policy"
+        description="Read the cancellation and refund policy for Syntheight digital products and services."
+        keywords="refund policy, cancellation policy, syntheight"
+        url="https://syntheight.com/refund"
+      />
       <Header />
       <main className="flex-1 pt-24 pb-16">
         <div className="container-slate">

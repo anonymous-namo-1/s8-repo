@@ -2,10 +2,17 @@ import React from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Separator } from '../components/ui/separator';
+import { SEO } from '../components/SEO';
 
 export default function LicensingPage() {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Licensing"
+        description="Understand Syntheight licensing terms for standard and extended use of digital assets."
+        keywords="licensing, standard license, extended license, digital assets"
+        url="https://syntheight.com/licensing"
+      />
       <Header />
       <main className="flex-1 py-16 md:py-24">
         <div className="container-brutal">

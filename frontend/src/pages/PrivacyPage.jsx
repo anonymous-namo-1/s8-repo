@@ -2,10 +2,17 @@ import React from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Separator } from '../components/ui/separator';
+import { SEO } from '../components/SEO';
 
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Privacy Policy"
+        description="Learn how Syntheight collects, uses, and protects your personal information."
+        keywords="privacy policy, data privacy, syntheight"
+        url="https://syntheight.com/privacy"
+      />
       <Header />
       <main className="flex-1 pt-24 pb-16">
         <div className="container-slate">

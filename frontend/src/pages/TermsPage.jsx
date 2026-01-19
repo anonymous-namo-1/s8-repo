@@ -2,10 +2,17 @@ import React from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Separator } from '../components/ui/separator';
+import { SEO } from '../components/SEO';
 
 export default function TermsPage() {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Terms & Conditions"
+        description="Review the terms and conditions for using Syntheight products and services."
+        keywords="terms and conditions, legal, syntheight"
+        url="https://syntheight.com/terms"
+      />
       <Header />
       <main className="flex-1 pt-24 pb-16">
         <div className="container-slate">

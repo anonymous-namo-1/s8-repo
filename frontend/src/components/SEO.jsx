@@ -7,7 +7,10 @@ export const SEO = ({
   keywords = "digital assets, premium templates, automation workflows, business tools, developer resources",
   image = "https://syntheight.com/images/workflow-product.png",
   url = "https://syntheight.com/",
-  type = "website"
+  type = "website",
+  author = "Syntheight",
+  siteName = "Syntheight",
+  robots = "index, follow"
 }) => {
   const fullTitle = title.includes('Syntheight') ? title : `${title} | Syntheight`;
 
@@ -18,6 +21,8 @@ export const SEO = ({
       <meta name="title" content={fullTitle} />
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
+      <meta name="author" content={author} />
+      <meta name="robots" content={robots} />
       <link rel="canonical" href={url} />
 
       {/* Open Graph / Facebook */}
@@ -26,6 +31,8 @@ export const SEO = ({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content="en_US" />
 
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />

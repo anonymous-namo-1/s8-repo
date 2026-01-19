@@ -66,8 +66,10 @@ export default function MyAssetsPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO
-        title="My Assets | Syntheight"
-        description="Access your purchased digital assets"
+        title="My Assets"
+        description="Access your purchased workflows, templates, and download links."
+        keywords="my assets, downloads, purchased workflows, syntheight"
+        url="https://syntheight.com/my-assets"
       />
       <Header />
       <main className="flex-1 pt-20 pb-16">
