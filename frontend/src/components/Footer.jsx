@@ -79,7 +79,8 @@ export const Footer = () => {
           <div>
             <Link to="/" className="group inline-block mb-2">
               <span className="text-lg font-bold tracking-tight transition-all duration-300 group-hover:tracking-wide">
-                Syntheight
+                <span className="text-foreground">Synth</span>
+                <span className="text-muted-foreground">eight</span>
               </span>
             </Link>
             <p className="text-xs text-muted-foreground/60">

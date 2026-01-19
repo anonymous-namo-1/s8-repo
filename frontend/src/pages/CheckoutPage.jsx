@@ -105,7 +105,7 @@ export default function CheckoutPage() {
         <div className="container-brutal py-6">
           <button 
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground rounded-full"
           >
             <ArrowLeft className="w-4 h-4" />
             Back

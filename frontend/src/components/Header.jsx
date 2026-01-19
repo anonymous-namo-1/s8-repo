@@ -55,7 +55,8 @@ export const Header = () => {
         {/* Logo - Left */}
         <Link to="/" className="flex items-center group">
           <span className="text-xl sm:text-lg font-bold tracking-tight transition-all duration-300 group-hover:tracking-wide">
-            Syntheight
+            <span className="text-foreground">Synth</span>
+            <span className="text-muted-foreground">eight</span>
           </span>
         </Link>
 
@@ -93,7 +94,7 @@ export const Header = () => {
         {/* Hamburger Menu Button - Mobile */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 -mr-2 relative"
+          className="md:hidden flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 -mr-2 relative rounded-full"
           aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
         >
           <motion.div

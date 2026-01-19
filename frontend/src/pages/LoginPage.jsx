@@ -184,7 +184,7 @@ export default function LoginPage() {
               >
                 <button
                   onClick={handleBack}
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors rounded-full"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back
@@ -239,7 +239,7 @@ export default function LoginPage() {
                     ) : (
                       <button
                         onClick={handleResendOTP}
-                        className="text-foreground underline hover:no-underline"
+                        className="text-foreground underline hover:no-underline rounded-full"
                         disabled={isSubmitting}
                       >
                         Resend code
