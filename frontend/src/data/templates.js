@@ -40,7 +40,7 @@ export const templates = [
     price: 29,
     originalPrice: 199,
     discount: 85,
-    image: "/images/whatsapp-hero.png",
+    image: "/images/whatsapp-workflows-12.png",
     images: [
       "/images/whatsapp-workflows-12.png",
       "/images/whatsapp-workflows-2.png",

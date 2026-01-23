@@ -109,13 +109,6 @@ export const TemplateCard = ({ template, onBuyNow }) => {
               </h3>
             </Link>
 
-            {/* Badge - moved below title */}
-            {template.badge && (
-              <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.12em] px-2.5 py-1 rounded-md bg-foreground text-background mb-2">
-                {template.badge}
-              </span>
-            )}
-
             {/* Best For Label - with premium styling */}
             <p className="text-sm text-muted-foreground mb-2 line-clamp-1">
               <span className="font-medium text-foreground/70">Best for:</span> {template.bestFor}
