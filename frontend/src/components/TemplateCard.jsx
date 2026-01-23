@@ -76,7 +76,7 @@ export const TemplateCard = ({ template, onBuyNow }) => {
             <ImageWithSkeleton
               src={template.image}
               alt={template.name}
-              className="transition-all duration-700 ease-out group-hover:scale-105 object-contain"
+              className="transition-all duration-700 ease-out group-hover:scale-105 object-cover object-top"
               lazy={true}
             />
             {/* Shimmer effect on hover */}
