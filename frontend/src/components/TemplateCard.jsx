@@ -150,7 +150,7 @@ export const TemplateCard = ({ template, onBuyNow }) => {
                 onClick={() => onBuyNow && onBuyNow(template)}
               >
                 <span className="relative z-10">Download</span>
-                <ArrowRight className="w-3.5 h-3.5 opacity-0 -ml-1 group-hover/btn:opacity-100 group-hover/btn:ml-0 transition-all duration-300 relative z-10" />
+                <ArrowRight className="w-3.5 h-3.5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
               </Button>
             </div>
           </div>
