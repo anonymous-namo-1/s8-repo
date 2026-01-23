@@ -2,10 +2,10 @@ import React from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/ui/button';
-import { CheckCircle, Download, ArrowLeft } from 'lucide-react';
+import { CheckCircle, Download, ArrowLeft, BookOpen, Sparkles, HelpCircle, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
-
+import { motion } from 'framer-motion';
 
 export default function WhatsAppPaymentSuccessPage() {
   const downloadUrl = 'https://drive.google.com/drive/u/1/folders/1YpeUgwiNT9MingxS4sBEwVUbBQG7HuI-';
@@ -15,8 +15,7 @@ export default function WhatsAppPaymentSuccessPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col relative">
-      
+    <div className="min-h-screen flex flex-col relative bg-gradient-to-b from-green-50/50 to-background">
       <SEO
         title="Payment Successful"
         description="Your payment is confirmed. Download your 100+ WhatsApp automation workflows instantly."
@@ -26,28 +25,55 @@ export default function WhatsAppPaymentSuccessPage() {
       <Header />
       <main className="flex-1 pt-24 pb-16">
         <div className="container-slate">
-          <div className="max-w-xl mx-auto text-center">
-            {/* Success Icon */}
-            <div className="mb-8 flex justify-center">
-              <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
-                <CheckCircle className="w-12 h-12 text-green-600" />
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-12"
+            >
+              <div className="mb-6 flex justify-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
+                  className="w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-lg shadow-green-500/30"
+                >
+                  <CheckCircle className="w-14 h-14 text-white" />
+                </motion.div>
               </div>
-            </div>
 
-            {/* Success Message */}
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-              Payment Successful!
-            </h1>
-            <p className="text-muted-foreground mb-8 text-lg">
-              Thank you for your purchase. Your order has been confirmed and you can now download your files.
-            </p>
+              <motion.h1
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-3xl md:text-4xl font-bold tracking-tight mb-3"
+              >
+                Payment Successful!
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-muted-foreground text-lg"
+              >
+                Thank you for your purchase. Your WhatsApp workflows are ready!
+              </motion.p>
+            </motion.div>
 
-            {/* Download Section */}
-            <div className="bg-secondary p-8 mb-8">
-              <h2 className="text-xl font-semibold mb-4">
-                Your Download is Ready
-              </h2>
-              <p className="text-muted-foreground mb-6 text-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="bg-white border border-gray-200 rounded-2xl p-8 mb-8 shadow-sm"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                  <MessageCircle className="w-5 h-5 text-green-600" />
+                </div>
+                <h2 className="text-xl font-semibold">Your Download is Ready</h2>
+              </div>
+              <p className="text-muted-foreground mb-6">
                 Click the button below to access your 100+ WhatsApp Automation Workflows. The files are hosted on Google Drive for fast and reliable downloads.
               </p>
               <Button
@@ -59,35 +85,111 @@ export default function WhatsAppPaymentSuccessPage() {
                 <Download className="w-5 h-5" />
                 Download Files
               </Button>
-            </div>
+            </motion.div>
 
-            {/* Additional Info */}
-            <div className="text-left bg-background border border-border p-6 mb-8">
-              <h3 className="font-semibold mb-3">What's Included:</h3>
-              <ul className="text-sm text-muted-foreground space-y-2">
-                <li>• 100+ ready-to-use WhatsApp automation workflows</li>
-                <li>• AI-powered chatbots with ChatGPT integration</li>
-                <li>• Multi-language support including Hinglish</li>
-                <li>• Works with n8n automation platform</li>
-                <li>• Lifetime access to all files</li>
-              </ul>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="bg-white border border-gray-200 rounded-2xl p-8 mb-8 shadow-sm"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-purple-600" />
+                </div>
+                <h2 className="text-xl font-semibold">What's Included</h2>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm">100+ WhatsApp automation workflows</span>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm">AI-powered chatbots with ChatGPT</span>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm">Multi-language support (Hinglish)</span>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm">Works with n8n platform</span>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm">24/7 automated responses</span>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm">Lifetime access to all files</span>
+                </div>
+              </div>
+            </motion.div>
 
-            {/* Support Note */}
-            <p className="text-sm text-muted-foreground mb-8">
-              Having trouble downloading? Contact us at{' '}
-              <a href="mailto:syntheight@gmail.com" className="underline hover:text-foreground">
-                syntheight@gmail.com
-              </a>
-            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-8 mb-8"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold">Basics You Must Know</h2>
+                  <p className="text-sm text-muted-foreground">Watch this video to get started with WhatsApp automation</p>
+                </div>
+              </div>
+              <div className="aspect-video rounded-xl overflow-hidden shadow-lg bg-black">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/dhhVxJ_qUPc?list=PLwdhOAfEpxTaHqf_o0waIy-EPz0PWEvFh"
+                  title="WhatsApp Automation Getting Started Guide"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-sm text-muted-foreground mt-4 text-center">
+                Learn how to set up and use your WhatsApp automation workflows
+              </p>
+            </motion.div>
 
-            {/* Back to Home */}
-            <Link to="/">
-              <Button variant="outline" size="lg" className="gap-2">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Home
-              </Button>
-            </Link>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="bg-white border border-gray-200 rounded-2xl p-6 mb-8 shadow-sm"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <HelpCircle className="w-5 h-5 text-muted-foreground" />
+                <span className="font-medium">Need Help?</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Having trouble downloading or setting up your WhatsApp workflows? Contact us at{' '}
+                <a href="mailto:syntheight@gmail.com" className="text-blue-600 hover:underline font-medium">
+                  syntheight@gmail.com
+                </a>
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9 }}
+              className="text-center"
+            >
+              <Link to="/">
+                <Button variant="outline" size="lg" className="gap-2">
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to Home
+                </Button>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </main>
