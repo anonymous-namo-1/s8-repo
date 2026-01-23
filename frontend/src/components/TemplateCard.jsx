@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Eye } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
-import { Badge } from './ui/badge';
 import { ImageWithSkeleton } from './ui/image-with-skeleton';
 import { formatPrice } from '../data/templates';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
@@ -63,10 +62,7 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         damping: 30,
       }}
     >
-      <Card className="group rounded-2xl border border-border/70 bg-gradient-to-b from-background via-background to-secondary/60 overflow-hidden flex flex-col relative transition-all duration-500 ring-1 ring-black/5 hover:shadow-[0_24px_80px_rgba(15,23,42,0.15)] hover:border-border/90 after:absolute after:inset-0 after:rounded-2xl after:opacity-0 after:group-hover:opacity-100 after:transition-opacity after:duration-500 after:pointer-events-none after:z-20 after:bg-gradient-to-br after:from-white/10 after:via-transparent after:to-white/5 after:backdrop-blur-[1px]">
-        {/* Refined glass-like overlay with enhanced blur and gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-transparent to-amber-500/8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10 backdrop-blur-sm" />
-        
+      <Card className="group rounded-2xl border border-border/70 bg-gradient-to-b from-background via-background to-secondary/60 overflow-hidden flex flex-col relative transition-all duration-500 ring-1 ring-black/5 hover:shadow-[0_24px_80px_rgba(15,23,42,0.15)] hover:border-border/90">
         {/* Gradient border effect on hover */}
         <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-5" style={{
           background: 'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.03) 100%)',
@@ -76,11 +72,6 @@ export const TemplateCard = ({ template, onBuyNow }) => {
 
         {/* Image - clickable to go to detail page */}
         <Link to={`/template/${template.slug}`} className="relative aspect-[16/10] overflow-hidden bg-secondary block">
-          {template.badge && (
-            <Badge className="absolute left-3 top-3 z-10 bg-foreground text-background text-[10px] font-semibold uppercase tracking-[0.18em] px-2.5 py-1 rounded-lg shadow-md drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover:shadow-lg group-hover:drop-shadow-[0_6px_16px_rgba(0,0,0,0.2)]">
-              {template.badge}
-            </Badge>
-          )}
           <div className="relative h-full overflow-hidden">
             <ImageWithSkeleton
               src={template.image}
@@ -94,15 +85,13 @@ export const TemplateCard = ({ template, onBuyNow }) => {
               animation: 'shimmer-shine 2s infinite',
             }} />
           </div>
-          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/40 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          
-          {/* Enhanced glassmorphism overlay with preview hint */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center backdrop-blur-0 group-hover:backdrop-blur-sm">
+          {/* Subtle overlay with preview hint - no blur */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
             <motion.span 
               initial={{ opacity: 0, y: 10 }}
               whileHover={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="flex items-center gap-2 px-5 py-3 rounded-full border border-white/50 bg-white/95 backdrop-blur-md text-sm font-semibold opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:bg-white/98 hover:border-white/70"
+              className="flex items-center gap-2 px-5 py-3 rounded-full border border-white/50 bg-white/95 text-sm font-semibold opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:bg-white hover:border-white/70"
             >
               <Eye className="w-4 h-4" />
               View Details
@@ -119,6 +108,13 @@ export const TemplateCard = ({ template, onBuyNow }) => {
                 {template.name}
               </h3>
             </Link>
+
+            {/* Badge - moved below title */}
+            {template.badge && (
+              <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.12em] px-2.5 py-1 rounded-md bg-foreground text-background mb-2">
+                {template.badge}
+              </span>
+            )}
 
             {/* Best For Label - with premium styling */}
             <p className="text-sm text-muted-foreground mb-2 line-clamp-1">
