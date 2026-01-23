@@ -32,12 +32,12 @@ export const Footer = () => {
       
       <div className="relative">
         {/* Positioning Statement - Premium styling */}
-        <div className="container-slate py-16 md:py-24 border-b border-border/40">
+        <div className="container-slate py-10 sm:py-16 md:py-24 border-b border-border/40">
           <div className="max-w-2xl">
-            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6 leading-snug">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-4 sm:mb-6 leading-snug">
               Workflows built for people who automate.
             </h3>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-10">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed mb-6 sm:mb-10">
               Stop building automations from scratch. 10,000+ ready-to-use workflows
               for developers and businesses who value their time.
             </p>
@@ -57,22 +57,22 @@ export const Footer = () => {
         </div>
 
         {/* Quick FAQ - Premium glass cards */}
-        <div className="container-slate py-12 md:py-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="container-slate py-8 sm:py-12 md:py-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {faqItems.map((item) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.title}
-                  className="group relative rounded-2xl border border-border/50 bg-gradient-to-br from-background via-background to-secondary/30 p-6 transition-all duration-300 hover:border-border hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] hover:-translate-y-1"
+                  className="group relative rounded-2xl border border-border/50 bg-gradient-to-br from-background via-background to-secondary/30 p-4 sm:p-6 transition-all duration-300 hover:border-border hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] hover:-translate-y-1"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 flex items-center justify-center bg-foreground text-background rounded-xl shadow-md transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg flex-shrink-0">
-                      <Icon className="w-5 h-5" />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-foreground text-background rounded-xl shadow-md transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg flex-shrink-0">
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-base tracking-tight mb-2">{item.title}</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <h4 className="font-semibold text-sm sm:text-base tracking-tight mb-1 sm:mb-2">{item.title}</h4>
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                         {item.desc}
                       </p>
                     </div>

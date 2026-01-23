@@ -42,7 +42,7 @@ export const TemplatesGrid = ({ showAll = true }) => {
   };
 
   return (
-    <section id="products" className="w-full py-20 md:py-28 relative overflow-hidden">
+    <section id="products" className="w-full py-12 sm:py-20 md:py-28 relative overflow-hidden">
       {/* Ambient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 via-transparent to-secondary/30 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(251,191,36,0.12),_transparent_55%)] pointer-events-none" />
@@ -69,14 +69,14 @@ export const TemplatesGrid = ({ showAll = true }) => {
               Premium Collection
             </motion.span>
 
-            <h2 id="workflows" className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+            <h2 id="workflows" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-3 sm:mb-4">
               Premium{' '}
               <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">
                 Digital Assets
               </span>
             </h2>
 
-            <p className="text-base sm:text-lg text-muted-foreground/90 leading-relaxed max-w-3xl">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground/90 leading-relaxed max-w-3xl">
               High-quality templates, workflows, and tools. One-time payment, lifetime access.
             </p>
           </div>
@@ -85,7 +85,7 @@ export const TemplatesGrid = ({ showAll = true }) => {
         {/* Responsive Grid with 3D perspective */}
         <div
           ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-7 lg:gap-8 xl:gap-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 xl:gap-10"
           style={{ perspective: isFull ? '2000px' : 'none' }}
         >
           {displayTemplates.map((template, index) => (

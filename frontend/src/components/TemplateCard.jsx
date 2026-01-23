@@ -95,17 +95,17 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         </Link>
 
         {/* Content */}
-        <CardContent className="p-5 sm:p-6 flex flex-col flex-1 relative z-20">
+        <CardContent className="p-4 sm:p-6 flex flex-col flex-1 relative z-20">
           <div className="flex-1">
             {/* Name - clickable */}
             <Link to={`/template/${template.slug}`}>
-              <h3 className="text-lg sm:text-xl font-semibold tracking-tight mb-2 line-clamp-2 group-hover:text-foreground/80 transition-colors duration-300">
+              <h3 className="text-base sm:text-xl font-semibold tracking-tight mb-1.5 sm:mb-2 line-clamp-2 group-hover:text-foreground/80 transition-colors duration-300">
                 {template.name}
               </h3>
             </Link>
 
             {/* Best For Label - with premium styling */}
-            <p className="text-sm text-muted-foreground mb-2 line-clamp-1">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-2 line-clamp-2 sm:line-clamp-1">
               <span className="font-medium text-foreground/70">Best for:</span> {template.bestFor}
             </p>
 
@@ -116,11 +116,11 @@ export const TemplateCard = ({ template, onBuyNow }) => {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-auto pt-3 sm:pt-4 border-t border-border/50 gap-3 sm:gap-0">
             {/* Price in INR - Improved visual hierarchy */}
-            <div className="flex flex-col items-start gap-1">
-              <div className="flex items-baseline gap-2.5">
-                <span className="text-3xl font-black tracking-tighter bg-gradient-to-br from-foreground to-foreground/80 bg-clip-text text-transparent">
+            <div className="flex items-center sm:items-start sm:flex-col gap-2 sm:gap-1">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl sm:text-3xl font-black tracking-tighter bg-gradient-to-br from-foreground to-foreground/80 bg-clip-text text-transparent">
                   {formatPrice(template.price)}
                 </span>
                 {template.originalPrice && (
@@ -130,14 +130,9 @@ export const TemplateCard = ({ template, onBuyNow }) => {
                 )}
               </div>
               {template.discount && (
-                <motion.span 
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                  className="text-xs font-bold tracking-wide text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-2.5 py-1 rounded-full"
-                >
+                <span className="text-[10px] sm:text-xs font-bold tracking-wide text-emerald-600 bg-emerald-50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full">
                   Save {template.discount}%
-                </motion.span>
+                </span>
               )}
             </div>
 
@@ -155,10 +150,9 @@ export const TemplateCard = ({ template, onBuyNow }) => {
               <Button
                 variant="brutal"
                 size="sm"
-                className="h-10 px-5 text-sm group/btn relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-black/30"
+                className="h-11 sm:h-10 w-full sm:w-auto px-5 text-sm group/btn relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-black/30"
                 onClick={() => onBuyNow && onBuyNow(template)}
               >
-                {/* Glow effect on hover */}
                 <span className="absolute inset-0 rounded-md bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 <span className="relative z-10">Download</span>
                 <ArrowRight className="w-3.5 h-3.5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1" />

@@ -264,30 +264,30 @@ export default function TemplateDetailPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               {/* Header */}
-              <div className="mb-6 rounded-2xl border border-border/60 bg-background/80 p-6 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
-                <p className="text-xs text-muted-foreground uppercase tracking-[0.15em] mb-3">
+              <div className="mb-4 sm:mb-6 rounded-2xl border border-border/60 bg-background/80 p-4 sm:p-6 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
+                <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-[0.15em] mb-2 sm:mb-3">
                   {template.bestFor}
                 </p>
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4">
                   {template.name}
                 </h1>
-                <p className="text-base text-muted-foreground leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   {template.description}
                 </p>
               </div>
 
               {/* Quick Stats - Premium pills */}
-              <div className="flex flex-wrap items-center gap-3 mb-6">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background/80 text-sm shadow-sm">
-                  <Zap className="w-4 h-4 text-muted-foreground" />
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-border/60 bg-background/80 text-xs sm:text-sm shadow-sm">
+                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
                   <span>Save hundreds of hours</span>
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background/80 text-sm shadow-sm">
-                  <Clock className="w-4 h-4 text-muted-foreground" />
+                <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-border/60 bg-background/80 text-xs sm:text-sm shadow-sm">
+                  <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
                   <span>Grow while you sleep</span>
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background/80 text-sm shadow-sm">
-                  <Shield className="w-4 h-4 text-muted-foreground" />
+                <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-border/60 bg-background/80 text-xs sm:text-sm shadow-sm">
+                  <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
                   <span>14-day money back guarantee</span>
                 </div>
               </div>
@@ -295,13 +295,13 @@ export default function TemplateDetailPage() {
               <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
 
               {/* Included - Premium list */}
-              <div className="mb-6 rounded-2xl border border-border/60 bg-background/80 p-6 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
-                <h2 className="text-base font-semibold mb-4">What You Get</h2>
-                <ul className="space-y-3">
+              <div className="mb-4 sm:mb-6 rounded-2xl border border-border/60 bg-background/80 p-4 sm:p-6 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
+                <h2 className="text-sm sm:text-base font-semibold mb-3 sm:mb-4">What You Get</h2>
+                <ul className="space-y-2 sm:space-y-3">
                   {template.includes.map((item, index) => (
-                    <li key={index} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <div className="w-5 h-5 rounded-full bg-foreground/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="w-3 h-3 text-foreground" />
+                    <li key={index} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground">
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-foreground/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-foreground" />
                       </div>
                       <span>{item}</span>
                     </li>
@@ -312,8 +312,8 @@ export default function TemplateDetailPage() {
               <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
 
               {/* Purchase Section - Premium CTA */}
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-background via-secondary/50 to-secondary/70 border border-border/70 shadow-[0_20px_60px_rgba(15,23,42,0.12)]">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+              <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-background via-secondary/50 to-secondary/70 border border-border/70 shadow-[0_20px_60px_rgba(15,23,42,0.12)]">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-5">
                   <div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">One-time purchase</p>
                     <div className="flex items-baseline gap-3">
