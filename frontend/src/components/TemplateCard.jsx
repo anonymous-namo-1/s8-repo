@@ -146,11 +146,11 @@ export const TemplateCard = ({ template, onBuyNow }) => {
               <Button
                 variant="brutal"
                 size="sm"
-                className="h-9 px-4 text-sm group/btn"
+                className="h-10 px-5 text-sm group/btn"
                 onClick={() => onBuyNow && onBuyNow(template)}
               >
-                <span>Buy Now</span>
-                <ArrowRight className="w-3.5 h-3.5 opacity-0 -ml-1 group-hover/btn:opacity-100 group-hover/btn:ml-0 transition-all duration-300" />
+                <span className="relative z-10">Download</span>
+                <ArrowRight className="w-3.5 h-3.5 opacity-0 -ml-1 group-hover/btn:opacity-100 group-hover/btn:ml-0 transition-all duration-300 relative z-10" />
               </Button>
             </div>
           </div>

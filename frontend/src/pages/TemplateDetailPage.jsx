@@ -395,8 +395,8 @@ export default function TemplateDetailPage() {
                     onClick={handleBuyNow}
                     className="w-full sm:w-auto group"
                   >
-                    <span>Buy Now</span>
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    <span className="relative z-10">Download</span>
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 relative z-10" />
                   </Button>
                 </div>
               </div>
@@ -447,8 +447,8 @@ export default function TemplateDetailPage() {
               onClick={handleBuyNow}
               className="rounded-full px-5 h-10 group flex-shrink-0"
             >
-              <span>Buy Now</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <span className="relative z-10">Download</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 relative z-10" />
             </Button>
           </div>
         </div>

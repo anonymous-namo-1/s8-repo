@@ -199,6 +199,14 @@ code {
         50%, 100% { transform: translateX(100%); }
     }
 
+    /* Moving glow sweep animation for download buttons */
+    @keyframes glow-sweep {
+        0% { transform: translateX(-100%); opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translateX(100%); opacity: 0; }
+    }
+
     /* Premium input focus */
     .premium-input {
         @apply transition-all duration-300;
