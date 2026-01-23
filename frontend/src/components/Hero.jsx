@@ -21,14 +21,27 @@ export const Hero = () => {
     if (!isVisible) return;
     
     let index = 0;
+    let isDeleting = false;
+    
     const timer = setInterval(() => {
-      if (index <= fullText.length) {
-        setDisplayedText(fullText.slice(0, index));
-        index++;
+      if (!isDeleting) {
+        if (index <= fullText.length) {
+          setDisplayedText(fullText.slice(0, index));
+          index++;
+        } else {
+          setTimeout(() => {
+            isDeleting = true;
+          }, 2000);
+        }
       } else {
-        clearInterval(timer);
+        if (index > 0) {
+          index--;
+          setDisplayedText(fullText.slice(0, index));
+        } else {
+          isDeleting = false;
+        }
       }
-    }, 30);
+    }, isDeleting ? 20 : 40);
 
     return () => clearInterval(timer);
   }, [isVisible]);
@@ -53,22 +66,28 @@ export const Hero = () => {
       <div className="container-slate relative pointer-events-none" style={{ zIndex: 2 }}>
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={isVisible ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0 }}
-            className="mb-8 pointer-events-auto flex justify-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0 }}
+            className="mb-10 pointer-events-auto flex justify-center"
           >
             <button
-              className="group inline-flex items-center gap-2 text-xs text-muted-foreground/60 hover:text-muted-foreground transition-colors duration-300"
+              className="group relative"
               onClick={(e) => {
                 e.stopPropagation();
                 handleClick(e);
               }}
             >
-              <span className="flex items-center justify-center w-8 h-8 rounded-full border border-muted-foreground/20 group-hover:border-muted-foreground/40 transition-all duration-300">
-                <Play className="w-3 h-3 ml-0.5" />
-              </span>
-              <span className="font-medium">Click here</span>
+              <div className="absolute inset-0 bg-blue-500/30 rounded-full blur-xl animate-pulse scale-150" />
+              <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-2xl animate-[pulse_2s_ease-in-out_infinite] scale-[2]" />
+              <div className="absolute inset-[-4px] bg-gradient-to-r from-blue-500/40 via-cyan-400/40 to-blue-500/40 rounded-full blur-md animate-[spin_4s_linear_infinite]" />
+              
+              <div className="relative flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(59,130,246,0.3),inset_0_1px_0_rgba(255,255,255,0.4)] transition-all duration-300 group-hover:bg-white/20 group-hover:border-white/50 group-hover:shadow-[0_8px_40px_rgba(59,130,246,0.5),inset_0_1px_0_rgba(255,255,255,0.5)]">
+                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/40 group-hover:shadow-blue-500/60 transition-all duration-300">
+                  <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
+                </span>
+                <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900 transition-colors pr-1">Click here</span>
+              </div>
             </button>
           </motion.div>
 
@@ -78,8 +97,8 @@ export const Hero = () => {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
           >
-            <span className="block">Premium Digital Assets.</span>
-            <span className="block mt-2 text-muted-foreground/70">Ready To Use.</span>
+            <span className="block">Premium Digital Assets</span>
+            <span className="block mt-2 text-muted-foreground/70">Ready To Use</span>
           </motion.h1>
 
           <motion.p
