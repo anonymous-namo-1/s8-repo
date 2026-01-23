@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
+import { Background3D } from './Background3D';
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,12 +14,12 @@ export const Hero = () => {
 
   return (
     <section className="w-full pt-32 pb-20 md:pt-44 md:pb-28 relative overflow-hidden">
-      {/* Subtle gradient overlay for better text readability over 3D background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/50 pointer-events-none" />
+      <Background3D />
+      
+      <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background pointer-events-none" style={{ zIndex: 1 }} />
 
-      <div className="container-slate relative z-10">
+      <div className="container-slate relative" style={{ zIndex: 2 }}>
         <div className="max-w-4xl">
-          {/* Target Audience Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -31,7 +32,6 @@ export const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Outcome-Driven Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -43,7 +43,6 @@ export const Hero = () => {
             <span className="block mt-2 text-muted-foreground/70">Ready to use.</span>
           </motion.h1>
 
-          {/* Value Proposition - Remove Uncertainty */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -53,7 +52,6 @@ export const Hero = () => {
             High-quality templates, workflows, and tools. One-time purchase, lifetime access.
           </motion.p>
 
-          {/* What You Get - Premium styled */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -78,7 +76,6 @@ export const Hero = () => {
             </span>
           </motion.div>
 
-          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -86,14 +83,14 @@ export const Hero = () => {
             className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
           >
             <Link to="/workflows">
-              <Button variant="brutal" size="xl" className="group">
+              <Button variant="brutal" size="xl" className="group relative z-10">
                 <span>Browse Products</span>
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </Link>
             <a
               href="#products"
-              className="group flex items-center gap-2 text-base sm:text-sm font-medium text-muted-foreground hover:text-foreground px-4 py-4 sm:py-3 transition-all duration-300"
+              className="group flex items-center gap-2 text-base sm:text-sm font-medium text-muted-foreground hover:text-foreground px-4 py-4 sm:py-3 transition-all duration-300 relative z-10"
             >
               <span className="relative">
                 View All Products
@@ -103,7 +100,6 @@ export const Hero = () => {
             </a>
           </motion.div>
 
-          {/* Social proof hint */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={isVisible ? { opacity: 1 } : {}}

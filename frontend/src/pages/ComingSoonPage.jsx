@@ -4,7 +4,7 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/ui/button';
 import { SEO } from '../components/SEO';
-import { Background3D } from '../components/Background3D';
+
 import { ArrowLeft, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -37,7 +37,7 @@ export default function ComingSoonPage() {
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      <Background3D />
+      
       <SEO
         title={`${info.title} - Coming Soon | Syntheight`}
         description={info.description}

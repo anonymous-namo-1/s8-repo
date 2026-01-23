@@ -60,24 +60,27 @@ The application uses two workflows:
 ## 3D Background Animation
 
 ### Features
-- **Interactive Blue Dot Grid**: A responsive grid of blue dots covering the background
-- **Click-Triggered Ripple Waves**: Clicking anywhere creates a wave that spreads outward in all directions
+- **Interactive Blue Dot Grid**: A responsive grid of blue dots on the right side of the hero section
+- **Click-Triggered Ripple Waves**: Clicking anywhere in the hero creates a wave that spreads outward
 - **3D Illusion**: Dots scale and shift position to create depth and 3D wave effect
 - **Ambient Animation**: Continuous subtle wave movement even without interaction
-- **Multiple Overlapping Waves**: Each click adds a new wave that interacts with existing ones
+- **Content-Aware Positioning**: Dots fade out on the left side to keep text/buttons clear
+- **Section Containment**: Dots fade at the bottom to prevent bleeding into section 2
 - **Device Optimization**: Three performance tiers based on device capabilities
 
 ### Technical Implementation
-- **Location**: `frontend/src/components/Background3D.jsx`
+- **Location**: `frontend/src/components/Background3D.jsx` (integrated into Hero.jsx)
 - **Technology**: HTML5 Canvas with 2D context for high performance
-- **Performance**: Automatic quality adjustment based on device memory, CPU cores, and screen size
+- **Containment**: Hero section only (not page-wide)
+- **Fade Zones**: Left side (45% clearance for content) and bottom (55-90% for section transition)
 
 ### How It Works
-1. A grid of blue dots is rendered across the canvas
-2. Clicking creates a ripple wave emanating from the click point
+1. Blue dots are rendered in a grid pattern on the right side of the hero section
+2. Clicking anywhere creates a ripple wave emanating from that point
 3. Waves travel outward with physics-based decay
 4. Dots move and scale based on wave height, creating 3D perspective illusion
-5. Multiple waves can overlap and combine
+5. Horizontal fade keeps the content area (left side) clear
+6. Vertical fade prevents dots from bleeding into the next section
 
 ### Performance Tiers
 1. **Full** (Desktop): 22px spacing, 3.5px dots, up to 8 simultaneous waves

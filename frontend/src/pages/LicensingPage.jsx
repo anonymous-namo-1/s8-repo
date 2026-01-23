@@ -3,12 +3,12 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Separator } from '../components/ui/separator';
 import { SEO } from '../components/SEO';
-import { Background3D } from '../components/Background3D';
+
 
 export default function LicensingPage() {
   return (
     <div className="min-h-screen flex flex-col relative">
-      <Background3D />
+      
       <SEO
         title="Licensing"
         description="Understand Syntheight licensing terms for standard and extended use of digital assets."

@@ -8,7 +8,7 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
 import { SEO } from '../components/SEO';
-import { Background3D } from '../components/Background3D';
+
 import { getTemplateBySlug, formatPrice } from '../data/templates';
 import { useRazorpay } from '../hooks/useRazorpay';
 import { Toaster } from 'sonner';
@@ -55,7 +55,7 @@ export default function TemplateDetailPage() {
   if (!template) {
     return (
       <div className="min-h-screen flex flex-col relative">
-        <Background3D />
+        
         <Header />
         <main className="flex-1 flex items-center justify-center pt-16">
           <div className="text-center">
@@ -101,7 +101,7 @@ export default function TemplateDetailPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background relative">
-      <Background3D />
+      
       <SEO
         title={seoTitle}
         description={seoDescription}

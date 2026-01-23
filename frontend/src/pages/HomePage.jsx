@@ -6,13 +6,11 @@ import { TrustSection } from '../components/TrustSection';
 import { WhySection } from '../components/WhySection';
 import { Footer } from '../components/Footer';
 import { SEO } from '../components/SEO';
-import { Background3D } from '../components/Background3D';
 import { Toaster } from 'sonner';
 
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col relative">
-      <Background3D />
       <SEO
         title="Syntheight - Automation Workflows & Premium Digital Assets"
         description="Discover 10,000+ automation workflows, templates, and tools for n8n, Zapier, and Make. One-time purchase, lifetime access."

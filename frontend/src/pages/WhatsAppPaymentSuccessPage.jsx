@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button';
 import { CheckCircle, Download, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
-import { Background3D } from '../components/Background3D';
+
 
 export default function WhatsAppPaymentSuccessPage() {
   const downloadUrl = 'https://drive.google.com/drive/u/1/folders/1YpeUgwiNT9MingxS4sBEwVUbBQG7HuI-';
@@ -16,7 +16,7 @@ export default function WhatsAppPaymentSuccessPage() {
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      <Background3D />
+      
       <SEO
         title="Payment Successful"
         description="Your payment is confirmed. Download your 100+ WhatsApp automation workflows instantly."

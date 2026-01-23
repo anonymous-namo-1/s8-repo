@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { SEO } from '../components/SEO';
-import { Background3D } from '../components/Background3D';
+
 import { toast, Toaster } from 'sonner';
 
 export default function SupportPage() {
@@ -42,7 +42,7 @@ export default function SupportPage() {
   
   return (
     <div className="min-h-screen flex flex-col relative">
-      <Background3D />
+      
       <SEO
         title="Support"
         description="Get help with Syntheight workflows and templates. We respond within 24 hours."

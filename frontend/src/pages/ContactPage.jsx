@@ -7,7 +7,7 @@ import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { SEO } from '../components/SEO';
-import { Background3D } from '../components/Background3D';
+
 import { Mail, Send, Clock, MessageSquare } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
 import api from '../utils/api';
@@ -66,7 +66,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background relative">
-      <Background3D />
+      
       <SEO
         title="Contact Syntheight"
         description="Reach out for support or questions about Syntheight workflows and templates. We typically respond within 24 hours."

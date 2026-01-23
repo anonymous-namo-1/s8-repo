@@ -8,7 +8,6 @@ export function Background3D() {
   const dotsRef = useRef([]);
   const wavesRef = useRef([]);
   const timeRef = useRef(0);
-  const scaledRef = useRef(false);
   const { tier } = useDeviceCapabilities();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -24,8 +23,6 @@ export function Background3D() {
 
   const config = React.useMemo(() => {
     const baseConfig = {
-      dotColor: 'rgba(59, 130, 246, 0.6)',
-      dotColorActive: 'rgba(59, 130, 246, 0.9)',
       dotSize: 3,
       spacing: 25,
       waveSpeed: 0.15,
@@ -35,6 +32,7 @@ export function Background3D() {
       ambientWaveAmplitude: 8,
       perspectiveStrength: 0.4,
       maxWaves: 5,
+      contentClearance: 0.45,
     };
 
     if (tier === 'full') {
@@ -55,11 +53,14 @@ export function Background3D() {
 
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
+        const x = offsetX + col * config.spacing;
+        const y = offsetY + row * config.spacing;
+        
         dots.push({
-          baseX: offsetX + col * config.spacing,
-          baseY: offsetY + row * config.spacing,
-          x: offsetX + col * config.spacing,
-          y: offsetY + row * config.spacing,
+          baseX: x,
+          baseY: y,
+          x: x,
+          y: y,
           z: 0,
           scale: 1,
           row,
@@ -71,10 +72,10 @@ export function Background3D() {
   }, [config.spacing]);
 
   const handleClick = useCallback((e) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    const rect = canvas.getBoundingClientRect();
+    const rect = container.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
@@ -99,7 +100,6 @@ export function Background3D() {
         const height = container.offsetHeight;
         setDimensions({ width, height });
         dotsRef.current = initDots(width, height);
-        scaledRef.current = false;
       }
     };
 
@@ -123,13 +123,31 @@ export function Background3D() {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 
+    const fadeStartY = dimensions.height * 0.55;
+    const fadeEndY = dimensions.height * 0.9;
+    const contentEdgeX = dimensions.width * config.contentClearance;
+    const fadeStartX = contentEdgeX;
+    const fadeEndX = contentEdgeX + dimensions.width * 0.15;
+
     if (prefersReducedMotion) {
       ctx.clearRect(0, 0, dimensions.width, dimensions.height);
       dotsRef.current.forEach((dot) => {
-        ctx.beginPath();
-        ctx.arc(dot.baseX, dot.baseY, config.dotSize, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(59, 130, 246, 0.4)';
-        ctx.fill();
+        const fadeYProgress = Math.max(0, Math.min(1, (dot.baseY - fadeStartY) / (fadeEndY - fadeStartY)));
+        const fadeYAlpha = 1 - fadeYProgress;
+        
+        let fadeXAlpha = 1;
+        if (dot.baseX < fadeEndX) {
+          fadeXAlpha = Math.max(0, (dot.baseX - fadeStartX) / (fadeEndX - fadeStartX));
+        }
+        
+        const finalAlpha = fadeYAlpha * fadeXAlpha;
+        
+        if (finalAlpha > 0.05) {
+          ctx.beginPath();
+          ctx.arc(dot.baseX, dot.baseY, config.dotSize, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(59, 130, 246, ${0.5 * finalAlpha})`;
+          ctx.fill();
+        }
       });
       return;
     }
@@ -144,7 +162,7 @@ export function Background3D() {
         return wave.strength > 0.01;
       });
 
-      const centerX = dimensions.width / 2;
+      const centerX = dimensions.width * 0.7;
       const centerY = dimensions.height / 2;
 
       dotsRef.current.forEach((dot) => {
@@ -186,8 +204,20 @@ export function Background3D() {
       const sortedDots = [...dotsRef.current].sort((a, b) => a.z - b.z);
 
       sortedDots.forEach((dot) => {
+        const fadeYProgress = Math.max(0, Math.min(1, (dot.baseY - fadeStartY) / (fadeEndY - fadeStartY)));
+        const fadeYAlpha = 1 - fadeYProgress;
+        
+        let fadeXAlpha = 1;
+        if (dot.baseX < fadeEndX) {
+          fadeXAlpha = Math.max(0, (dot.baseX - fadeStartX) / (fadeEndX - fadeStartX));
+        }
+        
+        const finalAlpha = fadeYAlpha * fadeXAlpha;
+        
+        if (finalAlpha < 0.05) return;
+
         const brightness = Math.min(1, 0.4 + (dot.z + 30) / 60);
-        const alpha = 0.3 + brightness * 0.5;
+        const alpha = (0.35 + brightness * 0.45) * finalAlpha;
         
         const r = 59;
         const g = Math.round(130 + dot.z * 0.5);
@@ -198,7 +228,7 @@ export function Background3D() {
         ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
         ctx.fill();
 
-        if (dot.z > 5) {
+        if (dot.z > 5 && finalAlpha > 0.3) {
           ctx.beginPath();
           ctx.arc(dot.x, dot.y, config.dotSize * dot.scale * 1.5, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.2})`;
@@ -221,7 +251,7 @@ export function Background3D() {
   return (
     <div 
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none overflow-hidden"
+      className="absolute inset-0 overflow-hidden pointer-events-none"
       style={{ zIndex: 0 }}
     >
       <div 
@@ -231,15 +261,10 @@ export function Background3D() {
       >
         <canvas
           ref={canvasRef}
-          className="absolute inset-0 w-full h-full"
-          style={{ 
-            background: 'transparent',
-            pointerEvents: 'none',
-          }}
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{ background: 'transparent' }}
         />
       </div>
-      
-      <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/80 pointer-events-none" />
     </div>
   );
 }

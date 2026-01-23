@@ -9,7 +9,7 @@ import { Label } from '../components/ui/label';
 import { Separator } from '../components/ui/separator';
 import { ImageWithSkeleton } from '../components/ui/image-with-skeleton';
 import { SEO } from '../components/SEO';
-import { Background3D } from '../components/Background3D';
+
 import { getTemplateBySlug } from '../data/templates';
 import { toast, Toaster } from 'sonner';
 
@@ -54,7 +54,7 @@ export default function CheckoutPage() {
   if (!template) {
     return (
       <div className="min-h-screen flex flex-col relative">
-        <Background3D />
+        
         <SEO
           title="Checkout - Template Not Found"
           description="The requested template could not be found. Browse available workflows and templates."
@@ -77,7 +77,7 @@ export default function CheckoutPage() {
   if (isComplete) {
     return (
       <div className="min-h-screen flex flex-col relative">
-        <Background3D />
+        
         <SEO
           title="Checkout Success"
           description="Purchase complete. Your download link is ready and has been sent to your email."
@@ -113,7 +113,7 @@ export default function CheckoutPage() {
   
   return (
     <div className="min-h-screen flex flex-col relative">
-      <Background3D />
+      
       <SEO
         title="Checkout"
         description="Complete your purchase to get instant access to Syntheight workflows and templates."

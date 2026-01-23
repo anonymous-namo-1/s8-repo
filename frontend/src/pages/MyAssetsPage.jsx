@@ -4,7 +4,7 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/ui/button';
 import { SEO } from '../components/SEO';
-import { Background3D } from '../components/Background3D';
+
 import { useAuth } from '../context/AuthContext';
 import { templates, formatPrice } from '../data/templates';
 import { Download, Lock, LogOut, Package, ArrowRight } from 'lucide-react';
@@ -66,7 +66,7 @@ export default function MyAssetsPage() {
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      <Background3D />
+      
       <SEO
         title="My Assets"
         description="Access your purchased workflows, templates, and download links."
