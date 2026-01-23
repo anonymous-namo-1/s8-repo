@@ -86,16 +86,11 @@ export const TemplateCard = ({ template, onBuyNow }) => {
             }} />
           </div>
           {/* Subtle overlay with preview hint - no blur */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-            <motion.span 
-              initial={{ opacity: 0, y: 10 }}
-              whileHover={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="flex items-center gap-2 px-5 py-3 rounded-full border border-white/50 bg-white/95 text-sm font-semibold opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:bg-white hover:border-white/70"
-            >
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center pointer-events-none">
+            <span className="flex items-center gap-2 px-5 py-3 rounded-full border border-white/50 bg-white text-sm font-semibold opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
               <Eye className="w-4 h-4" />
               View Details
-            </motion.span>
+            </span>
           </div>
         </Link>
 
