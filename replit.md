@@ -60,19 +60,26 @@ The application uses two workflows:
 ## 3D Background Animation
 
 ### Features
-- **3D Geometric Shapes**: Floating cubes, pyramids, octahedrons, torus knots, icosahedrons, dodecahedrons, and more
-- **Particle System**: Ambient floating particles across the scene
-- **Interactive Lighting**: Mouse-following point light for desktop users
-- **3D Grid Plane**: Subtle perspective grid in the background
-- **Device Optimization**: Three performance tiers (full, reduced, minimal) based on device capabilities
+- **Interactive Blue Dot Grid**: A responsive grid of blue dots covering the background
+- **Click-Triggered Ripple Waves**: Clicking anywhere creates a wave that spreads outward in all directions
+- **3D Illusion**: Dots scale and shift position to create depth and 3D wave effect
+- **Ambient Animation**: Continuous subtle wave movement even without interaction
+- **Multiple Overlapping Waves**: Each click adds a new wave that interacts with existing ones
+- **Device Optimization**: Three performance tiers based on device capabilities
 
 ### Technical Implementation
 - **Location**: `frontend/src/components/Background3D.jsx`
-- **Libraries**: three, @react-three/fiber, @react-three/drei
-- **Fallback**: CSS-based 3D animation for devices without WebGL support
+- **Technology**: HTML5 Canvas with 2D context for high performance
 - **Performance**: Automatic quality adjustment based on device memory, CPU cores, and screen size
 
+### How It Works
+1. A grid of blue dots is rendered across the canvas
+2. Clicking creates a ripple wave emanating from the click point
+3. Waves travel outward with physics-based decay
+4. Dots move and scale based on wave height, creating 3D perspective illusion
+5. Multiple waves can overlap and combine
+
 ### Performance Tiers
-1. **Full** (Desktop): All effects, 8 geometries, 200 particles, mouse tracking, grid plane
-2. **Reduced** (Tablet/Touch): 4 geometries, 100 particles, simplified effects
-3. **Minimal** (Mobile/Low-end): 2 geometries, 30 particles, basic animations
+1. **Full** (Desktop): 22px spacing, 3.5px dots, up to 8 simultaneous waves
+2. **Reduced** (Tablet/Touch): 30px spacing, 3px dots, up to 4 waves
+3. **Minimal** (Mobile/Low-end): 40px spacing, 2.5px dots, up to 2 waves
