@@ -78,12 +78,11 @@ export const Hero = () => {
                 handleClick(e);
               }}
             >
-              <div className="absolute inset-0 bg-blue-500/30 rounded-full blur-xl animate-pulse scale-150" />
-              <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-2xl animate-[pulse_2s_ease-in-out_infinite] scale-[2]" />
-              <div className="absolute inset-[-4px] bg-gradient-to-r from-blue-500/40 via-cyan-400/40 to-blue-500/40 rounded-full blur-md animate-[spin_4s_linear_infinite]" />
+              <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-2xl scale-150" />
+              <div className="absolute inset-[-4px] bg-gradient-to-r from-blue-500/20 via-cyan-400/20 to-blue-500/20 rounded-full blur-md" />
               
-              <div className="relative flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(59,130,246,0.3),inset_0_1px_0_rgba(255,255,255,0.4)] transition-all duration-300 group-hover:bg-white/20 group-hover:border-white/50 group-hover:shadow-[0_8px_40px_rgba(59,130,246,0.5),inset_0_1px_0_rgba(255,255,255,0.5)]">
-                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/40 group-hover:shadow-blue-500/60 transition-all duration-300">
+              <div className="relative flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(59,130,246,0.2),inset_0_1px_0_rgba(255,255,255,0.4)] transition-all duration-300 group-hover:bg-white/20 group-hover:border-white/50 group-hover:shadow-[0_8px_40px_rgba(59,130,246,0.4),inset_0_1px_0_rgba(255,255,255,0.5)]">
+                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 transition-all duration-300">
                   <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
                 </span>
                 <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900 transition-colors pr-1">Click here</span>
