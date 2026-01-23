@@ -13,33 +13,33 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
   const config = React.useMemo(() => {
     if (tier === 'full') {
       return {
-        dotSize: 2.2,
-        spacing: 18,
-        waveSpeed: 4,
-        waveWidth: 100,
-        maxWaves: 6,
-        floatAmplitude: 2,
-        trailDecay: 0.92,
+        dotSize: 1.5,
+        spacing: 12,
+        waveSpeed: 4.5,
+        waveWidth: 150,
+        maxWaves: 8,
+        liftHeight: 25,
+        trailDecay: 0.94,
       };
     } else if (tier === 'reduced') {
       return {
-        dotSize: 2,
-        spacing: 26,
-        waveSpeed: 3.5,
-        waveWidth: 85,
-        maxWaves: 4,
-        floatAmplitude: 1.5,
-        trailDecay: 0.9,
+        dotSize: 1.4,
+        spacing: 18,
+        waveSpeed: 4,
+        waveWidth: 120,
+        maxWaves: 5,
+        liftHeight: 20,
+        trailDecay: 0.92,
       };
     } else {
       return {
-        dotSize: 1.8,
-        spacing: 35,
-        waveSpeed: 3,
-        waveWidth: 70,
+        dotSize: 1.3,
+        spacing: 25,
+        waveSpeed: 3.5,
+        waveWidth: 100,
         maxWaves: 3,
-        floatAmplitude: 1,
-        trailDecay: 0.88,
+        liftHeight: 15,
+        trailDecay: 0.9,
       };
     }
   }, [tier]);
@@ -59,7 +59,7 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
       Math.hypot(rect.width - x, y),
       Math.hypot(x, rect.height - y),
       Math.hypot(rect.width - x, rect.height - y)
-    ) + 150;
+    ) + 200;
 
     wavesRef.current.push({
       x,
@@ -115,20 +115,21 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
         dotsRef.current[i] = {
           bx: offsetX + col * spacing,
           by: offsetY + row * spacing,
-          energy: 0,
-          vy: 0,
-          phase: (row + col) * 0.5,
+          lift: 0,
+          targetLift: 0,
+          scale: 1,
+          targetScale: 1,
         };
       }
     }
 
     const waveWidth = config.waveWidth;
     const waveSpeed = config.waveSpeed;
-    const floatAmp = config.floatAmplitude;
+    const liftHeight = config.liftHeight;
     const decay = config.trailDecay;
     const dotSize = config.dotSize;
 
-    const animate = (time) => {
+    const animate = () => {
       ctx.clearRect(0, 0, dimensions.width, dimensions.height);
 
       const waves = wavesRef.current;
@@ -139,15 +140,14 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
         }
       }
 
-      const t = time * 0.002;
       const dots = dotsRef.current;
       const numDots = dots.length;
       const numWaves = waves.length;
 
       for (let i = 0; i < numDots; i++) {
         const dot = dots[i];
-        let hitEnergy = 0;
-        let pushY = 0;
+        let maxLift = 0;
+        let maxScale = 1;
 
         for (let w = 0; w < numWaves; w++) {
           const wave = waves[w];
@@ -160,46 +160,58 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
           
           if (dist >= inner && dist <= outer) {
             const pos = (dist - inner) / waveWidth;
-            const e = Math.sin(pos * Math.PI);
-            if (e > hitEnergy) hitEnergy = e;
-            pushY += (dy / (dist || 1)) * e * 4;
+            const waveShape = Math.sin(pos * Math.PI);
+            
+            const lift = waveShape * liftHeight;
+            const scale = 1 + waveShape * 1.2;
+            
+            if (lift > maxLift) {
+              maxLift = lift;
+              maxScale = scale;
+            }
           }
         }
 
-        if (hitEnergy > dot.energy) {
-          dot.energy = hitEnergy;
-        } else {
-          dot.energy *= decay;
+        dot.targetLift = maxLift;
+        dot.targetScale = maxScale;
+        
+        dot.lift += (dot.targetLift - dot.lift) * 0.2;
+        dot.scale += (dot.targetScale - dot.scale) * 0.2;
+        
+        if (dot.targetLift === 0) {
+          dot.lift *= decay;
+          dot.scale = 1 + (dot.scale - 1) * decay;
         }
 
-        dot.vy = dot.vy * 0.9 + pushY * 0.08;
-        
-        if (dot.energy > 0.02) {
-          const e = dot.energy;
-          const float = Math.sin(t + dot.phase) * floatAmp * e;
+        if (dot.lift > 0.3 || dot.scale > 1.02) {
           const x = dot.bx;
-          const y = dot.by + float + dot.vy;
+          const y = dot.by - dot.lift;
           
-          const size = dotSize * (1 + e * 0.5);
-          const alpha = e * 0.85;
+          const size = dotSize * dot.scale;
+          const normalizedLift = Math.min(dot.lift / liftHeight, 1);
+          const alpha = 0.25 + normalizedLift * 0.7;
 
+          const shadowY = dot.by + 2;
+          const shadowAlpha = normalizedLift * 0.15;
           ctx.beginPath();
-          ctx.arc(x, y, size * 2.2, 0, 6.28);
-          ctx.fillStyle = `rgba(59,130,246,${alpha * 0.18})`;
+          ctx.arc(x, shadowY, size * 0.8, 0, 6.28);
+          ctx.fillStyle = `rgba(0,0,0,${shadowAlpha})`;
           ctx.fill();
 
           ctx.beginPath();
           ctx.arc(x, y, size, 0, 6.28);
-          ctx.fillStyle = `rgba(96,165,250,${alpha * 0.85})`;
+          ctx.fillStyle = `rgba(59,130,246,${alpha})`;
           ctx.fill();
 
-          ctx.beginPath();
-          ctx.arc(x, y, size * 0.4, 0, 6.28);
-          ctx.fillStyle = `rgba(219,234,254,${alpha})`;
-          ctx.fill();
-        } else if (dot.energy < 0.01) {
-          dot.energy = 0;
-          dot.vy = 0;
+          if (normalizedLift > 0.3) {
+            ctx.beginPath();
+            ctx.arc(x - size * 0.25, y - size * 0.25, size * 0.35, 0, 6.28);
+            ctx.fillStyle = `rgba(147,197,253,${normalizedLift * 0.6})`;
+            ctx.fill();
+          }
+        } else if (dot.lift < 0.2 && dot.scale < 1.01) {
+          dot.lift = 0;
+          dot.scale = 1;
         }
       }
 
