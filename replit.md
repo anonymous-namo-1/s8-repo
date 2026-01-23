@@ -59,6 +59,13 @@ The application uses two workflows:
 - Implemented click-triggered wave animation (January 2026)
 - Premium design overhaul across all pages (January 2026)
 - Payment success pages redesigned with YouTube tutorial section (January 2026)
+- Removed "Coming Soon" badges from header navigation (January 2026)
+- Changed "14 Day Guarantee" to "24/7 Automation" in Why section (January 2026)
+- Added custom cursor styling (January 2026)
+- Optimized Background3D for performance - animation only runs on click (January 2026)
+- Enhanced customer dashboard (MyAssetsPage) with glassmorphism styling (January 2026)
+- Improved Login page with premium glassmorphism card design (January 2026)
+- New button variants: glass, glass-dark, subtle (January 2026)
 
 ## Premium Design System
 
@@ -77,12 +84,20 @@ The application uses two workflows:
 | `.premium-glow` | Subtle glow effects |
 | `.scroll-reveal` | Smooth scroll-triggered reveal animation |
 | `.premium-shadow-sm/md/lg` | Consistent shadow utilities |
+| `.icon-container` | Premium rounded icon containers with gradients |
+| `.info-card` | Premium cards with rounded corners and hover effects |
+| `.form-card` | Styled form containers with shadows |
+| `.badge-premium` | Rounded badge styling with subtle gradient |
+| `.section-box` | Premium section containers |
+| `.input-premium` | Enhanced input field styling |
 
 ### Component Enhancements
 - **Header**: Logo scale animation, refined navigation underlines, pill-style badges
 - **TemplateCard**: 3D tilt effect, glass overlay on hover, shimmer effect, gradient borders
 - **Footer**: Glassmorphism background, hover-lift FAQ cards, animated link underlines
-- **Buttons**: Premium variants with gradients and shine effects
+- **Buttons**: Premium variants with gradients and shine effects (glass, glass-dark, subtle)
+- **LoginPage**: Glassmorphism card with premium form styling
+- **MyAssetsPage**: Gradient backgrounds, glass stats cards, improved product grid
 
 ### Payment Success Pages
 - Card-based layout with rounded corners
