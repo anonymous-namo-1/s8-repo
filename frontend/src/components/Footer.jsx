@@ -56,25 +56,27 @@ export const Footer = () => {
           <div className="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent" />
         </div>
 
-        {/* Quick FAQ - Enhanced premium cards */}
+        {/* Quick FAQ - Premium glass cards */}
         <div className="container-slate py-12 md:py-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {faqItems.map((item) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.title}
-                  className="group premium-hover-lift rounded-sm border border-border/40 p-6 transition-all duration-300 hover:border-border/70 hover:shadow-lg hover:bg-foreground/2"
+                  className="group relative rounded-2xl border border-border/50 bg-gradient-to-br from-background via-background to-secondary/30 p-6 transition-all duration-300 hover:border-border hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] hover:-translate-y-1"
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 flex items-center justify-center bg-foreground/5 group-hover:bg-foreground group-hover:text-background rounded-sm transition-all duration-300 group-hover:shadow-md group-hover:scale-110">
-                      <Icon className="w-5 h-5 transition-transform duration-300" />
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 flex items-center justify-center bg-foreground text-background rounded-xl shadow-md transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg flex-shrink-0">
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <h4 className="font-semibold text-base tracking-tight">{item.title}</h4>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-base tracking-tight mb-2">{item.title}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {item.desc}
-                  </p>
                 </div>
               );
             })}

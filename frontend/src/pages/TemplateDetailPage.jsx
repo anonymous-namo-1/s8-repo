@@ -279,12 +279,16 @@ export default function TemplateDetailPage() {
               {/* Quick Stats - Premium pills */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background/80 text-sm shadow-sm">
+                  <Zap className="w-4 h-4 text-muted-foreground" />
+                  <span>Save hundreds of hours</span>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background/80 text-sm shadow-sm">
                   <Clock className="w-4 h-4 text-muted-foreground" />
-                  <span>{template.customizeTime} to customize</span>
+                  <span>Grow while you sleep</span>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background/80 text-sm shadow-sm">
                   <Shield className="w-4 h-4 text-muted-foreground" />
-                  <span>14-day guarantee</span>
+                  <span>14-day money back guarantee</span>
                 </div>
               </div>
 
@@ -303,69 +307,6 @@ export default function TemplateDetailPage() {
                     </li>
                   ))}
                 </ul>
-              </div>
-
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
-
-              {/* Who This Is NOT For - Premium warning */}
-              <div className="mb-6 p-5 rounded-2xl bg-secondary/50 border border-foreground/10 shadow-[0_14px_35px_rgba(15,23,42,0.08)]">
-                <h2 className="text-sm font-semibold mb-2">Not For You If</h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {template.notFor}
-                </p>
-              </div>
-
-              {/* Tech Stack & File Formats - Premium grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                <div className="rounded-2xl border border-border/60 bg-background/80 p-5 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
-                  <h2 className="text-sm font-semibold mb-3">Tech Stack</h2>
-                  <div className="flex flex-wrap gap-2">
-                    {template.techStack.map((tech, index) => (
-                      <Badge
-                        key={index}
-                        variant="secondary"
-                        className="bg-background border border-border text-foreground/80 text-xs px-3 py-1 rounded-full"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-border/60 bg-background/80 p-5 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
-                  <h2 className="text-sm font-semibold mb-3">Files Included</h2>
-                  <div className="flex flex-wrap gap-2">
-                    {template.fileFormats.map((format, index) => (
-                      <Badge
-                        key={index}
-                        variant="secondary"
-                        className="bg-background border border-border text-foreground/80 text-xs px-3 py-1 rounded-full"
-                      >
-                        {format}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
-
-              {/* What Happens After Purchase - Premium steps */}
-              <div className="mb-6 rounded-2xl border border-border/60 bg-background/80 p-6 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
-                <h2 className="text-base font-semibold mb-4">After Purchase</h2>
-                <div className="space-y-4">
-                  {[
-                    'Instant download link via email',
-                    'Unzip and open in any code editor',
-                    'Email support if you get stuck'
-                  ].map((step, index) => (
-                    <div key={index} className="flex items-start gap-4 group">
-                      <div className="w-8 h-8 rounded-full bg-foreground text-background flex items-center justify-center text-sm font-bold flex-shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-sm">
-                        {index + 1}
-                      </div>
-                      <p className="text-sm text-muted-foreground pt-1.5">{step}</p>
-                    </div>
-                  ))}
-                </div>
               </div>
 
               <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent my-6" />
