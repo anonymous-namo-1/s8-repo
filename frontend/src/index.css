@@ -164,6 +164,31 @@ code {
         border-bottom: 1px solid var(--glass-border);
     }
 
+    /* Light glassmorphism for unscrolled header */
+    .glass-header-light {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Premium glassmorphism for scrolled header */
+    .glass-header-premium {
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    /* Premium glassmorphism for mobile menu */
+    .glass-menu {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(32px);
+        -webkit-backdrop-filter: blur(32px);
+        box-shadow: -4px 0 32px rgba(0, 0, 0, 0.12);
+    }
+
     /* Premium card hover effect */
     .premium-card {
         @apply relative overflow-hidden;
@@ -205,6 +230,12 @@ code {
         20% { opacity: 1; }
         80% { opacity: 1; }
         100% { transform: translateX(100%); opacity: 0; }
+    }
+
+    /* Shimmer shine effect for images */
+    @keyframes shimmer-shine {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
     }
 
     /* Premium input focus */
@@ -296,6 +327,101 @@ code {
         content: '';
         @apply absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-foreground/20 to-transparent;
     }
+
+    /* Glass Card - Glassmorphism with blur, transparency, and subtle border */
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        @apply rounded-lg overflow-hidden;
+    }
+
+    /* Premium Hover Lift - Lifts elements on hover with shadow */
+    .premium-hover-lift {
+        @apply transition-all duration-300;
+        transform: translateY(0);
+    }
+    .premium-hover-lift:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* Premium Border - Subtle gradient borders */
+    .premium-border {
+        @apply relative;
+        border: 1px solid transparent;
+        background: linear-gradient(var(--background), var(--background)) padding-box,
+                    linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.02) 100%) border-box;
+    }
+
+    /* Text Gradient - Gradient text effects */
+    .text-gradient {
+        background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Premium Glow - Subtle glow effects on elements */
+    .premium-glow {
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+        @apply transition-shadow duration-300;
+    }
+    .premium-glow:hover {
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Frosted Glass - Stronger blur effect variant */
+    .frosted-glass {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        @apply rounded-lg overflow-hidden;
+    }
+
+    /* Premium Shadow Utilities */
+    .premium-shadow-sm {
+        box-shadow: var(--shadow-sm);
+    }
+
+    .premium-shadow-md {
+        box-shadow: var(--shadow-md);
+    }
+
+    .premium-shadow-lg {
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* Scroll Reveal - Smooth scroll reveal animation */
+    @keyframes scrollReveal {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .scroll-reveal {
+        @apply opacity-0;
+        animation: scrollReveal 0.6s ease forwards;
+    }
+
+    /* Scroll Reveal with stagger support */
+    .scroll-reveal-stagger > * {
+        @apply opacity-0;
+        animation: scrollReveal 0.6s ease forwards;
+    }
+    .scroll-reveal-stagger > *:nth-child(1) { animation-delay: 0.1s; }
+    .scroll-reveal-stagger > *:nth-child(2) { animation-delay: 0.2s; }
+    .scroll-reveal-stagger > *:nth-child(3) { animation-delay: 0.3s; }
+    .scroll-reveal-stagger > *:nth-child(4) { animation-delay: 0.4s; }
+    .scroll-reveal-stagger > *:nth-child(5) { animation-delay: 0.5s; }
+    .scroll-reveal-stagger > *:nth-child(6) { animation-delay: 0.6s; }
 }
 
 @layer base {

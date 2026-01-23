@@ -57,19 +57,25 @@ export const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
           scrolled
-            ? 'glass-header shadow-[0_1px_20px_rgba(0,0,0,0.06)]'
-            : 'bg-background/80 backdrop-blur-md'
+            ? 'glass-header-premium border-b border-black/5 shadow-[0_4px_24px_rgba(0,0,0,0.08)]'
+            : 'glass-header-light'
         }`}
       >
         <div className="container-slate h-16 sm:h-14 flex items-center justify-between">
-          <Link to="/" className="flex items-center group">
-            <span className="text-xl sm:text-lg font-bold tracking-tight transition-all duration-300 group-hover:tracking-wide">
-              <span className="text-foreground">Synth</span>
-              <span className="text-muted-foreground">eight</span>
-            </span>
-          </Link>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Link to="/" className="flex items-center group">
+              <span className="text-xl sm:text-lg font-bold tracking-tight transition-all duration-300 group-hover:tracking-wide">
+                <span className="text-foreground">Synth</span>
+                <span className="text-muted-foreground">eight</span>
+              </span>
+            </Link>
+          </motion.div>
 
           <nav className="hidden md:flex items-center gap-1">
             {menuItems.map((item) => (
@@ -83,7 +89,7 @@ export const Header = () => {
                 <span className="flex items-center gap-1.5">
                   {item.label}
                   {item.badge && (
-                    <span className="text-[10px] px-1.5 py-0.5 bg-secondary text-muted-foreground font-medium">
+                    <span className="text-[10px] px-2.5 py-1 bg-secondary text-muted-foreground font-medium rounded-full transition-all duration-300">
                       {item.badge}
                     </span>
                   )}
@@ -103,7 +109,7 @@ export const Header = () => {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="md:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-lg hover:bg-black/5 transition-colors duration-300"
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
             {mobileMenuOpen ? (
@@ -131,16 +137,16 @@ export const Header = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="md:hidden fixed inset-y-0 right-0 w-[300px] max-w-[85vw] bg-white z-[201] flex flex-col shadow-2xl"
+              className="md:hidden fixed inset-y-0 right-0 w-[300px] max-w-[85vw] glass-menu z-[201] flex flex-col"
             >
-              <div className="flex items-center justify-between h-16 px-6 border-b border-gray-100">
+              <div className="flex items-center justify-between h-16 px-6 border-b border-white/15">
                 <span className="text-lg font-bold">
                   <span className="text-foreground">Synth</span>
                   <span className="text-muted-foreground">eight</span>
                 </span>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center w-10 h-10 -mr-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="flex items-center justify-center w-10 h-10 -mr-2 rounded-lg hover:bg-white/10 transition-colors duration-300"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -157,29 +163,29 @@ export const Header = () => {
                     <Link
                       to={item.to}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`flex items-center justify-between py-4 px-6 text-base font-medium transition-colors ${
+                      className={`flex items-center justify-between py-4 px-6 text-base font-medium transition-colors duration-300 ${
                         isActive(item.to) 
-                          ? 'text-blue-600 bg-blue-50' 
-                          : 'text-gray-900 hover:bg-gray-50'
+                          ? 'text-blue-600 bg-blue-500/10' 
+                          : 'text-foreground hover:bg-white/10'
                       }`}
                     >
                       <span className="flex items-center gap-3">
                         {item.label}
                         {item.badge && (
-                          <span className="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-500 font-medium rounded-full">
+                          <span className="text-[10px] px-2.5 py-1 bg-secondary/80 text-muted-foreground font-medium rounded-full transition-all duration-300">
                             {item.badge}
                           </span>
                         )}
                       </span>
-                      <ChevronRight className={`w-5 h-5 ${
-                        isActive(item.to) ? 'text-blue-500' : 'text-gray-300'
+                      <ChevronRight className={`w-5 h-5 transition-colors duration-300 ${
+                        isActive(item.to) ? 'text-blue-500' : 'text-foreground/40'
                       }`} />
                     </Link>
                   </motion.div>
                 ))}
               </nav>
 
-              <div className="p-6 border-t border-gray-100">
+              <div className="p-6 border-t border-white/15">
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}

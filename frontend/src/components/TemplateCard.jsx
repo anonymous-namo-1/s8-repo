@@ -63,30 +63,50 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         damping: 30,
       }}
     >
-      <Card className="group rounded-2xl border border-border/70 bg-gradient-to-b from-background via-background to-secondary/60 overflow-hidden flex flex-col relative transition-all duration-500 ring-1 ring-black/5 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] hover:border-border/90">
-        {/* Subtle gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-transparent to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
+      <Card className="group rounded-2xl border border-border/70 bg-gradient-to-b from-background via-background to-secondary/60 overflow-hidden flex flex-col relative transition-all duration-500 ring-1 ring-black/5 hover:shadow-[0_24px_80px_rgba(15,23,42,0.15)] hover:border-border/90 after:absolute after:inset-0 after:rounded-2xl after:opacity-0 after:group-hover:opacity-100 after:transition-opacity after:duration-500 after:pointer-events-none after:z-20 after:bg-gradient-to-br after:from-white/10 after:via-transparent after:to-white/5 after:backdrop-blur-[1px]">
+        {/* Refined glass-like overlay with enhanced blur and gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-transparent to-amber-500/8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10 backdrop-blur-sm" />
+        
+        {/* Gradient border effect on hover */}
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-5" style={{
+          background: 'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.03) 100%)',
+          padding: '1px',
+          borderRadius: '1rem'
+        }} />
 
         {/* Image - clickable to go to detail page */}
         <Link to={`/template/${template.slug}`} className="relative aspect-[16/10] overflow-hidden bg-secondary block">
           {template.badge && (
-            <Badge className="absolute left-3 top-3 z-10 bg-foreground text-background text-[10px] font-semibold uppercase tracking-[0.18em] px-2.5 py-1">
+            <Badge className="absolute left-3 top-3 z-10 bg-foreground text-background text-[10px] font-semibold uppercase tracking-[0.18em] px-2.5 py-1 rounded-lg shadow-md drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover:shadow-lg group-hover:drop-shadow-[0_6px_16px_rgba(0,0,0,0.2)]">
               {template.badge}
             </Badge>
           )}
-          <ImageWithSkeleton
-            src={template.image}
-            alt={template.name}
-            className="transition-all duration-500 group-hover:scale-105 object-top"
-            lazy={true}
-          />
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          {/* Hover overlay with preview hint */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
-            <span className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/40 bg-white/90 backdrop-blur-sm text-sm font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
+          <div className="relative h-full overflow-hidden">
+            <ImageWithSkeleton
+              src={template.image}
+              alt={template.name}
+              className="transition-all duration-700 ease-out group-hover:scale-110 object-cover"
+              lazy={true}
+            />
+            {/* Shimmer effect on hover */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+              animation: 'shimmer-shine 2s infinite',
+            }} />
+          </div>
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/40 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          {/* Enhanced glassmorphism overlay with preview hint */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center backdrop-blur-0 group-hover:backdrop-blur-sm">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileHover={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-2 px-5 py-3 rounded-full border border-white/50 bg-white/95 backdrop-blur-md text-sm font-semibold opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:bg-white/98 hover:border-white/70"
+            >
               <Eye className="w-4 h-4" />
               View Details
-            </span>
+            </motion.span>
           </div>
         </Link>
 
@@ -113,22 +133,27 @@ export const TemplateCard = ({ template, onBuyNow }) => {
 
           {/* Footer */}
           <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
-            {/* Price in INR - Enhanced styling */}
-            <div className="flex flex-col items-start">
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight">
+            {/* Price in INR - Improved visual hierarchy */}
+            <div className="flex flex-col items-start gap-1">
+              <div className="flex items-baseline gap-2.5">
+                <span className="text-3xl font-black tracking-tighter bg-gradient-to-br from-foreground to-foreground/80 bg-clip-text text-transparent">
                   {formatPrice(template.price)}
                 </span>
                 {template.originalPrice && (
-                  <span className="text-xs text-muted-foreground/60 line-through">
+                  <span className="text-xs text-muted-foreground/50 line-through font-medium">
                     {formatPrice(template.originalPrice)}
                   </span>
                 )}
               </div>
               {template.discount && (
-                <span className="text-xs text-green-600 font-semibold mt-0.5">
+                <motion.span 
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-xs font-bold tracking-wide text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-2.5 py-1 rounded-full"
+                >
                   Save {template.discount}%
-                </span>
+                </motion.span>
               )}
             </div>
 
@@ -146,11 +171,13 @@ export const TemplateCard = ({ template, onBuyNow }) => {
               <Button
                 variant="brutal"
                 size="sm"
-                className="h-10 px-5 text-sm group/btn"
+                className="h-10 px-5 text-sm group/btn relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-black/30"
                 onClick={() => onBuyNow && onBuyNow(template)}
               >
+                {/* Glow effect on hover */}
+                <span className="absolute inset-0 rounded-md bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 <span className="relative z-10">Download</span>
-                <ArrowRight className="w-3.5 h-3.5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
+                <ArrowRight className="w-3.5 h-3.5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1" />
               </Button>
             </div>
           </div>
