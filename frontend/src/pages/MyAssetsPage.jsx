@@ -173,7 +173,7 @@ export default function MyAssetsPage() {
                         <Link to={`/template/${template.slug}`}>
                           <Button variant="outline" size="sm" className="gap-2">
                             <Lock className="w-4 h-4" />
-                            Buy Now
+                            Download
                             <ArrowRight className="w-3 h-3" />
                           </Button>
                         </Link>
