@@ -57,7 +57,6 @@ export const templates = [
       "AI-powered chatbots with ChatGPT & GPT-4o integration",
       "Multi-language support including Hinglish",
       "Connect with WhatsApp, Email, Messenger, and more",
-      "Restaurant, Salon, Sales, Travel & more business templates",
       "Intent recognition and smart routing",
       "No coding skills required",
       "Ready to use - just import and configure",

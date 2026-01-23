@@ -8,7 +8,7 @@ import { ImageWithSkeleton } from './ui/image-with-skeleton';
 import { formatPrice } from '../data/templates';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 
-export const TemplateCard = ({ template, onBuyNow }) => {
+export const TemplateCard = ({ template }) => {
   const cardRef = useRef(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
@@ -62,13 +62,16 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         damping: 30,
       }}
     >
-      <Card className="group rounded-2xl border border-border/70 bg-gradient-to-b from-background via-background to-secondary/60 overflow-hidden flex flex-col relative transition-all duration-500 ring-1 ring-black/5 hover:shadow-[0_24px_80px_rgba(15,23,42,0.15)] hover:border-border/90">
+      <Card className="group h-full rounded-2xl border border-border/70 bg-gradient-to-b from-background via-background to-secondary/60 overflow-hidden flex flex-col relative transition-all duration-500 ring-1 ring-black/5 hover:shadow-[0_24px_80px_rgba(15,23,42,0.15)] hover:border-border/90">
         {/* Gradient border effect on hover */}
-        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-5" style={{
-          background: 'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.03) 100%)',
-          padding: '1px',
-          borderRadius: '1rem'
-        }} />
+        <div
+          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-5"
+          style={{
+            background: 'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.03) 100%)',
+            padding: '1px',
+            borderRadius: '1rem',
+          }}
+        />
 
         {/* Image - clickable to go to detail page */}
         <Link to={`/template/${template.slug}`} className="relative aspect-[4/3] overflow-hidden bg-secondary block">
@@ -80,10 +83,13 @@ export const TemplateCard = ({ template, onBuyNow }) => {
               lazy={true}
             />
             {/* Shimmer effect on hover */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
-              animation: 'shimmer-shine 2s infinite',
-            }} />
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+              style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+                animation: 'shimmer-shine 2s infinite',
+              }}
+            />
           </div>
           {/* Subtle overlay with preview hint - no blur */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center pointer-events-none">
@@ -99,24 +105,24 @@ export const TemplateCard = ({ template, onBuyNow }) => {
           <div className="flex-1">
             {/* Name - clickable */}
             <Link to={`/template/${template.slug}`}>
-              <h3 className="text-base sm:text-xl font-semibold tracking-tight mb-1.5 sm:mb-2 line-clamp-2 group-hover:text-foreground/80 transition-colors duration-300">
+              <h3 className="min-h-[2.6rem] sm:min-h-[3.2rem] text-base sm:text-xl font-semibold tracking-tight mb-1.5 sm:mb-2 line-clamp-2 group-hover:text-foreground/80 transition-colors duration-300">
                 {template.name}
               </h3>
             </Link>
 
             {/* Best For Label - with premium styling */}
-            <p className="text-xs sm:text-sm text-muted-foreground mb-2 line-clamp-2 sm:line-clamp-1">
+            <p className="min-h-[2.4rem] sm:min-h-[1.25rem] text-xs sm:text-sm text-muted-foreground mb-2 line-clamp-2 sm:line-clamp-1">
               <span className="font-medium text-foreground/70">Best for:</span> {template.bestFor}
             </p>
 
             {/* Use Case - hidden on mobile to reduce clutter */}
-            <p className="hidden sm:block text-xs text-muted-foreground/80 mb-3 line-clamp-1 leading-relaxed">
+            <p className="hidden sm:block min-h-[1.1rem] text-xs text-muted-foreground/80 mb-3 line-clamp-1 leading-relaxed">
               {template.useCase}
             </p>
           </div>
 
           {/* Footer */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-auto pt-3 sm:pt-4 border-t border-border/50 gap-3 sm:gap-0">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mt-auto pt-3 sm:pt-4 border-t border-border/50 gap-3 sm:gap-0">
             {/* Price in INR - Improved visual hierarchy */}
             <div className="flex items-center sm:items-start sm:flex-col gap-2 sm:gap-1">
               <div className="flex items-baseline gap-2">
@@ -138,24 +144,17 @@ export const TemplateCard = ({ template, onBuyNow }) => {
 
             {/* Actions */}
             <div className="flex items-center gap-3">
-              <Link
-                to={`/template/${template.slug}`}
-                className="hidden sm:flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 py-2 group/preview"
-              >
-                <span className="relative">
-                  Preview
-                  <span className="absolute bottom-0 left-0 w-0 h-px bg-foreground group-hover/preview:w-full transition-all duration-300" />
-                </span>
-              </Link>
               <Button
                 variant="brutal"
                 size="sm"
                 className="h-11 sm:h-10 w-full sm:w-auto px-5 text-sm group/btn relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-black/30"
-                onClick={() => onBuyNow && onBuyNow(template)}
+                asChild
               >
-                <span className="absolute inset-0 rounded-md bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                <span className="relative z-10">Download</span>
-                <ArrowRight className="w-3.5 h-3.5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                <Link to={`/template/${template.slug}`}>
+                  <span className="absolute inset-0 rounded-md bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <span className="relative z-10">Download</span>
+                  <ArrowRight className="w-3.5 h-3.5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                </Link>
               </Button>
             </div>
           </div>

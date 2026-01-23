@@ -3,21 +3,15 @@ import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import { TemplateCard } from './TemplateCard';
 import { templates } from '../data/templates';
-import { useRazorpay } from '../hooks/useRazorpay';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 
 export const TemplatesGrid = ({ showAll = true }) => {
-  const { initiatePayment } = useRazorpay();
   const [headerRef, isHeaderVisible] = useScrollAnimation(0.2);
   const [gridRef, isGridVisible] = useScrollAnimation(0.1);
   const { isFull, isMinimal } = useDeviceCapabilities();
 
   const displayTemplates = showAll ? templates : templates.slice(0, 8);
-
-  const handleBuyNow = (template) => {
-    initiatePayment(template);
-  };
 
   // 3D card reveal animation variants
   const cardVariants = {
@@ -96,8 +90,9 @@ export const TemplatesGrid = ({ showAll = true }) => {
               initial="hidden"
               animate={isGridVisible ? 'visible' : 'hidden'}
               style={{ transformStyle: 'preserve-3d' }}
+              className="h-full"
             >
-              <TemplateCard template={template} onBuyNow={handleBuyNow} />
+              <TemplateCard template={template} />
             </motion.div>
           ))}
         </div>
