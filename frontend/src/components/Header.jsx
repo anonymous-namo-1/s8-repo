@@ -24,18 +24,24 @@ export const Header = () => {
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
-      // Prevent touch scroll on iOS
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
+      document.body.style.top = `-${window.scrollY}px`;
     } else {
-      document.body.style.overflow = 'unset';
-      document.body.style.position = 'static';
-      document.body.style.width = 'auto';
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
     }
     return () => {
-      document.body.style.overflow = 'unset';
-      document.body.style.position = 'static';
-      document.body.style.width = 'auto';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
     };
   }, [mobileMenuOpen]);
 
@@ -49,68 +55,65 @@ export const Header = () => {
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'glass-header shadow-[0_1px_20px_rgba(0,0,0,0.06)]'
-          : 'bg-background/80 backdrop-blur-md'
-      }`}
-    >
-      <div className="container-slate h-16 sm:h-14 flex items-center justify-between">
-        <Link to="/" className="flex items-center group relative z-[70]">
-          <span className="text-xl sm:text-lg font-bold tracking-tight transition-all duration-300 group-hover:tracking-wide">
-            <span className="text-foreground">Synth</span>
-            <span className="text-muted-foreground">eight</span>
-          </span>
-        </Link>
-
-        <nav className="hidden md:flex items-center gap-1">
-          {menuItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.to}
-              className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 group ${
-                isActive(item.to) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              <span className="flex items-center gap-1.5">
-                {item.label}
-                {item.badge && (
-                  <span className="text-[10px] px-1.5 py-0.5 bg-secondary text-muted-foreground font-medium">
-                    {item.badge}
-                  </span>
-                )}
-              </span>
-              <span className={`absolute bottom-1 left-4 right-4 h-px bg-foreground transition-transform duration-300 origin-left ${
-                isActive(item.to) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-              }`} />
-            </Link>
-          ))}
-          <Link to="/login" className="ml-2">
-            <Button variant="brutal" size="sm" className="group">
-              <span>Sign In</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Button>
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+          scrolled
+            ? 'glass-header shadow-[0_1px_20px_rgba(0,0,0,0.06)]'
+            : 'bg-background/80 backdrop-blur-md'
+        }`}
+      >
+        <div className="container-slate h-16 sm:h-14 flex items-center justify-between">
+          <Link to="/" className="flex items-center group">
+            <span className="text-xl sm:text-lg font-bold tracking-tight transition-all duration-300 group-hover:tracking-wide">
+              <span className="text-foreground">Synth</span>
+              <span className="text-muted-foreground">eight</span>
+            </span>
           </Link>
-        </nav>
 
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-lg hover:bg-gray-100 transition-colors relative z-[70]"
-          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-        >
-          <motion.div
-            animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
-            transition={{ duration: 0.2 }}
+          <nav className="hidden md:flex items-center gap-1">
+            {menuItems.map((item) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 group ${
+                  isActive(item.to) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <span className="flex items-center gap-1.5">
+                  {item.label}
+                  {item.badge && (
+                    <span className="text-[10px] px-1.5 py-0.5 bg-secondary text-muted-foreground font-medium">
+                      {item.badge}
+                    </span>
+                  )}
+                </span>
+                <span className={`absolute bottom-1 left-4 right-4 h-px bg-foreground transition-transform duration-300 origin-left ${
+                  isActive(item.to) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                }`} />
+              </Link>
+            ))}
+            <Link to="/login" className="ml-2">
+              <Button variant="brutal" size="sm" className="group">
+                <span>Sign In</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </Link>
+          </nav>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
             {mobileMenuOpen ? (
               <X className="w-6 h-6" />
             ) : (
               <Menu className="w-6 h-6" />
             )}
-          </motion.div>
-        </button>
-      </div>
+          </button>
+        </div>
+      </header>
 
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -119,70 +122,81 @@ export const Header = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden fixed inset-0 bg-black/40 backdrop-blur-md z-[60]"
+              transition={{ duration: 0.2 }}
+              className="md:hidden fixed inset-0 bg-black/50 z-[200]"
               onClick={() => setMobileMenuOpen(false)}
             />
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="md:hidden fixed inset-y-0 right-0 w-[280px] bg-white shadow-2xl z-[65] flex flex-col"
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="md:hidden fixed inset-y-0 right-0 w-[300px] max-w-[85vw] bg-white z-[201] flex flex-col shadow-2xl"
             >
-              <div className="flex-1 flex flex-col pt-24 pb-8">
-                <nav className="flex flex-col">
-                  {menuItems.map((item, index) => (
-                    <motion.div
-                      key={item.label}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 + index * 0.05 }}
-                    >
-                      <Link
-                        to={item.to}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className={`flex items-center justify-between py-5 px-8 text-lg font-semibold border-b border-gray-50 transition-colors ${
-                          isActive(item.to) 
-                            ? 'text-blue-600 bg-blue-50/30' 
-                            : 'text-gray-900 hover:bg-gray-50'
-                        }`}
-                      >
-                        <span className="flex items-center gap-3">
-                          {item.label}
-                          {item.badge && (
-                            <span className="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-500 font-medium rounded-full">
-                              {item.badge}
-                            </span>
-                          )}
-                        </span>
-                        <ChevronRight className={`w-5 h-5 transition-transform ${
-                          isActive(item.to) ? 'text-blue-500' : 'text-gray-300'
-                        }`} />
-                      </Link>
-                    </motion.div>
-                  ))}
-                </nav>
+              <div className="flex items-center justify-between h-16 px-6 border-b border-gray-100">
+                <span className="text-lg font-bold">
+                  <span className="text-foreground">Synth</span>
+                  <span className="text-muted-foreground">eight</span>
+                </span>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center w-10 h-10 -mr-2 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
 
-                <div className="mt-auto px-8">
+              <nav className="flex-1 overflow-y-auto py-4">
+                {menuItems.map((item, index) => (
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
+                    key={item.label}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 + index * 0.05 }}
                   >
-                    <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                      <Button variant="brutal" className="w-full h-14 text-lg font-bold group">
-                        <span>Sign In</span>
-                        <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-                      </Button>
+                    <Link
+                      to={item.to}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex items-center justify-between py-4 px-6 text-base font-medium transition-colors ${
+                        isActive(item.to) 
+                          ? 'text-blue-600 bg-blue-50' 
+                          : 'text-gray-900 hover:bg-gray-50'
+                      }`}
+                    >
+                      <span className="flex items-center gap-3">
+                        {item.label}
+                        {item.badge && (
+                          <span className="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-500 font-medium rounded-full">
+                            {item.badge}
+                          </span>
+                        )}
+                      </span>
+                      <ChevronRight className={`w-5 h-5 ${
+                        isActive(item.to) ? 'text-blue-500' : 'text-gray-300'
+                      }`} />
                     </Link>
                   </motion.div>
-                </div>
+                ))}
+              </nav>
+
+              <div className="p-6 border-t border-gray-100">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                    <Button variant="brutal" className="w-full h-12 text-base font-semibold group">
+                      <span>Sign In</span>
+                      <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 };
