@@ -49,8 +49,8 @@ export const Header = () => {
 
   const menuItems = [
     { label: 'Workflows', to: '/workflows', type: 'link' },
-    { label: '3D Websites', to: '/3d-websites', type: 'link', badge: 'Coming Soon' },
-    { label: 'Notion', to: '/notion', type: 'link', badge: 'Coming Soon' },
+    { label: '3D Websites', to: '/3d-websites', type: 'link' },
+    { label: 'Notion', to: '/notion', type: 'link' },
     { label: 'Contact', to: '/contact', type: 'link' },
   ];
 

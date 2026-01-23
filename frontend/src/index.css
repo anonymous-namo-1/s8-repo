@@ -9,6 +9,30 @@ html {
     scroll-behavior: smooth;
     /* Responsive base font size - larger on mobile for better readability */
     font-size: 18px;
+    cursor: default;
+}
+
+/* Premium Custom Cursor */
+* {
+    cursor: inherit;
+}
+
+a, button, [role="button"], input[type="submit"], input[type="button"], 
+.cursor-pointer, [onclick], label[for], select, summary {
+    cursor: pointer;
+}
+
+input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]),
+textarea, [contenteditable="true"] {
+    cursor: text;
+}
+
+/* Grab cursors for draggable elements */
+[draggable="true"] {
+    cursor: grab;
+}
+[draggable="true"]:active {
+    cursor: grabbing;
 }
 
 @media (min-width: 640px) {

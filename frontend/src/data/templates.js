@@ -42,7 +42,6 @@ export const templates = [
     discount: 85,
     image: "/images/whatsapp-hero.png",
     images: [
-      "/images/whatsapp-hero.png",
       "/images/whatsapp-workflows-12.png",
       "/images/whatsapp-workflows-2.png",
       "/images/whatsapp-workflows-3.png",

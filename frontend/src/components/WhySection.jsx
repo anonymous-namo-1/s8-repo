@@ -109,8 +109,8 @@ export const WhySection = () => {
               </div>
               <div className="w-px bg-border/50" />
               <div>
-                <p className="text-3xl font-bold tracking-tight">14</p>
-                <p className="text-xs text-muted-foreground mt-1">Day Guarantee</p>
+                <p className="text-3xl font-bold tracking-tight">24/7</p>
+                <p className="text-xs text-muted-foreground mt-1">Automation</p>
               </div>
             </div>
           </motion.div>
