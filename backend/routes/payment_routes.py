@@ -39,6 +39,13 @@ def create_payment_router(db: AsyncIOMotorDatabase) -> APIRouter:
     email_service = get_email_service()
     order_service = get_order_service(db)
     otp_service = OTPService(db)
+    
+    def check_razorpay():
+        if razorpay_service is None:
+            raise HTTPException(
+                status_code=503,
+                detail="Payment service not configured. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET."
+            )
 
     @router.post("/orders/create", response_model=OrderResponse)
     async def create_order(request: OrderCreateRequest):
@@ -51,6 +58,7 @@ def create_payment_router(db: AsyncIOMotorDatabase) -> APIRouter:
         Returns:
             Order details including Razorpay order ID
         """
+        check_razorpay()
         try:
             # Get template price
             amount = TEMPLATE_PRICING.get(request.template_id)
@@ -112,6 +120,7 @@ def create_payment_router(db: AsyncIOMotorDatabase) -> APIRouter:
         Returns:
             Verification result
         """
+        check_razorpay()
         try:
             # Verify signature
             is_valid = razorpay_service.verify_payment_signature(
@@ -277,6 +286,7 @@ def create_payment_router(db: AsyncIOMotorDatabase) -> APIRouter:
         Returns:
             Success response
         """
+        check_razorpay()
         try:
             # Get raw body and signature
             body = await request.body()

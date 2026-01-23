@@ -147,9 +147,14 @@ class RazorpayService:
 _razorpay_service: Optional[RazorpayService] = None
 
 
-def get_razorpay_service() -> RazorpayService:
-    """Get or create Razorpay service singleton"""
+def get_razorpay_service() -> Optional[RazorpayService]:
+    """Get or create Razorpay service singleton. Returns None if credentials not configured."""
     global _razorpay_service
     if _razorpay_service is None:
+        key_id = os.getenv("RAZORPAY_KEY_ID")
+        key_secret = os.getenv("RAZORPAY_KEY_SECRET")
+        if not key_id or not key_secret:
+            logger.warning("Razorpay credentials not configured. Payment features will be disabled.")
+            return None
         _razorpay_service = RazorpayService()
     return _razorpay_service
