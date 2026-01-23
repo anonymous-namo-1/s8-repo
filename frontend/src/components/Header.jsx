@@ -24,11 +24,18 @@ export const Header = () => {
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      // Prevent touch scroll on iOS
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
     } else {
       document.body.style.overflow = 'unset';
+      document.body.style.position = 'static';
+      document.body.style.width = 'auto';
     }
     return () => {
       document.body.style.overflow = 'unset';
+      document.body.style.position = 'static';
+      document.body.style.width = 'auto';
     };
   }, [mobileMenuOpen]);
 
@@ -50,7 +57,7 @@ export const Header = () => {
       }`}
     >
       <div className="container-slate h-16 sm:h-14 flex items-center justify-between">
-        <Link to="/" className="flex items-center group">
+        <Link to="/" className="flex items-center group relative z-[70]">
           <span className="text-xl sm:text-lg font-bold tracking-tight transition-all duration-300 group-hover:tracking-wide">
             <span className="text-foreground">Synth</span>
             <span className="text-muted-foreground">eight</span>
@@ -89,7 +96,7 @@ export const Header = () => {
 
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-lg hover:bg-gray-100 transition-colors"
+          className="md:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-lg hover:bg-gray-100 transition-colors relative z-[70]"
           aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
         >
           <motion.div
@@ -97,9 +104,9 @@ export const Header = () => {
             transition={{ duration: 0.2 }}
           >
             {mobileMenuOpen ? (
-              <X className="w-5 h-5" />
+              <X className="w-6 h-6" />
             ) : (
-              <Menu className="w-5 h-5" />
+              <Menu className="w-6 h-6" />
             )}
           </motion.div>
         </button>
@@ -112,65 +119,66 @@ export const Header = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden fixed inset-0 top-16 bg-black/30 backdrop-blur-sm z-[55]"
+              transition={{ duration: 0.3 }}
+              className="md:hidden fixed inset-0 bg-black/40 backdrop-blur-md z-[60]"
               onClick={() => setMobileMenuOpen(false)}
             />
             <motion.div
-              initial={{ opacity: 0, x: '100%' }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: '100%' }}
-              transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-              className="md:hidden fixed top-16 right-0 bottom-0 z-[60] w-full max-w-xs bg-white shadow-2xl"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="md:hidden fixed inset-y-0 right-0 w-[280px] bg-white shadow-2xl z-[65] flex flex-col"
             >
-              <nav className="flex flex-col h-full">
-                <div className="flex-1 overflow-y-auto py-4">
+              <div className="flex-1 flex flex-col pt-24 pb-8">
+                <nav className="flex flex-col">
                   {menuItems.map((item, index) => (
                     <motion.div
                       key={item.label}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 + 0.1 }}
+                      transition={{ delay: 0.1 + index * 0.05 }}
                     >
                       <Link
                         to={item.to}
                         onClick={() => setMobileMenuOpen(false)}
-                        className={`flex items-center justify-between py-4 px-6 text-base font-medium transition-colors ${
+                        className={`flex items-center justify-between py-5 px-8 text-lg font-semibold border-b border-gray-50 transition-colors ${
                           isActive(item.to) 
-                            ? 'bg-gray-50 text-foreground' 
-                            : 'text-gray-600 hover:bg-gray-50 hover:text-foreground'
+                            ? 'text-blue-600 bg-blue-50/30' 
+                            : 'text-gray-900 hover:bg-gray-50'
                         }`}
                       >
                         <span className="flex items-center gap-3">
                           {item.label}
                           {item.badge && (
-                            <span className="text-[10px] px-2 py-1 bg-gray-100 text-gray-500 font-medium rounded-full">
+                            <span className="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-500 font-medium rounded-full">
                               {item.badge}
                             </span>
                           )}
                         </span>
-                        <ChevronRight className={`w-4 h-4 text-gray-400 transition-transform ${
-                          isActive(item.to) ? 'translate-x-0' : '-translate-x-1 group-hover:translate-x-0'
+                        <ChevronRight className={`w-5 h-5 transition-transform ${
+                          isActive(item.to) ? 'text-blue-500' : 'text-gray-300'
                         }`} />
                       </Link>
                     </motion.div>
                   ))}
-                </div>
+                </nav>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="p-4 border-t border-gray-100"
-                >
-                  <Link to="/login" className="block" onClick={() => setMobileMenuOpen(false)}>
-                    <Button variant="brutal" className="w-full h-12 text-base group">
-                      <span>Sign In</span>
-                      <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </Button>
-                  </Link>
-                </motion.div>
-              </nav>
+                <div className="mt-auto px-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                      <Button variant="brutal" className="w-full h-14 text-lg font-bold group">
+                        <span>Sign In</span>
+                        <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                      </Button>
+                    </Link>
+                  </motion.div>
+                </div>
+              </div>
             </motion.div>
           </>
         )}
