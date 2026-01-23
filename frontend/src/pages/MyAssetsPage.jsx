@@ -7,7 +7,7 @@ import { SEO } from '../components/SEO';
 
 import { useAuth } from '../context/AuthContext';
 import { templates, formatPrice } from '../data/templates';
-import { Download, Lock, LogOut, Package, ArrowRight } from 'lucide-react';
+import { Download, Lock, LogOut, Package, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast, Toaster } from 'sonner';
 
@@ -16,7 +16,6 @@ export default function MyAssetsPage() {
   const { user, isAuthenticated, loading, logout, getDownloadLink } = useAuth();
   const [downloadingId, setDownloadingId] = useState(null);
 
-  // Redirect if not authenticated
   useEffect(() => {
     if (!loading && !isAuthenticated) {
       navigate('/login');
@@ -51,7 +50,14 @@ export default function MyAssetsPage() {
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1 flex items-center justify-center pt-16">
-          <div className="animate-pulse text-muted-foreground">Loading...</div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center gap-4"
+          >
+            <div className="w-12 h-12 rounded-full border-2 border-foreground/20 border-t-foreground animate-spin" />
+            <p className="text-muted-foreground text-sm">Loading your assets...</p>
+          </motion.div>
         </main>
         <Footer />
       </div>
@@ -59,13 +65,13 @@ export default function MyAssetsPage() {
   }
 
   if (!isAuthenticated) {
-    return null; // Will redirect in useEffect
+    return null;
   }
 
   const purchasedTemplateIds = user?.purchases || [];
 
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="min-h-screen flex flex-col relative bg-gradient-to-b from-white via-gray-50/50 to-white">
       
       <SEO
         title="My Assets"
@@ -74,49 +80,91 @@ export default function MyAssetsPage() {
         url="https://syntheight.com/my-assets"
       />
       <Header />
-      <main className="flex-1 pt-20 pb-16">
+      <main className="flex-1 pt-24 pb-20">
         <div className="container-slate">
-          {/* Header */}
+          {/* Header Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-10"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-12"
           >
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
               <div>
-                <h1 className="text-3xl font-bold tracking-tight mb-2">My Assets</h1>
-                <p className="text-muted-foreground">
+                <motion.h1 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.5 }}
+                  className="text-4xl font-bold tracking-tight mb-3"
+                >
+                  My Assets
+                </motion.h1>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="text-muted-foreground"
+                >
                   Signed in as <span className="font-medium text-foreground">{user?.email}</span>
-                </p>
+                </motion.p>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleLogout}
-                className="gap-2 self-start"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
               >
-                <LogOut className="w-4 h-4" />
-                Sign Out
-              </Button>
+                <Button
+                  variant="glass"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="gap-2 shadow-sm hover:shadow-md"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Sign Out
+                </Button>
+              </motion.div>
             </div>
 
-            {/* Stats */}
-            <div className="flex gap-6 p-4 bg-secondary">
-              <div>
-                <p className="text-2xl font-bold">{purchasedTemplateIds.length}</p>
-                <p className="text-xs text-muted-foreground">Products Owned</p>
+            {/* Stats Section - Glassmorphism */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="grid grid-cols-2 gap-4 sm:flex sm:gap-6"
+            >
+              <div className="relative group p-6 bg-white/80 backdrop-blur-xl border border-black/5 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CheckCircle2 className="w-5 h-5 text-green-600" />
+                    <span className="text-xs font-medium text-green-600 uppercase tracking-wider">Owned</span>
+                  </div>
+                  <p className="text-3xl font-bold tracking-tight">{purchasedTemplateIds.length}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Products in your library</p>
+                </div>
               </div>
-              <div className="w-px bg-border" />
-              <div>
-                <p className="text-2xl font-bold">{templates.length - purchasedTemplateIds.length}</p>
-                <p className="text-xs text-muted-foreground">Available</p>
+              
+              <div className="relative group p-6 bg-white/80 backdrop-blur-xl border border-black/5 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-5 h-5 text-blue-600" />
+                    <span className="text-xs font-medium text-blue-600 uppercase tracking-wider">Available</span>
+                  </div>
+                  <p className="text-3xl font-bold tracking-tight">{templates.length - purchasedTemplateIds.length}</p>
+                  <p className="text-xs text-muted-foreground mt-1">More to explore</p>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+          >
             {templates.map((template, index) => {
               const isPurchased = purchasedTemplateIds.includes(template.slug);
               const isDownloading = downloadingId === template.slug;
@@ -126,92 +174,127 @@ export default function MyAssetsPage() {
                   key={template.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`border border-border bg-background p-6 ${
-                    isPurchased ? '' : 'opacity-60'
+                  transition={{ duration: 0.5, delay: 0.1 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  className={`group relative overflow-hidden bg-white/90 backdrop-blur-xl border rounded-2xl transition-all duration-500 ${
+                    isPurchased 
+                      ? 'border-green-200/50 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] hover:-translate-y-1' 
+                      : 'border-black/5 opacity-75 hover:opacity-100 shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]'
                   }`}
                 >
-                  <div className="flex gap-5">
-                    {/* Product Image */}
-                    <div className="w-24 h-24 flex-shrink-0 bg-secondary overflow-hidden">
-                      <img
-                        src={template.image}
-                        alt={template.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-
-                    {/* Product Info */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <h3 className="font-semibold text-base truncate">{template.name}</h3>
-                        {isPurchased ? (
-                          <span className="flex-shrink-0 text-xs px-2 py-1 bg-green-100 text-green-700 font-medium">
-                            Owned
-                          </span>
-                        ) : (
-                          <span className="flex-shrink-0 text-xs px-2 py-1 bg-secondary text-muted-foreground font-medium">
-                            {formatPrice(template.price)}
-                          </span>
+                  {isPurchased && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-500/[0.03] via-transparent to-transparent pointer-events-none" />
+                  )}
+                  
+                  <div className="relative p-6">
+                    <div className="flex gap-5">
+                      <div className="relative w-28 h-28 flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50 shadow-inner">
+                        <img
+                          src={template.image}
+                          alt={template.name}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        {isPurchased && (
+                          <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 to-transparent" />
                         )}
                       </div>
 
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                        {template.description}
-                      </p>
+                      <div className="flex-1 min-w-0 flex flex-col">
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <h3 className="font-semibold text-lg truncate leading-tight">{template.name}</h3>
+                          {isPurchased ? (
+                            <span className="flex-shrink-0 inline-flex items-center gap-1.5 text-xs px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-full shadow-sm">
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              Owned
+                            </span>
+                          ) : (
+                            <span className="flex-shrink-0 text-sm px-3 py-1.5 bg-gray-100 text-gray-600 font-medium rounded-full">
+                              {formatPrice(template.price)}
+                            </span>
+                          )}
+                        </div>
 
-                      {isPurchased ? (
-                        <Button
-                          variant="brutal"
-                          size="sm"
-                          onClick={() => handleDownload(template.slug)}
-                          disabled={isDownloading}
-                          className="gap-2"
-                        >
-                          <Download className="w-4 h-4" />
-                          {isDownloading ? 'Opening...' : 'Download'}
-                        </Button>
-                      ) : (
-                        <Link to={`/template/${template.slug}`}>
-                          <Button variant="outline" size="sm" className="gap-2">
-                            <Lock className="w-4 h-4" />
-                            Download
-                            <ArrowRight className="w-3 h-3" />
+                        <p className="text-sm text-muted-foreground mb-4 line-clamp-2 flex-grow">
+                          {template.description}
+                        </p>
+
+                        {isPurchased ? (
+                          <Button
+                            variant="brutal"
+                            size="sm"
+                            onClick={() => handleDownload(template.slug)}
+                            disabled={isDownloading}
+                            className="gap-2 w-fit rounded-full shadow-md hover:shadow-lg"
+                          >
+                            {isDownloading ? (
+                              <>
+                                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                Opening...
+                              </>
+                            ) : (
+                              <>
+                                <Download className="w-4 h-4" />
+                                Download
+                              </>
+                            )}
                           </Button>
-                        </Link>
-                      )}
+                        ) : (
+                          <Link to={`/template/${template.slug}`}>
+                            <Button variant="outline" size="sm" className="gap-2 rounded-full">
+                              <Lock className="w-4 h-4" />
+                              View Product
+                              <ArrowRight className="w-3 h-3" />
+                            </Button>
+                          </Link>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
 
           {/* Empty State */}
           {purchasedTemplateIds.length === 0 && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-center py-12 mt-6 border border-dashed border-border"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="relative mt-12 overflow-hidden"
             >
-              <Package className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No purchases yet</h3>
-              <p className="text-sm text-muted-foreground mb-6">
-                You haven't purchased any products yet. Browse our collection to get started.
-              </p>
-              <Link to="/workflows">
-                <Button variant="brutal" className="gap-2">
-                  Browse Products
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
+              <div className="relative text-center py-16 px-8 bg-gradient-to-br from-white via-gray-50/50 to-white border border-dashed border-gray-200 rounded-3xl">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
+                
+                <div className="relative">
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 0.4 }}
+                    className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gray-100 to-gray-50 rounded-2xl flex items-center justify-center shadow-inner"
+                  >
+                    <Package className="w-10 h-10 text-muted-foreground/50" />
+                  </motion.div>
+                  
+                  <h3 className="text-xl font-semibold mb-3">No purchases yet</h3>
+                  <p className="text-muted-foreground mb-8 max-w-sm mx-auto">
+                    You haven't purchased any products yet. Browse our collection to find automation workflows that will transform your business.
+                  </p>
+                  
+                  <Link to="/workflows">
+                    <Button variant="brutal" size="lg" className="gap-2 rounded-full shadow-lg hover:shadow-xl">
+                      <Sparkles className="w-4 h-4" />
+                      Browse Products
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </motion.div>
           )}
         </div>
       </main>
       <Footer />
-      <Toaster position="top-center" />
+      <Toaster position="top-center" richColors />
     </div>
   );
 }

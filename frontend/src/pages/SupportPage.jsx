@@ -51,65 +51,76 @@ export default function SupportPage() {
       />
       <Header />
       <main className="flex-1 py-16 md:py-24">
-        <div className="container-brutal">
-          <div className="max-w-xl">
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
-              Support
-            </h1>
-            <p className="text-lg text-muted-foreground mb-12">
-              Need help? Send us a message and we will respond within 24 hours.
-            </p>
+        <div className="container-slate">
+          <div className="max-w-xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="inline-block text-xs font-semibold text-muted-foreground uppercase tracking-[0.2em] mb-4">
+                Get Help
+              </span>
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+                Support
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Need help? Send us a message and we will respond within 24 hours.
+              </p>
+            </div>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input 
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="border-border bg-background"
-                />
-              </div>
+            <div className="form-card">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                  <Input 
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="h-12 rounded-xl border-border/60 bg-background transition-all duration-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus:border-foreground/20"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="subject" className="text-sm font-medium">Subject</Label>
+                  <Input 
+                    id="subject"
+                    name="subject"
+                    type="text"
+                    placeholder="What do you need help with?"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="h-12 rounded-xl border-border/60 bg-background transition-all duration-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus:border-foreground/20"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="text-sm font-medium">Message</Label>
+                  <Textarea 
+                    id="message"
+                    name="message"
+                    placeholder="Describe your issue or question..."
+                    rows={6}
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="rounded-xl border-border/60 bg-background resize-none transition-all duration-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus:border-foreground/20"
+                  />
+                </div>
+                
+                <Button 
+                  type="submit" 
+                  variant="brutal" 
+                  size="lg" 
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </Button>
+              </form>
               
-              <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
-                <Input 
-                  id="subject"
-                  name="subject"
-                  type="text"
-                  placeholder="What do you need help with?"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="border-border bg-background"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea 
-                  id="message"
-                  name="message"
-                  placeholder="Describe your issue or question..."
-                  rows={6}
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="border-border bg-background resize-none"
-                />
-              </div>
-              
-              <Button 
-                type="submit" 
-                variant="brutal" 
-                size="lg" 
-                className="w-full"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </Button>
-            </form>
+              <p className="text-xs text-muted-foreground text-center mt-6">
+                We respect your privacy. Your information will never be shared.
+              </p>
+            </div>
           </div>
         </div>
       </main>

@@ -55,13 +55,13 @@ export default function ComingSoonPage() {
           >
             {/* Icon */}
             <div className="mb-8 flex justify-center">
-              <div className="w-20 h-20 bg-secondary flex items-center justify-center text-4xl">
+              <div className="icon-container-lg text-4xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                 {info.icon}
               </div>
             </div>
 
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary border border-border text-sm font-medium text-muted-foreground mb-6">
+            <div className="badge-premium text-muted-foreground mb-6">
               <Clock className="w-4 h-4" />
               Coming Soon
             </div>
@@ -77,13 +77,13 @@ export default function ComingSoonPage() {
             </p>
 
             {/* Info box */}
-            <div className="bg-secondary p-6 mb-8 text-left">
-              <h2 className="text-base font-semibold mb-3">What to expect:</h2>
-              <ul className="text-sm text-muted-foreground space-y-2">
-                <li>• Premium quality assets</li>
-                <li>• One-time purchase, lifetime access</li>
-                <li>• Regular updates and additions</li>
-                <li>• 14-day money-back guarantee</li>
+            <div className="section-box text-left mb-8">
+              <h2 className="text-base font-semibold mb-4">What to expect:</h2>
+              <ul className="space-y-3">
+                <li className="list-item-premium">Premium quality assets</li>
+                <li className="list-item-premium">One-time purchase, lifetime access</li>
+                <li className="list-item-premium">Regular updates and additions</li>
+                <li className="list-item-premium">14-day money-back guarantee</li>
               </ul>
             </div>
 

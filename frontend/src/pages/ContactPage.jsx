@@ -95,9 +95,9 @@ export default function ContactPage() {
 
               {/* Contact Info Cards */}
               <div className="space-y-4">
-                <div className="group p-5 border border-border bg-background hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300">
+                <div className="group info-card">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-foreground/5 group-hover:bg-foreground group-hover:text-background flex items-center justify-center transition-all duration-300">
+                    <div className="icon-container">
                       <Mail className="w-5 h-5" />
                     </div>
                     <div>
@@ -112,9 +112,9 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="group p-5 border border-border bg-background hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300">
+                <div className="group info-card">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-foreground/5 group-hover:bg-foreground group-hover:text-background flex items-center justify-center transition-all duration-300">
+                    <div className="icon-container">
                       <Clock className="w-5 h-5" />
                     </div>
                     <div>
@@ -126,9 +126,9 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="group p-5 border border-border bg-background hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300">
+                <div className="group info-card">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-foreground/5 group-hover:bg-foreground group-hover:text-background flex items-center justify-center transition-all duration-300">
+                    <div className="icon-container">
                       <MessageSquare className="w-5 h-5" />
                     </div>
                     <div>
@@ -148,7 +148,7 @@ export default function ContactPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <div className="p-8 sm:p-10 border border-border bg-background shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
+              <div className="form-card">
                 <h2 className="text-xl font-semibold mb-6">Send us a message</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -164,7 +164,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         onFocus={() => setFocusedField('name')}
                         onBlur={() => setFocusedField(null)}
-                        className="h-12 border-border bg-background transition-all duration-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus:border-foreground/30"
+                        className="h-12 rounded-xl border-border/60 bg-background transition-all duration-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus:border-foreground/20"
                       />
                     </div>
                   </div>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         onFocus={() => setFocusedField('email')}
                         onBlur={() => setFocusedField(null)}
-                        className="h-12 border-border bg-background transition-all duration-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus:border-foreground/30"
+                        className="h-12 rounded-xl border-border/60 bg-background transition-all duration-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus:border-foreground/20"
                       />
                     </div>
                   </div>
@@ -198,7 +198,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         onFocus={() => setFocusedField('message')}
                         onBlur={() => setFocusedField(null)}
-                        className="border-border bg-background resize-none transition-all duration-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus:border-foreground/30"
+                        className="rounded-xl border-border/60 bg-background resize-none transition-all duration-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus:border-foreground/20"
                       />
                     </div>
                   </div>
