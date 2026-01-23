@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { Background3D } from './Background3D';
 
@@ -15,71 +15,32 @@ export const Hero = () => {
   return (
     <section className="w-full pt-32 pb-20 md:pt-44 md:pb-28 relative overflow-hidden">
       <Background3D />
-      
-      <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background pointer-events-none" style={{ zIndex: 1 }} />
 
       <div className="container-slate relative" style={{ zIndex: 2 }}>
         <div className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-6"
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/80 backdrop-blur-sm border border-border text-sm font-medium text-muted-foreground">
-              <Sparkles className="w-4 h-4" />
-              For creators, developers, and business owners
-            </span>
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-8"
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
           >
-            <span className="block">Premium digital</span>
-            <span className="block">assets.</span>
+            <span className="block">Premium digital assets.</span>
             <span className="block mt-2 text-muted-foreground/70">Ready to use.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mb-6 leading-relaxed font-light"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-lg sm:text-xl text-muted-foreground max-w-xl mb-8 leading-relaxed"
           >
-            High-quality templates, workflows, and tools. One-time purchase, lifetime access.
+            Templates, workflows, and tools. One-time purchase, lifetime access.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-10 text-sm sm:text-base text-muted-foreground"
-          >
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
-              Premium quality
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
-              Instant download
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
-              Lifetime access
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
-              14-day guarantee
-            </span>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
           >
             <Link to="/workflows">
@@ -99,15 +60,6 @@ export const Hero = () => {
               <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
             </a>
           </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={isVisible ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-10 text-xs text-muted-foreground/60"
-          >
-            Trusted by creators, developers, and businesses worldwide
-          </motion.p>
         </div>
       </div>
     </section>

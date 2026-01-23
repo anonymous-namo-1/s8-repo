@@ -5,71 +5,27 @@ export function Background3D() {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const animationRef = useRef(null);
-  const dotsRef = useRef([]);
   const wavesRef = useRef([]);
-  const timeRef = useRef(0);
   const { tier } = useDeviceCapabilities();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-    
-    const handleChange = (e) => setPrefersReducedMotion(e.matches);
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
 
   const config = React.useMemo(() => {
     const baseConfig = {
-      dotSize: 3,
-      spacing: 25,
-      waveSpeed: 0.15,
-      waveDecay: 0.985,
-      waveAmplitude: 25,
-      ambientWaveSpeed: 0.0008,
-      ambientWaveAmplitude: 8,
-      perspectiveStrength: 0.4,
+      dotSize: 4,
+      spacing: 20,
+      waveSpeed: 4,
+      waveWidth: 60,
       maxWaves: 5,
-      contentClearance: 0.45,
     };
 
     if (tier === 'full') {
-      return { ...baseConfig, spacing: 22, dotSize: 3.5, maxWaves: 8 };
+      return { ...baseConfig, spacing: 18, dotSize: 4.5, maxWaves: 8, waveWidth: 70 };
     } else if (tier === 'reduced') {
-      return { ...baseConfig, spacing: 30, dotSize: 3, maxWaves: 4 };
+      return { ...baseConfig, spacing: 25, dotSize: 4, maxWaves: 4, waveWidth: 55 };
     } else {
-      return { ...baseConfig, spacing: 40, dotSize: 2.5, maxWaves: 2, ambientWaveAmplitude: 4 };
+      return { ...baseConfig, spacing: 35, dotSize: 3.5, maxWaves: 3, waveWidth: 45 };
     }
   }, [tier]);
-
-  const initDots = useCallback((width, height) => {
-    const dots = [];
-    const cols = Math.ceil(width / config.spacing) + 2;
-    const rows = Math.ceil(height / config.spacing) + 2;
-    const offsetX = (width - (cols - 1) * config.spacing) / 2;
-    const offsetY = (height - (rows - 1) * config.spacing) / 2;
-
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const x = offsetX + col * config.spacing;
-        const y = offsetY + row * config.spacing;
-        
-        dots.push({
-          baseX: x,
-          baseY: y,
-          x: x,
-          y: y,
-          z: 0,
-          scale: 1,
-          row,
-          col,
-        });
-      }
-    }
-    return dots;
-  }, [config.spacing]);
 
   const handleClick = useCallback((e) => {
     const container = containerRef.current;
@@ -87,7 +43,12 @@ export function Background3D() {
       x,
       y,
       radius: 0,
-      strength: 1,
+      maxRadius: Math.max(
+        Math.sqrt(x * x + y * y),
+        Math.sqrt((rect.width - x) ** 2 + y ** 2),
+        Math.sqrt(x ** 2 + (rect.height - y) ** 2),
+        Math.sqrt((rect.width - x) ** 2 + (rect.height - y) ** 2)
+      ) + 100,
       timestamp: Date.now(),
     });
   }, [config.maxWaves]);
@@ -99,14 +60,13 @@ export function Background3D() {
         const width = container.offsetWidth;
         const height = container.offsetHeight;
         setDimensions({ width, height });
-        dotsRef.current = initDots(width, height);
       }
     };
 
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);
-  }, [initDots]);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -123,115 +83,75 @@ export function Background3D() {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 
-    const fadeStartY = dimensions.height * 0.55;
-    const fadeEndY = dimensions.height * 0.9;
-    const contentEdgeX = dimensions.width * config.contentClearance;
-    const fadeStartX = contentEdgeX;
-    const fadeEndX = contentEdgeX + dimensions.width * 0.15;
+    const cols = Math.ceil(dimensions.width / config.spacing) + 2;
+    const rows = Math.ceil(dimensions.height / config.spacing) + 2;
+    const offsetX = (dimensions.width - (cols - 1) * config.spacing) / 2;
+    const offsetY = (dimensions.height - (rows - 1) * config.spacing) / 2;
 
-    if (prefersReducedMotion) {
-      ctx.clearRect(0, 0, dimensions.width, dimensions.height);
-      dotsRef.current.forEach((dot) => {
-        const fadeYProgress = Math.max(0, Math.min(1, (dot.baseY - fadeStartY) / (fadeEndY - fadeStartY)));
-        const fadeYAlpha = 1 - fadeYProgress;
-        
-        let fadeXAlpha = 1;
-        if (dot.baseX < fadeEndX) {
-          fadeXAlpha = Math.max(0, (dot.baseX - fadeStartX) / (fadeEndX - fadeStartX));
-        }
-        
-        const finalAlpha = fadeYAlpha * fadeXAlpha;
-        
-        if (finalAlpha > 0.05) {
-          ctx.beginPath();
-          ctx.arc(dot.baseX, dot.baseY, config.dotSize, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(59, 130, 246, ${0.5 * finalAlpha})`;
-          ctx.fill();
-        }
-      });
-      return;
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        dots.push({
+          x: offsetX + col * config.spacing,
+          y: offsetY + row * config.spacing,
+        });
+      }
     }
 
     const animate = () => {
-      timeRef.current += 1;
       ctx.clearRect(0, 0, dimensions.width, dimensions.height);
 
       wavesRef.current = wavesRef.current.filter(wave => {
-        wave.radius += config.waveSpeed * 15;
-        wave.strength *= config.waveDecay;
-        return wave.strength > 0.01;
+        wave.radius += config.waveSpeed;
+        return wave.radius < wave.maxRadius;
       });
 
-      const centerX = dimensions.width * 0.7;
-      const centerY = dimensions.height / 2;
+      if (wavesRef.current.length === 0) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
 
-      dotsRef.current.forEach((dot) => {
-        let totalZ = 0;
-
-        const ambientOffset = 
-          Math.sin(dot.baseX * 0.01 + timeRef.current * config.ambientWaveSpeed * 2) *
-          Math.cos(dot.baseY * 0.01 + timeRef.current * config.ambientWaveSpeed * 1.5) *
-          config.ambientWaveAmplitude;
-        
-        totalZ += ambientOffset;
+      dots.forEach((dot) => {
+        let maxAlpha = 0;
+        let maxScale = 1;
 
         wavesRef.current.forEach(wave => {
-          const dx = dot.baseX - wave.x;
-          const dy = dot.baseY - wave.y;
+          const dx = dot.x - wave.x;
+          const dy = dot.y - wave.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          const waveWidth = 80;
-          const distFromWave = Math.abs(distance - wave.radius);
+          const innerRadius = wave.radius - config.waveWidth;
+          const outerRadius = wave.radius;
           
-          if (distFromWave < waveWidth) {
-            const wavePhase = (distance - wave.radius) / waveWidth * Math.PI;
-            const waveEffect = Math.sin(wavePhase) * wave.strength * config.waveAmplitude;
-            totalZ += waveEffect;
+          if (distance >= innerRadius && distance <= outerRadius) {
+            const positionInWave = (distance - innerRadius) / config.waveWidth;
+            
+            const alpha = Math.sin(positionInWave * Math.PI);
+            const scale = 1 + Math.sin(positionInWave * Math.PI) * 0.8;
+            
+            if (alpha > maxAlpha) {
+              maxAlpha = alpha;
+              maxScale = scale;
+            }
           }
         });
 
-        const perspectiveX = (dot.baseX - centerX) * config.perspectiveStrength * (totalZ / 100);
-        const perspectiveY = (dot.baseY - centerY) * config.perspectiveStrength * (totalZ / 100);
-
-        dot.x = dot.baseX + perspectiveX;
-        dot.y = dot.baseY + perspectiveY;
-        dot.z = totalZ;
-
-        const baseScale = 1 + totalZ / 100;
-        dot.scale = Math.max(0.3, Math.min(2.5, baseScale));
-      });
-
-      const sortedDots = [...dotsRef.current].sort((a, b) => a.z - b.z);
-
-      sortedDots.forEach((dot) => {
-        const fadeYProgress = Math.max(0, Math.min(1, (dot.baseY - fadeStartY) / (fadeEndY - fadeStartY)));
-        const fadeYAlpha = 1 - fadeYProgress;
-        
-        let fadeXAlpha = 1;
-        if (dot.baseX < fadeEndX) {
-          fadeXAlpha = Math.max(0, (dot.baseX - fadeStartX) / (fadeEndX - fadeStartX));
-        }
-        
-        const finalAlpha = fadeYAlpha * fadeXAlpha;
-        
-        if (finalAlpha < 0.05) return;
-
-        const brightness = Math.min(1, 0.4 + (dot.z + 30) / 60);
-        const alpha = (0.35 + brightness * 0.45) * finalAlpha;
-        
-        const r = 59;
-        const g = Math.round(130 + dot.z * 0.5);
-        const b = 246;
-        
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, config.dotSize * dot.scale, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-        ctx.fill();
-
-        if (dot.z > 5 && finalAlpha > 0.3) {
+        if (maxAlpha > 0.02) {
+          const size = config.dotSize * maxScale;
+          
           ctx.beginPath();
-          ctx.arc(dot.x, dot.y, config.dotSize * dot.scale * 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.2})`;
+          ctx.arc(dot.x, dot.y, size * 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(59, 130, 246, ${maxAlpha * 0.15})`;
+          ctx.fill();
+          
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(59, 130, 246, ${maxAlpha * 0.7})`;
+          ctx.fill();
+          
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, size * 0.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(147, 197, 253, ${maxAlpha * 0.9})`;
           ctx.fill();
         }
       });
@@ -246,25 +166,20 @@ export function Background3D() {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [dimensions, config, prefersReducedMotion]);
+  }, [dimensions, config]);
 
   return (
     <div 
       ref={containerRef}
-      className="absolute inset-0 overflow-hidden pointer-events-none"
+      className="absolute inset-0 overflow-hidden"
       style={{ zIndex: 0 }}
+      onClick={handleClick}
     >
-      <div 
-        className="absolute inset-0 pointer-events-auto"
-        onClick={handleClick}
-        style={{ cursor: 'default' }}
-      >
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ background: 'transparent' }}
-        />
-      </div>
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ background: 'transparent' }}
+      />
     </div>
   );
 }
