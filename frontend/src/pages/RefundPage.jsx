@@ -3,10 +3,12 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Separator } from '../components/ui/separator';
 import { SEO } from '../components/SEO';
+import { Background3D } from '../components/Background3D';
 
 export default function RefundPage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative">
+      <Background3D />
       <SEO
         title="Refund & Cancellation Policy"
         description="Read the cancellation and refund policy for Syntheight digital products and services."

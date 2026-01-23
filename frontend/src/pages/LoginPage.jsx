@@ -6,6 +6,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { SEO } from '../components/SEO';
+import { Background3D } from '../components/Background3D';
 import { toast, Toaster } from 'sonner';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Mail, KeyRound } from 'lucide-react';
@@ -120,7 +121,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative">
+      <Background3D />
       <SEO
         title="Sign In"
         description="Sign in to access your purchased Syntheight workflows and downloads."

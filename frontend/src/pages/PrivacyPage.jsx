@@ -3,10 +3,12 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Separator } from '../components/ui/separator';
 import { SEO } from '../components/SEO';
+import { Background3D } from '../components/Background3D';
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative">
+      <Background3D />
       <SEO
         title="Privacy Policy"
         description="Learn how Syntheight collects, uses, and protects your personal information."

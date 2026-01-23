@@ -3,12 +3,9 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
-import { FloatingShapes } from './FloatingShapes';
-import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const { isMinimal } = useDeviceCapabilities();
 
   useEffect(() => {
     setIsVisible(true);
@@ -16,11 +13,8 @@ export const Hero = () => {
 
   return (
     <section className="w-full pt-32 pb-20 md:pt-44 md:pb-28 relative overflow-hidden">
-      {/* 3D Floating Background - positioned behind content */}
-      <FloatingShapes />
-
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/50 pointer-events-none" />
+      {/* Subtle gradient overlay for better text readability over 3D background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/50 pointer-events-none" />
 
       <div className="container-slate relative z-10">
         <div className="max-w-4xl">

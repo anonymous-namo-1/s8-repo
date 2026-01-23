@@ -55,3 +55,24 @@ The application uses two workflows:
 - Made Razorpay integration optional (app works without payment credentials)
 - Frontend configured to run on port 5000 with all hosts allowed
 - Backend configured to run on port 8000
+- Added device-friendly 3D animated background using Three.js/React Three Fiber (January 2026)
+
+## 3D Background Animation
+
+### Features
+- **3D Geometric Shapes**: Floating cubes, pyramids, octahedrons, torus knots, icosahedrons, dodecahedrons, and more
+- **Particle System**: Ambient floating particles across the scene
+- **Interactive Lighting**: Mouse-following point light for desktop users
+- **3D Grid Plane**: Subtle perspective grid in the background
+- **Device Optimization**: Three performance tiers (full, reduced, minimal) based on device capabilities
+
+### Technical Implementation
+- **Location**: `frontend/src/components/Background3D.jsx`
+- **Libraries**: three, @react-three/fiber, @react-three/drei
+- **Fallback**: CSS-based 3D animation for devices without WebGL support
+- **Performance**: Automatic quality adjustment based on device memory, CPU cores, and screen size
+
+### Performance Tiers
+1. **Full** (Desktop): All effects, 8 geometries, 200 particles, mouse tracking, grid plane
+2. **Reduced** (Tablet/Touch): 4 geometries, 100 particles, simplified effects
+3. **Minimal** (Mobile/Low-end): 2 geometries, 30 particles, basic animations
