@@ -65,7 +65,7 @@ export const ImageWithSkeleton = ({
         <img
           src={src}
           alt={alt}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
+          className={`w-full h-full transition-opacity duration-300 ${
             loading ? 'opacity-0' : 'opacity-100'
           } ${className}`}
           loading={lazy ? 'lazy' : 'eager'}

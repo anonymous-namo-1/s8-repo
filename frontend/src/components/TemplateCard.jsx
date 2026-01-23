@@ -71,12 +71,12 @@ export const TemplateCard = ({ template, onBuyNow }) => {
         }} />
 
         {/* Image - clickable to go to detail page */}
-        <Link to={`/template/${template.slug}`} className="relative aspect-[16/10] overflow-hidden bg-secondary block">
+        <Link to={`/template/${template.slug}`} className="relative aspect-[4/3] overflow-hidden bg-secondary block">
           <div className="relative h-full overflow-hidden">
             <ImageWithSkeleton
               src={template.image}
               alt={template.name}
-              className="transition-all duration-700 ease-out group-hover:scale-110 object-cover"
+              className="transition-all duration-700 ease-out group-hover:scale-105 object-contain"
               lazy={true}
             />
             {/* Shimmer effect on hover */}
