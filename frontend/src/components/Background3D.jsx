@@ -11,19 +11,20 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
 
   const config = React.useMemo(() => {
     const baseConfig = {
-      dotSize: 4,
-      spacing: 20,
-      waveSpeed: 4,
-      waveWidth: 60,
-      maxWaves: 5,
+      dotSize: 2.5,
+      spacing: 12,
+      waveSpeed: 5,
+      waveWidth: 80,
+      maxWaves: 6,
+      resonanceDecay: 0.92,
     };
 
     if (tier === 'full') {
-      return { ...baseConfig, spacing: 18, dotSize: 4.5, maxWaves: 8, waveWidth: 70 };
+      return { ...baseConfig, spacing: 10, dotSize: 2.5, maxWaves: 10, waveWidth: 90 };
     } else if (tier === 'reduced') {
-      return { ...baseConfig, spacing: 25, dotSize: 4, maxWaves: 4, waveWidth: 55 };
+      return { ...baseConfig, spacing: 16, dotSize: 2.2, maxWaves: 5, waveWidth: 70 };
     } else {
-      return { ...baseConfig, spacing: 35, dotSize: 3.5, maxWaves: 3, waveWidth: 45 };
+      return { ...baseConfig, spacing: 22, dotSize: 2, maxWaves: 3, waveWidth: 55 };
     }
   }, [tier]);
 
@@ -46,7 +47,7 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
         Math.sqrt((rect.width - x) ** 2 + y ** 2),
         Math.sqrt(x ** 2 + (rect.height - y) ** 2),
         Math.sqrt((rect.width - x) ** 2 + (rect.height - y) ** 2)
-      ) + 100,
+      ) + 150,
       timestamp: Date.now(),
     });
   }, [config.maxWaves]);
@@ -96,6 +97,8 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
         dots.push({
           x: offsetX + col * config.spacing,
           y: offsetY + row * config.spacing,
+          resonance: 0,
+          resonancePhase: 0,
         });
       }
     }
@@ -108,14 +111,11 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
         return wave.radius < wave.maxRadius;
       });
 
-      if (wavesRef.current.length === 0) {
-        animationRef.current = requestAnimationFrame(animate);
-        return;
-      }
+      const time = Date.now() * 0.008;
 
       dots.forEach((dot) => {
-        let maxAlpha = 0;
-        let maxScale = 1;
+        let maxEnergy = 0;
+        let hitByWave = false;
 
         wavesRef.current.forEach(wave => {
           const dx = dot.x - wave.x;
@@ -126,34 +126,53 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
           const outerRadius = wave.radius;
           
           if (distance >= innerRadius && distance <= outerRadius) {
+            hitByWave = true;
             const positionInWave = (distance - innerRadius) / config.waveWidth;
+            const energy = Math.sin(positionInWave * Math.PI);
             
-            const alpha = Math.sin(positionInWave * Math.PI);
-            const scale = 1 + Math.sin(positionInWave * Math.PI) * 0.8;
+            if (energy > maxEnergy) {
+              maxEnergy = energy;
+            }
             
-            if (alpha > maxAlpha) {
-              maxAlpha = alpha;
-              maxScale = scale;
+            if (energy > dot.resonance) {
+              dot.resonance = energy;
+              dot.resonancePhase = time;
             }
           }
         });
 
-        if (maxAlpha > 0.02) {
-          const size = config.dotSize * maxScale;
+        if (!hitByWave && dot.resonance > 0) {
+          dot.resonance *= config.resonanceDecay;
+          if (dot.resonance < 0.01) {
+            dot.resonance = 0;
+          }
+        }
+
+        const displayEnergy = Math.max(maxEnergy, dot.resonance);
+
+        if (displayEnergy > 0.01) {
+          const resonanceOscillation = dot.resonance > 0.01 
+            ? Math.sin((time - dot.resonancePhase) * 8) * 0.3 * dot.resonance 
+            : 0;
+          
+          const scale = 1 + displayEnergy * 0.6 + resonanceOscillation;
+          const size = config.dotSize * scale;
+          
+          const alpha = displayEnergy * 0.85;
           
           ctx.beginPath();
-          ctx.arc(dot.x, dot.y, size * 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(59, 130, 246, ${maxAlpha * 0.15})`;
+          ctx.arc(dot.x, dot.y, size * 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(59, 130, 246, ${alpha * 0.12})`;
           ctx.fill();
           
           ctx.beginPath();
           ctx.arc(dot.x, dot.y, size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(59, 130, 246, ${maxAlpha * 0.7})`;
+          ctx.fillStyle = `rgba(59, 130, 246, ${alpha * 0.75})`;
           ctx.fill();
           
           ctx.beginPath();
-          ctx.arc(dot.x, dot.y, size * 0.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(147, 197, 253, ${maxAlpha * 0.9})`;
+          ctx.arc(dot.x, dot.y, size * 0.4, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(147, 197, 253, ${alpha * 0.95})`;
           ctx.fill();
         }
       });
