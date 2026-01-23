@@ -7,12 +7,31 @@ import { Background3D } from './Background3D';
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [displayedText, setDisplayedText] = useState('');
   const backgroundRef = useRef(null);
   const sectionRef = useRef(null);
+  
+  const fullText = 'Templates, workflows, and tools. One-time purchase, lifetime access.';
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    let index = 0;
+    const timer = setInterval(() => {
+      if (index <= fullText.length) {
+        setDisplayedText(fullText.slice(0, index));
+        index++;
+      } else {
+        clearInterval(timer);
+      }
+    }, 30);
+
+    return () => clearInterval(timer);
+  }, [isVisible]);
 
   const handleClick = useCallback((e) => {
     if (backgroundRef.current && sectionRef.current) {
@@ -33,23 +52,44 @@ export const Hero = () => {
 
       <div className="container-slate relative pointer-events-none" style={{ zIndex: 2 }}>
         <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isVisible ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0 }}
+            className="mb-8 pointer-events-auto flex justify-center"
+          >
+            <button
+              className="group inline-flex items-center gap-2 text-xs text-muted-foreground/60 hover:text-muted-foreground transition-colors duration-300"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClick(e);
+              }}
+            >
+              <span className="flex items-center justify-center w-8 h-8 rounded-full border border-muted-foreground/20 group-hover:border-muted-foreground/40 transition-all duration-300">
+                <Play className="w-3 h-3 ml-0.5" />
+              </span>
+              <span className="font-medium">Click here</span>
+            </button>
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
           >
-            <span className="block">Premium digital assets.</span>
-            <span className="block mt-2 text-muted-foreground/70">Ready to use.</span>
+            <span className="block">Premium Digital Assets.</span>
+            <span className="block mt-2 text-muted-foreground/70">Ready To Use.</span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={isVisible ? { opacity: 1 } : {}}
+            transition={{ duration: 0.3, delay: 0.3 }}
+            className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed h-[3.5rem] sm:h-auto"
           >
-            Templates, workflows, and tools. One-time purchase, lifetime access.
+            {displayedText}
+            <span className="inline-block w-0.5 h-5 bg-blue-500/70 ml-0.5 animate-pulse" />
           </motion.p>
 
           <motion.div
@@ -74,26 +114,6 @@ export const Hero = () => {
               </span>
               <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
             </Link>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="mt-10 pointer-events-auto"
-          >
-            <button
-              className="group inline-flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleClick(e);
-              }}
-            >
-              <span className="flex items-center justify-center w-12 h-12 rounded-full border border-muted-foreground/30 group-hover:border-foreground/50 group-hover:bg-foreground/5 transition-all duration-300">
-                <Play className="w-5 h-5 ml-0.5" />
-              </span>
-              <span className="font-medium">Click here</span>
-            </button>
           </motion.div>
         </div>
       </div>
