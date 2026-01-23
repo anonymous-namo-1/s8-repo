@@ -58,30 +58,50 @@ The application uses two workflows:
 - Simplified hero section text (January 2026)
 - Implemented click-triggered wave animation (January 2026)
 
-## Click-Triggered Wave Animation
+## Interactive 3D Wave Animation
+
+Inspired by Google Antigravity's premium aesthetic.
 
 ### Features
-- **Invisible by default**: No dots visible until user clicks
-- **Click to activate**: Clicking anywhere creates an expanding wave of blue dots
-- **Disappearing trail**: Dots only appear at the wavefront, then fade away after passing
-- **Full-width coverage**: Works across the entire hero section (both sides)
-- **Multiple waves**: Can trigger multiple overlapping waves
-- **Device-friendly**: Three performance tiers adapt to device capabilities
+- **Invisible by default**: Clean background until user clicks
+- **3D parallax effect**: Dots lift up AND shift away from click point
+- **Dynamic shadows**: Shadows appear below lifted dots for depth
+- **Smooth physics**: Easing-based transitions for fluid motion
+- **Multi-wave support**: Multiple overlapping waves from rapid clicks
+- **Device-adaptive**: Three performance tiers for all devices
 
 ### Technical Implementation
 - **Location**: `frontend/src/components/Background3D.jsx`
-- **Technology**: HTML5 Canvas with 2D context for high performance
-- **Containment**: Hero section only
+- **Technology**: HTML5 Canvas 2D (vanilla JS, no heavy dependencies)
+- **Pattern**: React forwardRef for parent-child communication
 
 ### How It Works
-1. Background is clean with no dots visible initially
-2. Clicking anywhere creates a wave that expands from that click point
-3. Only dots at the current wavefront are visible (ring effect)
-4. As the wave travels outward, dots behind it disappear
-5. Multiple clicks create multiple overlapping wave rings
-6. Waves auto-remove after reaching maximum radius
+1. Click triggers `triggerWave(x, y)` from Hero component
+2. Wave expands from click point at constant speed
+3. Dots within wave radius calculate:
+   - **Energy**: Sine wave shape for smooth rise/fall
+   - **Lift**: Vertical displacement (3D height)
+   - **Parallax shift**: Horizontal/vertical displacement away from origin
+   - **Scale**: Size increase at wave peak
+4. Smooth easing applied to all transitions (0.15 factor)
+5. Decay applied when no waves affecting dot (0.93 factor)
+6. Shadow rendered at base position for depth illusion
+
+### Key Functions
+- `triggerWave(x, y)`: Creates new wave at coordinates
+- `animate()`: Main render loop, processes waves and dots
+- Wave shape: `Math.sin(position * Math.PI)` for smooth bell curve
 
 ### Performance Tiers
-1. **Full** (Desktop): 18px spacing, 4.5px dots, up to 8 simultaneous waves
-2. **Reduced** (Tablet/Touch): 25px spacing, 4px dots, up to 4 waves
-3. **Minimal** (Mobile/Low-end): 35px spacing, 3.5px dots, up to 3 waves
+| Tier | Spacing | Dot Size | Max Waves | Target Device |
+|------|---------|----------|-----------|---------------|
+| Full | 8px | 1.2px | 10 | Desktop |
+| Reduced | 14px | 1.3px | 6 | Tablet/Touch |
+| Minimal | 20px | 1.4px | 4 | Mobile/Low-end |
+
+### Animation Parameters
+- Wave speed: 5px/frame
+- Wave width: 180px (transition zone)
+- Lift height: 20px max
+- Parallax strength: 12px max shift
+- Trail decay: 0.93 (smooth fade)

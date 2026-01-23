@@ -1,6 +1,19 @@
 import React, { useRef, useEffect, useCallback, useState, useImperativeHandle, forwardRef } from 'react';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 
+/**
+ * Background3D - Interactive 3D Wave Animation Component
+ * 
+ * Creates a grid of dots that respond to clicks with a 3D wave effect.
+ * Dots lift up, shift with parallax, and cast shadows for depth illusion.
+ * 
+ * Features:
+ * - Click-triggered expanding wave rings
+ * - 3D parallax shift (dots move away from click point)
+ * - Vertical lift for depth illusion
+ * - Dynamic shadows
+ * - Device-adaptive performance tiers
+ */
 export const Background3D = forwardRef(function Background3D(props, ref) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
@@ -10,40 +23,48 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
   const { tier } = useDeviceCapabilities();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
+  // Device-adaptive configuration
   const config = React.useMemo(() => {
+    const base = {
+      waveSpeed: 5,
+      waveWidth: 180,
+      liftHeight: 20,
+      parallaxStrength: 12,
+      trailDecay: 0.93,
+    };
+
     if (tier === 'full') {
       return {
-        dotSize: 1.5,
-        spacing: 12,
-        waveSpeed: 4.5,
-        waveWidth: 150,
-        maxWaves: 8,
-        liftHeight: 25,
-        trailDecay: 0.94,
+        ...base,
+        dotSize: 1.2,
+        spacing: 8,
+        maxWaves: 10,
       };
     } else if (tier === 'reduced') {
       return {
-        dotSize: 1.4,
-        spacing: 18,
-        waveSpeed: 4,
-        waveWidth: 120,
-        maxWaves: 5,
-        liftHeight: 20,
-        trailDecay: 0.92,
+        ...base,
+        dotSize: 1.3,
+        spacing: 14,
+        maxWaves: 6,
+        waveWidth: 150,
       };
     } else {
       return {
-        dotSize: 1.3,
-        spacing: 25,
-        waveSpeed: 3.5,
-        waveWidth: 100,
-        maxWaves: 3,
+        ...base,
+        dotSize: 1.4,
+        spacing: 20,
+        maxWaves: 4,
+        waveWidth: 120,
         liftHeight: 15,
-        trailDecay: 0.9,
       };
     }
   }, [tier]);
 
+  /**
+   * Triggers a wave from the specified coordinates
+   * @param {number} x - X coordinate relative to container
+   * @param {number} y - Y coordinate relative to container
+   */
   const triggerWave = useCallback((x, y) => {
     const container = containerRef.current;
     if (!container) return;
@@ -59,19 +80,18 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
       Math.hypot(rect.width - x, y),
       Math.hypot(x, rect.height - y),
       Math.hypot(rect.width - x, rect.height - y)
-    ) + 200;
+    ) + 250;
 
     wavesRef.current.push({
       x,
       y,
       radius: 0,
       maxRadius,
+      born: performance.now(),
     });
   }, [config.maxWaves]);
 
-  useImperativeHandle(ref, () => ({
-    triggerWave
-  }), [triggerWave]);
+  useImperativeHandle(ref, () => ({ triggerWave }), [triggerWave]);
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -102,36 +122,34 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
     canvas.style.height = `${dimensions.height}px`;
     ctx.scale(dpr, dpr);
 
-    const { spacing } = config;
-    const cols = Math.ceil(dimensions.width / spacing) + 1;
-    const rows = Math.ceil(dimensions.height / spacing) + 1;
+    // Initialize dot grid
+    const { spacing, dotSize, waveWidth, waveSpeed, liftHeight, parallaxStrength, trailDecay } = config;
+    const cols = Math.ceil(dimensions.width / spacing) + 2;
+    const rows = Math.ceil(dimensions.height / spacing) + 2;
     const offsetX = (dimensions.width - (cols - 1) * spacing) / 2;
     const offsetY = (dimensions.height - (rows - 1) * spacing) / 2;
 
-    dotsRef.current = new Array(rows * cols);
+    dotsRef.current = [];
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
-        const i = row * cols + col;
-        dotsRef.current[i] = {
-          bx: offsetX + col * spacing,
-          by: offsetY + row * spacing,
+        dotsRef.current.push({
+          baseX: offsetX + col * spacing,
+          baseY: offsetY + row * spacing,
+          x: offsetX + col * spacing,
+          y: offsetY + row * spacing,
           lift: 0,
-          targetLift: 0,
+          shiftX: 0,
+          shiftY: 0,
           scale: 1,
-          targetScale: 1,
-        };
+          energy: 0,
+        });
       }
     }
-
-    const waveWidth = config.waveWidth;
-    const waveSpeed = config.waveSpeed;
-    const liftHeight = config.liftHeight;
-    const decay = config.trailDecay;
-    const dotSize = config.dotSize;
 
     const animate = () => {
       ctx.clearRect(0, 0, dimensions.width, dimensions.height);
 
+      // Update waves
       const waves = wavesRef.current;
       for (let i = waves.length - 1; i >= 0; i--) {
         waves[i].radius += waveSpeed;
@@ -141,76 +159,100 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
       }
 
       const dots = dotsRef.current;
-      const numDots = dots.length;
       const numWaves = waves.length;
 
-      for (let i = 0; i < numDots; i++) {
+      // Process each dot
+      for (let i = 0; i < dots.length; i++) {
         const dot = dots[i];
-        let maxLift = 0;
-        let maxScale = 1;
+        let maxEnergy = 0;
+        let totalShiftX = 0;
+        let totalShiftY = 0;
 
+        // Calculate influence from all active waves
         for (let w = 0; w < numWaves; w++) {
           const wave = waves[w];
-          const dx = dot.bx - wave.x;
-          const dy = dot.by - wave.y;
+          const dx = dot.baseX - wave.x;
+          const dy = dot.baseY - wave.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           
           const inner = wave.radius - waveWidth;
           const outer = wave.radius;
           
           if (dist >= inner && dist <= outer) {
+            // Calculate wave intensity at this position
             const pos = (dist - inner) / waveWidth;
             const waveShape = Math.sin(pos * Math.PI);
             
-            const lift = waveShape * liftHeight;
-            const scale = 1 + waveShape * 1.2;
-            
-            if (lift > maxLift) {
-              maxLift = lift;
-              maxScale = scale;
+            if (waveShape > maxEnergy) {
+              maxEnergy = waveShape;
             }
+
+            // Parallax shift - dots move away from wave origin
+            const angle = Math.atan2(dy, dx);
+            const shiftAmount = waveShape * parallaxStrength;
+            totalShiftX += Math.cos(angle) * shiftAmount;
+            totalShiftY += Math.sin(angle) * shiftAmount;
           }
         }
 
-        dot.targetLift = maxLift;
-        dot.targetScale = maxScale;
-        
-        dot.lift += (dot.targetLift - dot.lift) * 0.2;
-        dot.scale += (dot.targetScale - dot.scale) * 0.2;
-        
-        if (dot.targetLift === 0) {
-          dot.lift *= decay;
-          dot.scale = 1 + (dot.scale - 1) * decay;
+        // Smooth transitions
+        const easing = 0.15;
+        const targetLift = maxEnergy * liftHeight;
+        const targetScale = 1 + maxEnergy * 0.8;
+
+        dot.energy += (maxEnergy - dot.energy) * easing;
+        dot.lift += (targetLift - dot.lift) * easing;
+        dot.shiftX += (totalShiftX - dot.shiftX) * easing;
+        dot.shiftY += (totalShiftY - dot.shiftY) * easing;
+        dot.scale += (targetScale - dot.scale) * easing;
+
+        // Apply decay when no waves affecting
+        if (maxEnergy === 0) {
+          dot.energy *= trailDecay;
+          dot.lift *= trailDecay;
+          dot.shiftX *= trailDecay;
+          dot.shiftY *= trailDecay;
+          dot.scale = 1 + (dot.scale - 1) * trailDecay;
         }
 
-        if (dot.lift > 0.3 || dot.scale > 1.02) {
-          const x = dot.bx;
-          const y = dot.by - dot.lift;
-          
+        // Calculate final position with parallax
+        dot.x = dot.baseX + dot.shiftX;
+        dot.y = dot.baseY - dot.lift + dot.shiftY * 0.5;
+
+        // Render dot if visible
+        if (dot.energy > 0.02) {
           const size = dotSize * dot.scale;
-          const normalizedLift = Math.min(dot.lift / liftHeight, 1);
-          const alpha = 0.25 + normalizedLift * 0.7;
+          const alpha = 0.15 + dot.energy * 0.75;
 
-          const shadowY = dot.by + 2;
-          const shadowAlpha = normalizedLift * 0.15;
-          ctx.beginPath();
-          ctx.arc(x, shadowY, size * 0.8, 0, 6.28);
-          ctx.fillStyle = `rgba(0,0,0,${shadowAlpha})`;
-          ctx.fill();
+          // Shadow for 3D depth
+          if (dot.lift > 1) {
+            const shadowOffset = dot.lift * 0.3;
+            const shadowAlpha = dot.energy * 0.12;
+            ctx.beginPath();
+            ctx.arc(dot.baseX + dot.shiftX, dot.baseY + shadowOffset, size * 0.9, 0, 6.283);
+            ctx.fillStyle = `rgba(0,0,0,${shadowAlpha})`;
+            ctx.fill();
+          }
 
+          // Main dot
           ctx.beginPath();
-          ctx.arc(x, y, size, 0, 6.28);
+          ctx.arc(dot.x, dot.y, size, 0, 6.283);
           ctx.fillStyle = `rgba(59,130,246,${alpha})`;
           ctx.fill();
 
-          if (normalizedLift > 0.3) {
+          // Highlight for lifted dots
+          if (dot.energy > 0.4) {
             ctx.beginPath();
-            ctx.arc(x - size * 0.25, y - size * 0.25, size * 0.35, 0, 6.28);
-            ctx.fillStyle = `rgba(147,197,253,${normalizedLift * 0.6})`;
+            ctx.arc(dot.x - size * 0.2, dot.y - size * 0.2, size * 0.3, 0, 6.283);
+            ctx.fillStyle = `rgba(191,219,254,${dot.energy * 0.5})`;
             ctx.fill();
           }
-        } else if (dot.lift < 0.2 && dot.scale < 1.01) {
+        } else if (dot.energy < 0.01) {
+          // Reset inactive dots
+          dot.energy = 0;
           dot.lift = 0;
+          dot.shiftX = 0;
+          dot.shiftY = 0;
           dot.scale = 1;
         }
       }
