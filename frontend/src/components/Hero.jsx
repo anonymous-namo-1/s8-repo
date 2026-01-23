@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
@@ -7,16 +7,31 @@ import { Background3D } from './Background3D';
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const backgroundRef = useRef(null);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  return (
-    <section className="w-full pt-32 pb-20 md:pt-44 md:pb-28 relative overflow-hidden">
-      <Background3D />
+  const handleClick = useCallback((e) => {
+    if (backgroundRef.current && sectionRef.current) {
+      const rect = sectionRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      backgroundRef.current.triggerWave(x, y);
+    }
+  }, []);
 
-      <div className="container-slate relative" style={{ zIndex: 2 }}>
+  return (
+    <section 
+      ref={sectionRef}
+      className="w-full pt-32 pb-20 md:pt-44 md:pb-28 relative overflow-hidden cursor-pointer"
+      onClick={handleClick}
+    >
+      <Background3D ref={backgroundRef} />
+
+      <div className="container-slate relative pointer-events-none" style={{ zIndex: 2 }}>
         <div className="max-w-4xl">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -41,7 +56,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pointer-events-auto"
           >
             <Link to="/workflows">
               <Button variant="brutal" size="xl" className="group relative z-10">

@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import React, { useRef, useEffect, useCallback, useState, useImperativeHandle, forwardRef } from 'react';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 
-export function Background3D() {
+export const Background3D = forwardRef(function Background3D(props, ref) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const animationRef = useRef(null);
@@ -27,13 +27,11 @@ export function Background3D() {
     }
   }, [tier]);
 
-  const handleClick = useCallback((e) => {
+  const triggerWave = useCallback((x, y) => {
     const container = containerRef.current;
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
 
     if (wavesRef.current.length >= config.maxWaves) {
       wavesRef.current.shift();
@@ -52,6 +50,10 @@ export function Background3D() {
       timestamp: Date.now(),
     });
   }, [config.maxWaves]);
+
+  useImperativeHandle(ref, () => ({
+    triggerWave
+  }), [triggerWave]);
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -171,15 +173,14 @@ export function Background3D() {
   return (
     <div 
       ref={containerRef}
-      className="absolute inset-0 overflow-hidden"
+      className="absolute inset-0 overflow-hidden pointer-events-none"
       style={{ zIndex: 0 }}
-      onClick={handleClick}
     >
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
+        className="absolute inset-0 w-full h-full"
         style={{ background: 'transparent' }}
       />
     </div>
   );
-}
+});
