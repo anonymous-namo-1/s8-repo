@@ -55,34 +55,33 @@ The application uses two workflows:
 - Made Razorpay integration optional (app works without payment credentials)
 - Frontend configured to run on port 5000 with all hosts allowed
 - Backend configured to run on port 8000
-- Added device-friendly 3D animated background using Three.js/React Three Fiber (January 2026)
+- Simplified hero section text (January 2026)
+- Implemented click-triggered wave animation (January 2026)
 
-## 3D Background Animation
+## Click-Triggered Wave Animation
 
 ### Features
-- **Interactive Blue Dot Grid**: A responsive grid of blue dots on the right side of the hero section
-- **Click-Triggered Ripple Waves**: Clicking anywhere in the hero creates a wave that spreads outward
-- **3D Illusion**: Dots scale and shift position to create depth and 3D wave effect
-- **Ambient Animation**: Continuous subtle wave movement even without interaction
-- **Content-Aware Positioning**: Dots fade out on the left side to keep text/buttons clear
-- **Section Containment**: Dots fade at the bottom to prevent bleeding into section 2
-- **Device Optimization**: Three performance tiers based on device capabilities
+- **Invisible by default**: No dots visible until user clicks
+- **Click to activate**: Clicking anywhere creates an expanding wave of blue dots
+- **Disappearing trail**: Dots only appear at the wavefront, then fade away after passing
+- **Full-width coverage**: Works across the entire hero section (both sides)
+- **Multiple waves**: Can trigger multiple overlapping waves
+- **Device-friendly**: Three performance tiers adapt to device capabilities
 
 ### Technical Implementation
-- **Location**: `frontend/src/components/Background3D.jsx` (integrated into Hero.jsx)
+- **Location**: `frontend/src/components/Background3D.jsx`
 - **Technology**: HTML5 Canvas with 2D context for high performance
-- **Containment**: Hero section only (not page-wide)
-- **Fade Zones**: Left side (45% clearance for content) and bottom (55-90% for section transition)
+- **Containment**: Hero section only
 
 ### How It Works
-1. Blue dots are rendered in a grid pattern on the right side of the hero section
-2. Clicking anywhere creates a ripple wave emanating from that point
-3. Waves travel outward with physics-based decay
-4. Dots move and scale based on wave height, creating 3D perspective illusion
-5. Horizontal fade keeps the content area (left side) clear
-6. Vertical fade prevents dots from bleeding into the next section
+1. Background is clean with no dots visible initially
+2. Clicking anywhere creates a wave that expands from that click point
+3. Only dots at the current wavefront are visible (ring effect)
+4. As the wave travels outward, dots behind it disappear
+5. Multiple clicks create multiple overlapping wave rings
+6. Waves auto-remove after reaching maximum radius
 
 ### Performance Tiers
-1. **Full** (Desktop): 22px spacing, 3.5px dots, up to 8 simultaneous waves
-2. **Reduced** (Tablet/Touch): 30px spacing, 3px dots, up to 4 waves
-3. **Minimal** (Mobile/Low-end): 40px spacing, 2.5px dots, up to 2 waves
+1. **Full** (Desktop): 18px spacing, 4.5px dots, up to 8 simultaneous waves
+2. **Reduced** (Tablet/Touch): 25px spacing, 4px dots, up to 4 waves
+3. **Minimal** (Mobile/Low-end): 35px spacing, 3.5px dots, up to 3 waves
