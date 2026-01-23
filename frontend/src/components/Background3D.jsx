@@ -20,6 +20,8 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
   const animationRef = useRef(null);
   const wavesRef = useRef([]);
   const dotsRef = useRef([]);
+  const isAnimatingRef = useRef(false);
+  const hasActiveDotsRef = useRef(false);
   const { tier } = useDeviceCapabilities();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
@@ -37,116 +39,43 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
       return {
         ...base,
         dotSize: 1.2,
-        spacing: 8,
-        maxWaves: 10,
+        spacing: 12,
+        maxWaves: 8,
       };
     } else if (tier === 'reduced') {
       return {
         ...base,
         dotSize: 1.3,
-        spacing: 14,
-        maxWaves: 6,
+        spacing: 18,
+        maxWaves: 5,
         waveWidth: 150,
       };
     } else {
       return {
         ...base,
         dotSize: 1.4,
-        spacing: 20,
-        maxWaves: 4,
+        spacing: 24,
+        maxWaves: 3,
         waveWidth: 120,
         liftHeight: 15,
       };
     }
   }, [tier]);
 
-  /**
-   * Triggers a wave from the specified coordinates
-   * @param {number} x - X coordinate relative to container
-   * @param {number} y - Y coordinate relative to container
-   */
-  const triggerWave = useCallback((x, y) => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const rect = container.getBoundingClientRect();
-
-    if (wavesRef.current.length >= config.maxWaves) {
-      wavesRef.current.shift();
-    }
-
-    const maxRadius = Math.max(
-      Math.hypot(x, y),
-      Math.hypot(rect.width - x, y),
-      Math.hypot(x, rect.height - y),
-      Math.hypot(rect.width - x, rect.height - y)
-    ) + 250;
-
-    wavesRef.current.push({
-      x,
-      y,
-      radius: 0,
-      maxRadius,
-      born: performance.now(),
-    });
-  }, [config.maxWaves]);
-
-  useImperativeHandle(ref, () => ({ triggerWave }), [triggerWave]);
-
-  useEffect(() => {
-    const updateDimensions = () => {
-      const container = containerRef.current;
-      if (container) {
-        setDimensions({ 
-          width: container.offsetWidth, 
-          height: container.offsetHeight 
-        });
-      }
-    };
-
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, []);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || dimensions.width === 0) return;
-
-    const ctx = canvas.getContext('2d', { alpha: true });
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  // Start animation loop only when needed
+  const startAnimation = useCallback(() => {
+    if (isAnimatingRef.current) return;
+    isAnimatingRef.current = true;
     
-    canvas.width = dimensions.width * dpr;
-    canvas.height = dimensions.height * dpr;
-    canvas.style.width = `${dimensions.width}px`;
-    canvas.style.height = `${dimensions.height}px`;
-    ctx.scale(dpr, dpr);
-
-    // Initialize dot grid
-    const { spacing, dotSize, waveWidth, waveSpeed, liftHeight, parallaxStrength, trailDecay } = config;
-    const cols = Math.ceil(dimensions.width / spacing) + 2;
-    const rows = Math.ceil(dimensions.height / spacing) + 2;
-    const offsetX = (dimensions.width - (cols - 1) * spacing) / 2;
-    const offsetY = (dimensions.height - (rows - 1) * spacing) / 2;
-
-    dotsRef.current = [];
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        dotsRef.current.push({
-          baseX: offsetX + col * spacing,
-          baseY: offsetY + row * spacing,
-          x: offsetX + col * spacing,
-          y: offsetY + row * spacing,
-          lift: 0,
-          shiftX: 0,
-          shiftY: 0,
-          scale: 1,
-          energy: 0,
-        });
-      }
-    }
-
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const { dotSize, waveWidth, waveSpeed, liftHeight, parallaxStrength, trailDecay } = config;
+    
     const animate = () => {
+      if (!isAnimatingRef.current) return;
+      
       ctx.clearRect(0, 0, dimensions.width, dimensions.height);
 
       // Update waves
@@ -160,6 +89,7 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
 
       const dots = dotsRef.current;
       const numWaves = waves.length;
+      let activeDots = 0;
 
       // Process each dot
       for (let i = 0; i < dots.length; i++) {
@@ -179,7 +109,6 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
           const outer = wave.radius;
           
           if (dist >= inner && dist <= outer) {
-            // Calculate wave intensity at this position
             const pos = (dist - inner) / waveWidth;
             const waveShape = Math.sin(pos * Math.PI);
             
@@ -187,7 +116,6 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
               maxEnergy = waveShape;
             }
 
-            // Parallax shift - dots move away from wave origin
             const angle = Math.atan2(dy, dx);
             const shiftAmount = waveShape * parallaxStrength;
             totalShiftX += Math.cos(angle) * shiftAmount;
@@ -221,6 +149,7 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
 
         // Render dot if visible
         if (dot.energy > 0.02) {
+          activeDots++;
           const size = dotSize * dot.scale;
           const alpha = 0.15 + dot.energy * 0.75;
 
@@ -257,12 +186,111 @@ export const Background3D = forwardRef(function Background3D(props, ref) {
         }
       }
 
+      // Stop animation if no active waves and no active dots
+      if (waves.length === 0 && activeDots === 0) {
+        isAnimatingRef.current = false;
+        return;
+      }
+
       animationRef.current = requestAnimationFrame(animate);
     };
 
     animationRef.current = requestAnimationFrame(animate);
+  }, [config, dimensions]);
 
+  /**
+   * Triggers a wave from the specified coordinates
+   * @param {number} x - X coordinate relative to container
+   * @param {number} y - Y coordinate relative to container
+   */
+  const triggerWave = useCallback((x, y) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+
+    if (wavesRef.current.length >= config.maxWaves) {
+      wavesRef.current.shift();
+    }
+
+    const maxRadius = Math.max(
+      Math.hypot(x, y),
+      Math.hypot(rect.width - x, y),
+      Math.hypot(x, rect.height - y),
+      Math.hypot(rect.width - x, rect.height - y)
+    ) + 250;
+
+    wavesRef.current.push({
+      x,
+      y,
+      radius: 0,
+      maxRadius,
+      born: performance.now(),
+    });
+    
+    // Start animation when wave is triggered
+    startAnimation();
+  }, [config.maxWaves, startAnimation]);
+
+  useImperativeHandle(ref, () => ({ triggerWave }), [triggerWave]);
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      const container = containerRef.current;
+      if (container) {
+        setDimensions({ 
+          width: container.offsetWidth, 
+          height: container.offsetHeight 
+        });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  // Initialize canvas and dots grid (animation only starts on click)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || dimensions.width === 0) return;
+
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    
+    canvas.width = dimensions.width * dpr;
+    canvas.height = dimensions.height * dpr;
+    canvas.style.width = `${dimensions.width}px`;
+    canvas.style.height = `${dimensions.height}px`;
+    ctx.scale(dpr, dpr);
+
+    // Initialize dot grid
+    const { spacing } = config;
+    const cols = Math.ceil(dimensions.width / spacing) + 2;
+    const rows = Math.ceil(dimensions.height / spacing) + 2;
+    const offsetX = (dimensions.width - (cols - 1) * spacing) / 2;
+    const offsetY = (dimensions.height - (rows - 1) * spacing) / 2;
+
+    dotsRef.current = [];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        dotsRef.current.push({
+          baseX: offsetX + col * spacing,
+          baseY: offsetY + row * spacing,
+          x: offsetX + col * spacing,
+          y: offsetY + row * spacing,
+          lift: 0,
+          shiftX: 0,
+          shiftY: 0,
+          scale: 1,
+          energy: 0,
+        });
+      }
+    }
+
+    // Cleanup animation on unmount
     return () => {
+      isAnimatingRef.current = false;
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
